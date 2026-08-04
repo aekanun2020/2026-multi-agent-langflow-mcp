@@ -98,6 +98,15 @@ Faithfulness ตรวจว่าข้อสรุปใน final answer ม�
 
 ดูรายละเอียดรายข้อใน [evaluation.md](benchmarks/customer-service-hard10/evaluation.md)
 
+ผล v6 Concurrent Full-Answer ล่าสุด:
+
+- Availability: 10/10 = 100%
+- Correctness: 28/50 = 56.0%
+- Faithfulness: 36/50 = 72.0%
+- Correctness ดีขึ้นจาก v5 จำนวน 12 จุด แต่ latency เฉลี่ยเพิ่มจาก 43.2 เป็น 61.9 วินาที
+
+ดู [evaluation-v6.md](benchmarks/customer-service-hard10/evaluation-v6.md)
+
 ผล safe-mode รอบแรกถูก invalidated และเก็บเพื่อ audit ไว้ใน `evaluation-safe-mode-invalidated.md`
 
 ## Run benchmark
