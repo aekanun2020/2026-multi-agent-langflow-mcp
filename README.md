@@ -7,17 +7,40 @@
 ```text
 flows/
   LAB-1-4-withlocal-parallel-consensus-v5-thai.json
+  LAB-1-4-withlocal-concurrent-consensus-v6-thai.json
 benchmarks/customer-service-hard10/
   questions.txt
   ground-truth.md
   evaluation.md
 scripts/
+  build_v6_concurrent.mjs
+  copy_flow_api_keys.py
+  sync_flow_design.py
   run_langflow_hard10.py
   inspect_mcp_servers.py
   call_mcp_tool.py
 ```
 
-## Flow v5
+## Flow v6: Concurrent Full-Answer Consensus
+
+v6 เป็น flow หลักตามแนวคิด Multi-Agent with Concurrent Orchestration:
+
+```text
+คำถามเดียวกัน
+  ├─ Concurrent Full-Answer Agent 1 ─┐
+  ├─ Concurrent Full-Answer Agent 2 ─┼─ Concurrent Answer Consensus ─ Final Answer Synthesizer
+  └─ Concurrent Full-Answer Agent 3 ─┘
+```
+
+- Agents ทั้งสามได้รับคำถาม, tools และ instructions เหมือนกัน
+- แต่ละ Agent สร้างคำตอบฉบับเต็มพร้อม structured claims, calculations, evidence และ uncertainties
+- Aggregator เปรียบเทียบค่าของ claims ไม่ได้นับ `notify/do_not_notify/abstain`
+- Final Synthesizer ตอบจาก claims ที่ตรงกันอย่างน้อย 2 ใน 3 และพิจารณาหลักฐานเมื่อคำตอบต่างกัน
+- Final Synthesizer ไม่มี MCP/tool edge และทำ external action ไม่ได้
+
+รายละเอียดอยู่ใน [docs/v6-concurrent-orchestration.md](docs/v6-concurrent-orchestration.md)
+
+## Flow v5 (legacy vote-based)
 
 Flow ประกอบด้วย worker อิสระ 3 ตัว:
 
@@ -26,6 +49,8 @@ Flow ประกอบด้วย worker อิสระ 3 ตัว:
 3. Risk worker — ตรวจความขัดแย้ง ข้อมูลขาด และความเสี่ยง
 
 ผลจาก workers ถูกส่งเข้า deterministic vote aggregator ก่อนส่งให้ executor สรุปเป็นภาษาไทย
+
+v5 เก็บไว้เพื่อเปรียบเทียบเท่านั้น เพราะ vote schema แบบ notification ไม่ตรงกับ analytical QA benchmark
 
 ไฟล์ flow ไม่บันทึก API key ผู้ใช้ต้องตั้งค่า key หลัง import หรือผ่าน environment/secret ของ Langflow เอง
 
@@ -81,6 +106,12 @@ Langflow ต้องทำงานที่ `http://localhost:7860` และ�
 
 ```bash
 python3 scripts/run_langflow_hard10.py benchmarks/customer-service-hard10/questions.txt
+```
+
+ระบุ flow อื่น เช่น v6 ผ่าน environment variable:
+
+```bash
+LANGFLOW_FLOW_ID=<flow-id> python3 scripts/run_langflow_hard10.py benchmarks/customer-service-hard10/questions.txt
 ```
 
 สคริปต์สร้าง session ใหม่ต่อคำถามหนึ่งข้อเพื่อไม่ให้คำตอบก่อนหน้ารั่วข้ามข้อ และไม่ส่ง `tweaks` ใด ๆ ไปเปลี่ยน flow ดังนั้นคำตอบมาจาก SUT ที่ import อยู่ใน Langflow โดยตรง

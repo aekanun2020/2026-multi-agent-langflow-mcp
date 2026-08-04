@@ -1,11 +1,13 @@
 import json
+import os
 import sys
 import time
 import urllib.request
+import urllib.error
 import uuid
 
 
-FLOW_ID = "8279ebb2-2592-4557-8b3e-963402aff62e"
+FLOW_ID = os.getenv("LANGFLOW_FLOW_ID", "8279ebb2-2592-4557-8b3e-963402aff62e")
 URL = f"http://127.0.0.1:7860/api/v1/run/{FLOW_ID}"
 
 
@@ -66,6 +68,13 @@ for label, question in questions:
             "question": label,
             "elapsed_seconds": round(time.monotonic() - started, 2),
             "answer": text,
+        }
+    except urllib.error.HTTPError as exc:
+        detail = exc.read().decode("utf-8", errors="replace")[:2000]
+        result = {
+            "question": label,
+            "elapsed_seconds": round(time.monotonic() - started, 2),
+            "error": f"HTTPError: {exc.code} {exc.reason}; body={detail}",
         }
     except Exception as exc:
         result = {
