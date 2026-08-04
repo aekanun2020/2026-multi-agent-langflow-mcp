@@ -65,14 +65,15 @@ Correctness ตรวจเฉพาะ **final answer จาก Chat Output** �
 
 Faithfulness ตรวจว่าข้อสรุปใน final answer มีหลักฐานจากโจทย์ MSSQL หรือ RAG รองรับ และไม่มีการแต่งค่าเพิ่ม
 
-ผลการทดสอบ v5 รอบแรกด้านล่างถูก **invalidated** เพราะ runner รุ่นแรก override system prompt ของ Executor ด้วย safe-mode tweak จึงเก็บไว้เป็นประวัติเท่านั้น ไม่ใช่ clean SUT baseline:
+ผล clean SUT run ล่าสุด (ไม่มี prompt/parameter override):
 
-- Availability: 9/10
-- Correctness รวม timeout: 19/50 = 38.0%
-- Correctness เฉพาะข้อที่ตอบ: 19/45 = 42.2%
-- Faithfulness เฉพาะข้อที่ตอบ: 25/45 = 55.6%
+- Availability: 10/10 = 100%
+- Correctness: 22/50 = 44.0%
+- Faithfulness: 34/50 = 68.0%
 
 ดูรายละเอียดรายข้อใน [evaluation.md](benchmarks/customer-service-hard10/evaluation.md)
+
+ผล safe-mode รอบแรกถูก invalidated และเก็บเพื่อ audit ไว้ใน `evaluation-safe-mode-invalidated.md`
 
 ## Run benchmark
 
