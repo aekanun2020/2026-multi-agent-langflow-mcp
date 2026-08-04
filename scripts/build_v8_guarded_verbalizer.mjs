@@ -120,6 +120,7 @@ const guard = structuredClone(consensus);
 guard.id = "FinalClaimGuard-main";
 guard.position = { x: 1700, y: 470 };
 guard.data.id = "FinalClaimGuard-main";
+guard.data.type = "FinalClaimGuard";
 guard.data.node.display_name = "Deterministic Final Claim Guard";
 guard.data.node.description = "Render locked values and reject factual additions from the verbalizer.";
 guard.data.node.icon = "shield-check";
@@ -160,6 +161,22 @@ const makeEdge = (base, source, target, sourceField, targetField, sourceType) =>
   target,
   sourceHandle: replaceHandle(base.sourceHandle, [[base.source, source], ["response", sourceField], ["Agent", sourceType]]),
   targetHandle: replaceHandle(base.targetHandle, [[base.target, target], ["input_value", targetField]]),
+  data: {
+    sourceHandle: {
+      ...structuredClone(base.data.sourceHandle),
+      dataType: sourceType,
+      id: source,
+      name: sourceField,
+      output_types: ["Message"],
+    },
+    targetHandle: {
+      ...structuredClone(base.data.targetHandle),
+      fieldName: targetField,
+      id: target,
+      inputTypes: ["Message"],
+      type: target === "ChatOutput-BDIVy" ? "other" : "str",
+    },
+  },
 });
 
 flow.data.edges.push(

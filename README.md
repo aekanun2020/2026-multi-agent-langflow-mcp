@@ -125,6 +125,8 @@ v7 คง concurrent full-answer 3 agents และ deterministic 2-of-3 claim c
 
 v8 ให้ LLM ทำหน้าที่เสนอถ้อยคำและ label ภาษาไทยเท่านั้น จากนั้น deterministic Final Claim Guard จะประกอบค่าจริงจาก `agreed_claims` และปฏิเสธข้อความที่เพิ่มตัวเลข หน่วย สกุลเงิน policy หรือ claim ใหม่ รายละเอียดอยู่ใน [docs/v8-guarded-verbalizer.md](docs/v8-guarded-verbalizer.md)
 
+ผล Grounded-18 ของ v8: availability 88.9%, correctness 37.8%, faithfulness 85.6%, reasoning leakage 0/18 และ invented currency 0/18 ดู [evaluation-v8.md](benchmarks/finance-loan-grounded18/evaluation-v8.md)
+
 ผล safe-mode รอบแรกถูก invalidated และเก็บเพื่อ audit ไว้ใน `evaluation-safe-mode-invalidated.md`
 
 ## Run benchmark

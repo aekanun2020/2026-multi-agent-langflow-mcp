@@ -1,0 +1,1 @@
+{"question": "Q1", "elapsed_seconds": 0.02, "error": "HTTPError: 500 Internal Server Error; body={\"detail\":\"{\\\"message\\\":\\\"Edge between FinalClaimGuard and ChatOutput has no matched type.\\\",\\\"traceback\\\":null,\\\"description\\\":null,\\\"code\\\":null,\\\"suggestion\\\":null}\"}"}

@@ -406,8 +406,8 @@
             ]
           },
           "targetHandle": {
-            "fieldName": "input_value",
-            "id": "Agent-ycwYQ",
+            "fieldName": "consensus_report",
+            "id": "FinalClaimGuard-main",
             "inputTypes": [
               "Message"
             ],
@@ -434,14 +434,12 @@
             ]
           },
           "targetHandle": {
-            "fieldName": "input_value",
-            "id": "ChatOutput-BDIVy",
+            "fieldName": "verbalizer_output",
+            "id": "FinalClaimGuard-main",
             "inputTypes": [
-              "Data",
-              "DataFrame",
               "Message"
             ],
-            "type": "other"
+            "type": "str"
           }
         },
         "id": "reactflow__edge-Agent-ycwYQresponse-FinalClaimGuard-mainverbalizer_output",
@@ -456,9 +454,9 @@
         "className": "",
         "data": {
           "sourceHandle": {
-            "dataType": "Agent",
-            "id": "Agent-ycwYQ",
-            "name": "response",
+            "dataType": "FinalClaimGuard",
+            "id": "FinalClaimGuard-main",
+            "name": "result",
             "output_types": [
               "Message"
             ]
@@ -467,8 +465,6 @@
             "fieldName": "input_value",
             "id": "ChatOutput-BDIVy",
             "inputTypes": [
-              "Data",
-              "DataFrame",
               "Message"
             ],
             "type": "other"
@@ -5369,7 +5365,7 @@
           },
           "selected_output": "result",
           "showNode": true,
-          "type": "ConsensusVoteAggregator"
+          "type": "FinalClaimGuard"
         },
         "dragging": false,
         "id": "FinalClaimGuard-main",

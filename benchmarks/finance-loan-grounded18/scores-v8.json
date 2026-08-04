@@ -1,0 +1,30 @@
+{
+  "flow_id": "c0bb787d-fbd5-41a9-acbf-e0932611d315",
+  "question_count": 18,
+  "availability": {"passed": 16, "total": 18, "percent": 88.9},
+  "correctness": {"points": 34, "max_points": 90, "percent": 37.8},
+  "faithfulness": {"points": 77, "max_points": 90, "percent": 85.6},
+  "latency_seconds": {"average": 83.12, "median": 74.31, "minimum": 33.62, "maximum": 240.0},
+  "reasoning_leakage": {"count": 0, "total": 18, "percent": 0.0},
+  "invented_currency": {"count": 0, "total": 18, "percent": 0.0},
+  "per_question": [
+    {"id": "Q1", "correctness": 2, "faithfulness": 4},
+    {"id": "Q2", "correctness": 5, "faithfulness": 5},
+    {"id": "Q3", "correctness": 1, "faithfulness": 5},
+    {"id": "Q4", "correctness": 3, "faithfulness": 5},
+    {"id": "Q5", "correctness": 0, "faithfulness": 5},
+    {"id": "Q6", "correctness": 1, "faithfulness": 5},
+    {"id": "Q7", "correctness": 0, "faithfulness": 0},
+    {"id": "Q8", "correctness": 0, "faithfulness": 0},
+    {"id": "Q9", "correctness": 0, "faithfulness": 5},
+    {"id": "Q10", "correctness": 3, "faithfulness": 5},
+    {"id": "Q11", "correctness": 4, "faithfulness": 4},
+    {"id": "Q12", "correctness": 5, "faithfulness": 5},
+    {"id": "Q13", "correctness": 2, "faithfulness": 5},
+    {"id": "Q14", "correctness": 2, "faithfulness": 5},
+    {"id": "Q15", "correctness": 0, "faithfulness": 5},
+    {"id": "Q16", "correctness": 0, "faithfulness": 5},
+    {"id": "Q17", "correctness": 1, "faithfulness": 4},
+    {"id": "Q18", "correctness": 5, "faithfulness": 5}
+  ]
+}
