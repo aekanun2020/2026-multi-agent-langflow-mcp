@@ -77,6 +77,8 @@ Workers มีหน้าที่ต่างกัน:
 
 ชื่อ: `LAB-1-4-withlocal-concurrent-consensus-v6-thai`
 
+แนวคิดอ้างอิง: [การแก้ปัญหาคำตอบที่ไม่คงเส้นคงวาของ Agent ด้วย Multi-Agent with Concurrent Orchestration](https://aekanunbigdata.medium.com/การแก้ปัญหาคำตอบที่ไม่คงเส้นคงวาของ-agent-ด้วย-multi-agent-with-concurrent-orchestration-bfe6e0b7a96f)
+
 ```text
 คำถามเดียวกัน
   ├─ Full-Answer Agent 1 ─┐
@@ -85,6 +87,8 @@ Workers มีหน้าที่ต่างกัน:
 ```
 
 v6 เปลี่ยนจาก specialist voting เป็น independent full-answer replication: Agent ทั้งสามได้รับคำถาม, tools และ instructions เหมือนกัน แต่สร้างคำตอบฉบับเต็มแยกจากกัน พร้อม `claims`, `calculations`, `evidence`, `uncertainties` และ `confidence`
+
+ส่วนที่ตรงกับบทความคือ same-task concurrent workers และการรวมหลายผลลัพธ์เพื่อลดความผันผวน ส่วน claim schema, deterministic 2-of-3 threshold และ Final Synthesizer เป็นส่วนที่ v6 เพิ่มขึ้นในการนำแนวคิดมาทำงานจริงบน Langflow
 
 Aggregator เปรียบเทียบ claim ด้วย stable key และ canonical value:
 

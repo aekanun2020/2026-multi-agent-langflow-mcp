@@ -1,5 +1,9 @@
 # v6 Concurrent Full-Answer Orchestration
 
+v6 นำแนวคิดจากบทความ [การแก้ปัญหาคำตอบที่ไม่คงเส้นคงวาของ Agent ด้วย Multi-Agent with Concurrent Orchestration](https://aekanunbigdata.medium.com/การแก้ปัญหาคำตอบที่ไม่คงเส้นคงวาของ-agent-ด้วย-multi-agent-with-concurrent-orchestration-bfe6e0b7a96f) มาประยุกต์ใช้ โดยส่งคำถามเดียวกันให้ Agents หลายตัวทำงานอย่างอิสระพร้อมกัน แล้วรวมคำตอบเพื่อลดผลกระทบจาก non-determinism
+
+v6 ไม่ได้อ้างว่าเหมือน implementation ในบทความทุกประการ: flow นี้เพิ่ม structured claims, deterministic 2-of-3 claim threshold และ Final Answer Synthesizer เป็นกลไกเฉพาะของ Langflow implementation นี้
+
 ## Objective
 
 ลดความไม่คงเส้นคงวาของคำตอบด้วยการให้ Agents หลายตัวแก้โจทย์เดียวกันอย่างอิสระและพร้อมกัน แล้วรวมผลระดับ claim ก่อนสร้าง Final Answer

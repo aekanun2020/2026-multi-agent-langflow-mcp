@@ -27,7 +27,7 @@ scripts/
 
 ## Flow v6: Concurrent Full-Answer Consensus
 
-v6 เป็น flow หลักตามแนวคิด Multi-Agent with Concurrent Orchestration:
+v6 เป็น flow หลักที่นำแนวคิดจากบทความ [การแก้ปัญหาคำตอบที่ไม่คงเส้นคงวาของ Agent ด้วย Multi-Agent with Concurrent Orchestration](https://aekanunbigdata.medium.com/การแก้ปัญหาคำตอบที่ไม่คงเส้นคงวาของ-agent-ด้วย-multi-agent-with-concurrent-orchestration-bfe6e0b7a96f) มาประยุกต์ใช้:
 
 ```text
 คำถามเดียวกัน
@@ -41,6 +41,8 @@ v6 เป็น flow หลักตามแนวคิด Multi-Agent with Co
 - Aggregator เปรียบเทียบค่าของ claims ไม่ได้นับ `notify/do_not_notify/abstain`
 - Final Synthesizer ตอบจาก claims ที่ตรงกันอย่างน้อย 2 ใน 3 และพิจารณาหลักฐานเมื่อคำตอบต่างกัน
 - Final Synthesizer ไม่มี MCP/tool edge และทำ external action ไม่ได้
+
+ความสอดคล้องกับบทความอยู่ที่การส่ง task เดียวกันให้ Agents หลายตัวทำงานอย่างอิสระพร้อมกัน แล้วรวมหลายคำตอบเพื่อลดผลกระทบจาก non-determinism ส่วน structured claims, deterministic 2-of-3 threshold และ Final Synthesizer เป็นรายละเอียด implementation ที่เพิ่มใน v6
 
 รายละเอียดอยู่ใน [docs/v6-concurrent-orchestration.md](docs/v6-concurrent-orchestration.md)
 
