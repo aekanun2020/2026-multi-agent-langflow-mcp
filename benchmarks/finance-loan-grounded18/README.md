@@ -12,4 +12,6 @@ Rubric ใช้หลักเดียวกับ customer-service Hard-10: �
 - Faithfulness: 0–5 ต่อข้อ ตรวจว่าทุกข้อสรุปสำคัญรองรับด้วยโจทย์/MSSQL/RAG และไม่แต่งข้อมูลหรือ causality
 - Timeout/execution failure: 0 ทั้ง correctness และ faithfulness
 
-Ground source: `artifacts/finance_mcp_ground_truth_q1_q10.md` ใน source repository โดย paraphrases ใช้ ground เดียวกับ primary contract ที่สอดคล้องกัน
+Canonical ground อยู่ใน `ground-truth.json` และ SQL สำหรับตรวจซ้ำอยู่ใน `sql/ground-queries.sql` โดยนำเข้าจาก `artifacts/finance_mcp_ground_truth_q1_q10.md` ใน source repository ส่วน paraphrases ใช้ ground เดียวกับ primary contract ที่สอดคล้องกัน
+
+กติกาคะแนนที่ freeze ไว้อยู่ใน `rubric.md` Raw answers ของแต่ละรุ่นเป็น immutable artifacts และไม่ถูกใช้สร้าง ground

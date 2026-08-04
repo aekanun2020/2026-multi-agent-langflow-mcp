@@ -16,6 +16,13 @@ benchmarks/customer-service-hard10/
   questions.txt
   ground-truth.md
   evaluation.md
+benchmarks/finance-loan-grounded18/
+  questions.txt
+  ground-truth.json
+  rubric.md
+  sql/ground-queries.sql
+  raw-v7.jsonl
+  raw-v8.jsonl
 scripts/
   build_v6_concurrent.mjs
   build_v7_financial_loan.mjs
