@@ -8,12 +8,14 @@
 flows/
   LAB-1-4-withlocal-parallel-consensus-v5-thai.json
   LAB-1-4-withlocal-concurrent-consensus-v6-thai.json
+  LAB-1-4-withlocal-concurrent-consensus-v7-financial-loan-thai.json
 benchmarks/customer-service-hard10/
   questions.txt
   ground-truth.md
   evaluation.md
 scripts/
   build_v6_concurrent.mjs
+  build_v7_financial_loan.mjs
   copy_flow_api_keys.py
   sync_flow_design.py
   run_langflow_hard10.py
@@ -106,6 +108,10 @@ Faithfulness ตรวจว่าข้อสรุปใน final answer ม�
 - Correctness ดีขึ้นจาก v5 จำนวน 12 จุด แต่ latency เฉลี่ยเพิ่มจาก 43.2 เป็น 61.9 วินาที
 
 ดู [evaluation-v6.md](benchmarks/customer-service-hard10/evaluation-v6.md)
+
+## Flow v7: Financial & Loan specialization
+
+v7 คง concurrent full-answer 3 agents และ deterministic 2-of-3 claim consensus ของ v6 แต่เพิ่ม data contract สำหรับ `loans_fact`, dimension joins, rate/percent normalization, DTI policy grounding และ data-quality guardrails สำหรับงานวิเคราะห์สินเชื่อ รายละเอียดอยู่ใน [docs/v7-financial-loan.md](docs/v7-financial-loan.md)
 
 ผล safe-mode รอบแรกถูก invalidated และเก็บเพื่อ audit ไว้ใน `evaluation-safe-mode-invalidated.md`
 
