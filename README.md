@@ -127,6 +127,23 @@ v8 ให้ LLM ทำหน้าที่เสนอถ้อยคำแล
 
 ผล Grounded-18 ของ v8: availability 88.9%, correctness 37.8%, faithfulness 85.6%, reasoning leakage 0/18 และ invented currency 0/18 ดู [evaluation-v8.md](benchmarks/finance-loan-grounded18/evaluation-v8.md)
 
+### v7 เทียบกับ v8
+
+| Metric | v7 | v8 | ผลที่เห็น |
+|---|---:|---:|---|
+| Availability | 100% | 88.9% | v7 จบงานครบกว่า |
+| Correctness | 81.1% | 37.8% | v7 ตอบครบและตรง ground มากกว่า |
+| Faithfulness | 51.1% | 85.6% | v8 ลด claims ที่ไม่มีหลักฐาน |
+| Reasoning leakage | 18/18 | 0/18 | v8 ปิด leakage ได้ทั้งหมด |
+| Invented currency | พบหลายข้อ | 0/18 | v8 ป้องกันได้ทั้งหมด |
+| Average latency | 56.70s | 83.12s | v8 ช้ากว่าและ timeout 2 ข้อ |
+
+สถานะปัจจุบัน:
+
+- ใช้ **v7** เป็น baseline ด้าน answer completeness/correctness แต่ยังไม่ควรเชื่อ claims ที่ Final Synthesizer เพิ่มเอง
+- ใช้ **v8** เป็น safety architecture reference เพราะ Final Claim Guard ทำงานตามเป้าหมาย แต่ยังไม่ใช่รุ่นแนะนำสำหรับ production QA เนื่องจากคำตอบไม่ครบ
+- งานถัดไปคือกำหนด canonical claim schema ต่อ financial intent ให้ workers ทั้งสามใช้ key, metric, grain และ unit เดียวกันก่อน vote โดยไม่ผ่อน deterministic guard
+
 ผล safe-mode รอบแรกถูก invalidated และเก็บเพื่อ audit ไว้ใน `evaluation-safe-mode-invalidated.md`
 
 ## Run benchmark
