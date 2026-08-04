@@ -12,6 +12,7 @@ flows/
   LAB-1-4-withlocal-concurrent-consensus-v6-thai.json
   LAB-1-4-withlocal-concurrent-consensus-v7-financial-loan-thai.json
   LAB-1-4-withlocal-concurrent-consensus-v8-guarded-verbalizer-thai.json
+  LAB-1-4-withlocal-concurrent-consensus-v9-canonical-claims-thai.json
 benchmarks/customer-service-hard10/
   questions.txt
   ground-truth.md
@@ -27,6 +28,7 @@ scripts/
   build_v6_concurrent.mjs
   build_v7_financial_loan.mjs
   build_v8_guarded_verbalizer.mjs
+  build_v9_canonical_claims.mjs
   copy_flow_api_keys.py
   sync_flow_design.py
   run_langflow_hard10.py
@@ -150,6 +152,12 @@ v8 ให้ LLM ทำหน้าที่เสนอถ้อยคำแล
 - ใช้ **v7** เป็น baseline ด้าน answer completeness/correctness แต่ยังไม่ควรเชื่อ claims ที่ Final Synthesizer เพิ่มเอง
 - ใช้ **v8** เป็น safety architecture reference เพราะ Final Claim Guard ทำงานตามเป้าหมาย แต่ยังไม่ใช่รุ่นแนะนำสำหรับ production QA เนื่องจากคำตอบไม่ครบ
 - งานถัดไปคือกำหนด canonical claim schema ต่อ financial intent ให้ workers ทั้งสามใช้ key, metric, grain และ unit เดียวกันก่อน vote โดยไม่ผ่อน deterministic guard
+
+## Flow v9: Canonical finance claims
+
+v9 รักษา Final Claim Guard ของ v8 และเพิ่ม canonical claim schema สำหรับ 10 Finance/Loan contracts, alias normalization, precision-safe SQL และ raw-DTI semantics เพื่อเพิ่ม completeness โดยไม่คืนอำนาจสร้างข้อเท็จจริงให้ Final LLM รายละเอียดอยู่ใน [docs/v9-canonical-claims.md](docs/v9-canonical-claims.md)
+
+สถานะ: implemented และ import เข้าโปรเจกต์ NT แล้ว; evaluation pending การอนุญาตส่งข้อมูล Finance/Loan สำหรับ v9 ผ่าน OpenRouter
 
 ผล safe-mode รอบแรกถูก invalidated และเก็บเพื่อ audit ไว้ใน `evaluation-safe-mode-invalidated.md`
 
