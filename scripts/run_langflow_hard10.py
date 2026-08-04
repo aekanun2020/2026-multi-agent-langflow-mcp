@@ -9,6 +9,7 @@ import uuid
 
 FLOW_ID = os.getenv("LANGFLOW_FLOW_ID", "8279ebb2-2592-4557-8b3e-963402aff62e")
 URL = f"http://127.0.0.1:7860/api/v1/run/{FLOW_ID}"
+RAW_OUTPUT_PATH = os.getenv("LANGFLOW_RAW_OUTPUT_PATH")
 
 
 def load_questions(path):
@@ -82,4 +83,8 @@ for label, question in questions:
             "elapsed_seconds": round(time.monotonic() - started, 2),
             "error": f"{type(exc).__name__}: {exc}",
         }
-    print(json.dumps(result, ensure_ascii=False), flush=True)
+    line = json.dumps(result, ensure_ascii=False)
+    if RAW_OUTPUT_PATH:
+        with open(RAW_OUTPUT_PATH, "a", encoding="utf-8") as output:
+            output.write(line + "\n")
+    print(line, flush=True)

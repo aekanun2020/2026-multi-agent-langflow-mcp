@@ -117,6 +117,8 @@ Faithfulness ตรวจว่าข้อสรุปใน final answer ม�
 
 v7 คง concurrent full-answer 3 agents และ deterministic 2-of-3 claim consensus ของ v6 แต่เพิ่ม data contract สำหรับ `loans_fact`, dimension joins, rate/percent normalization, DTI policy grounding และ data-quality guardrails สำหรับงานวิเคราะห์สินเชื่อ รายละเอียดอยู่ใน [docs/v7-financial-loan.md](docs/v7-financial-loan.md)
 
+ผล Finance/Loan Grounded-18: availability 100%, correctness 81.1%, faithfulness 51.1% และพบ reasoning leakage 18/18 ข้อ ดู [evaluation-v7.md](benchmarks/finance-loan-grounded18/evaluation-v7.md)
+
 ผล safe-mode รอบแรกถูก invalidated และเก็บเพื่อ audit ไว้ใน `evaluation-safe-mode-invalidated.md`
 
 ## Run benchmark

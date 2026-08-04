@@ -1,0 +1,29 @@
+{
+  "flow_id": "3d81bf10-f200-46db-96b1-20ce7d5b502f",
+  "question_count": 18,
+  "availability": {"passed": 18, "total": 18, "percent": 100.0},
+  "correctness": {"points": 73, "max_points": 90, "percent": 81.1},
+  "faithfulness": {"points": 46, "max_points": 90, "percent": 51.1},
+  "latency_seconds": {"average": 56.7, "median": 55.64, "minimum": 35.22, "maximum": 88.69},
+  "reasoning_leakage": {"count": 18, "total": 18, "percent": 100.0},
+  "per_question": [
+    {"id": "Q1", "correctness": 4, "faithfulness": 3},
+    {"id": "Q2", "correctness": 5, "faithfulness": 4},
+    {"id": "Q3", "correctness": 5, "faithfulness": 3},
+    {"id": "Q4", "correctness": 5, "faithfulness": 2},
+    {"id": "Q5", "correctness": 5, "faithfulness": 2},
+    {"id": "Q6", "correctness": 5, "faithfulness": 2},
+    {"id": "Q7", "correctness": 2, "faithfulness": 2},
+    {"id": "Q8", "correctness": 4, "faithfulness": 2},
+    {"id": "Q9", "correctness": 5, "faithfulness": 3},
+    {"id": "Q10", "correctness": 5, "faithfulness": 4},
+    {"id": "Q11", "correctness": 4, "faithfulness": 3},
+    {"id": "Q12", "correctness": 5, "faithfulness": 4},
+    {"id": "Q13", "correctness": 5, "faithfulness": 2},
+    {"id": "Q14", "correctness": 2, "faithfulness": 2},
+    {"id": "Q15", "correctness": 1, "faithfulness": 1},
+    {"id": "Q16", "correctness": 5, "faithfulness": 2},
+    {"id": "Q17", "correctness": 1, "faithfulness": 2},
+    {"id": "Q18", "correctness": 5, "faithfulness": 3}
+  ]
+}
