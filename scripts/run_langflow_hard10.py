@@ -40,16 +40,6 @@ for label, question in questions:
             "input_type": "chat",
             "output_type": "chat",
             "session_id": session_id,
-            "tweaks": {
-                "Agent-ycwYQ": {
-                    "system_prompt": (
-                        "BENCHMARK SAFE MODE: สรุป consensus report เป็นภาษาไทยเท่านั้น "
-                        "ห้ามเรียก tool หรือดำเนินการภายนอกทุกชนิด ไม่ว่าผล consensus จะเป็นอะไร"
-                    ),
-                    "max_iterations": 1,
-                    "add_current_date_tool": False,
-                }
-            },
         },
         ensure_ascii=False,
     ).encode("utf-8")

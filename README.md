@@ -65,7 +65,7 @@ Correctness ตรวจเฉพาะ **final answer จาก Chat Output** �
 
 Faithfulness ตรวจว่าข้อสรุปใน final answer มีหลักฐานจากโจทย์ MSSQL หรือ RAG รองรับ และไม่มีการแต่งค่าเพิ่ม
 
-ผลการทดสอบ v5 รอบแรก:
+ผลการทดสอบ v5 รอบแรกด้านล่างถูก **invalidated** เพราะ runner รุ่นแรก override system prompt ของ Executor ด้วย safe-mode tweak จึงเก็บไว้เป็นประวัติเท่านั้น ไม่ใช่ clean SUT baseline:
 
 - Availability: 9/10
 - Correctness รวม timeout: 19/50 = 38.0%
@@ -82,11 +82,12 @@ Langflow ต้องทำงานที่ `http://localhost:7860` และ�
 python3 scripts/run_langflow_hard10.py benchmarks/customer-service-hard10/questions.txt
 ```
 
-สคริปต์สร้าง session ใหม่ต่อคำถามหนึ่งข้อเพื่อไม่ให้คำตอบก่อนหน้ารั่วข้ามข้อ และตั้ง executor เป็น benchmark safe mode ซึ่งห้ามเรียก tools หรือทำ external action
+สคริปต์สร้าง session ใหม่ต่อคำถามหนึ่งข้อเพื่อไม่ให้คำตอบก่อนหน้ารั่วข้ามข้อ และไม่ส่ง `tweaks` ใด ๆ ไปเปลี่ยน flow ดังนั้นคำตอบมาจาก SUT ที่ import อยู่ใน Langflow โดยตรง
+
+> คำเตือน: runner เรียก flow เดิมแบบ end-to-end หาก Executor ของ flow มีสิทธิ์เรียกเครื่องมือที่เปลี่ยนแปลงข้อมูล ผู้ทดสอบต้องจัด MCP แบบ read-only หรือ test doubles ที่ชั้น environment โดยห้ามแก้ prompt/parameters ของ SUT ระหว่างการประเมิน
 
 ## Security
 
 - ห้าม commit API keys, database passwords หรือ bearer tokens
 - ตรวจ flow export ทุกครั้งก่อน commit เพราะ Langflow บาง configuration อาจ export secret ติดมาด้วย
 - ชุดข้อมูลต้นทางอาจมี PII; ควรใช้เฉพาะใน environment ที่ได้รับอนุญาต
-

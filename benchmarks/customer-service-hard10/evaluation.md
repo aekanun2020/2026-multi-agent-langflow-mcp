@@ -1,5 +1,9 @@
 # Langflow v5 Thai — Hard-10 Evaluation
 
+> **สถานะ: INVALIDATED / ไม่ใช่ clean SUT run**
+>
+> รอบนี้ส่ง `tweaks` ไป override system prompt ของ Executor ด้วย Benchmark Safe Mode จึงไม่ใช่ผลของ flow v5 เดิมแบบ end-to-end คะแนนด้านล่างเก็บไว้เป็นประวัติของ safe-mode variant เท่านั้น และห้ามใช้อ้างเป็น baseline ของ SUT หลังแก้ runner แล้วต้องรันทดสอบใหม่
+
 วันที่ทดสอบ: 2026-08-04  
 Flow ID: `8279ebb2-2592-4557-8b3e-963402aff62e`  
 Flow: `LAB-1-4-withlocal-parallel-consensus-v5-thai`
@@ -8,13 +12,15 @@ Flow: `LAB-1-4-withlocal-parallel-consensus-v5-thai`
 
 - ยิงคำถาม 10 ข้อผ่าน `/api/v1/run/{flow_id}`
 - แต่ละข้อใช้ session ใหม่ ป้องกันคำตอบก่อนหน้ารั่วเข้าข้อถัดไป
-- เปิด Benchmark Safe Mode ที่ Executor: สรุป consensus เท่านั้น ห้ามเรียก tool หรือทำ external action
+- รอบที่บันทึกในเอกสารนี้เคยเปิด Benchmark Safe Mode ที่ Executor ซึ่งเป็นเหตุให้ผลถูก invalidated
 - เทียบกับ `mcp_customer_service_hard10_ground_truth.md`
 - คะแนนต่อมิติ 0–5
   - Correctness: ตรวจเฉพาะคำตอบสุดท้ายจาก Chat Output เทียบ ground truth; ไม่นำคำตอบ worker, vote หรือข้อความ reasoning มาช่วยเพิ่มคะแนน
   - Faithfulness: ข้อสรุปมีหลักฐานจากโจทย์/MSSQL/RAG รองรับและไม่แต่งข้อมูล
 
 ## ผลรวม
+
+> คะแนนส่วนนี้เป็นผลเก่าของ **safe-mode variant** ไม่ใช่คะแนน clean SUT
 
 - Availability: **9/10 = 90%** (Q2 timeout ที่ 240 วินาที)
 - Correctness แบบ end-to-end รวม timeout เป็นศูนย์: **19/50 = 38.0%**
