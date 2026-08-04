@@ -2,6 +2,8 @@
 
 ตัวอย่าง Langflow 1.7.3 สำหรับงาน multi-agent แบบ parallel workers และ deterministic vote aggregation พร้อม benchmark ที่ใช้ MSSQL + RAG เป็น ground
 
+ภาพรวมและความแตกต่างของ v4, v5, v6 และ v7 อยู่ที่ [docs/flow-versions.md](docs/flow-versions.md)
+
 ## โครงสร้าง
 
 ```text
