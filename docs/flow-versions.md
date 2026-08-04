@@ -10,6 +10,7 @@
 | v5 | Specialist parallel voting | 3 | deterministic 2-of-3 decision vote | Consensus Executor | การตัดสินใจแบบ enum เช่น notify/do_not_notify |
 | v6 | Concurrent full-answer consensus | 3 | deterministic 2-of-3 ต่อ structured claim | Final Answer Synthesizer | analytical QA และคำถาม business logic หลายขั้น |
 | v7 | Concurrent financial/loan consensus | 3 | claim consensus แบบ v6 พร้อม loan contract | Final Financial Answer Synthesizer | financial analytics และ loan portfolio reasoning |
+| v8 | Guarded financial verbalization | 3 | claim consensus + deterministic output guard | LLM wording-only + Final Claim Guard | grounded loan answers ที่ห้าม LLM เพิ่ม claim |
 
 ## v4 — Single-agent baseline
 
@@ -152,9 +153,33 @@ v7 คง orchestration ของ v6 แต่เพิ่ม financial/loan ana
 
 อ่านรายละเอียดเพิ่มเติมที่ [v7-financial-loan.md](v7-financial-loan.md)
 
+## v8 — Guarded wording-only verbalizer
+
+ชื่อ: `LAB-1-4-withlocal-concurrent-consensus-v8-guarded-verbalizer-thai`
+
+v8 แก้ failure ที่พบจาก Grounded-18 ซึ่ง Final Synthesizer ของ v7 เพิ่มสกุลเงิน เปลี่ยน metric และเปิดเผย reasoning หลัง consensus โดยยังคง Analysts และ claim voting เดิม แต่จำกัด LLM ขั้นสุดท้ายให้เสนอเพียงข้อความนำ ข้อความปิด และ label ภาษาไทย
+
+Deterministic Final Claim Guard จะตรวจ schema และคำต้องห้าม ก่อนประกอบค่าจริงจาก `agreed_claims` ด้วยโค้ด หาก LLM ใช้ key นอก consensus หรือเพิ่มตัวเลข หน่วย สกุลเงิน policy หรือข้อความเชิงตัดสิน ระบบจะทิ้ง proposal และ fallback เป็น claim keys ที่ deterministic
+
+ข้อดี:
+
+- LLM แก้หรือปัดเศษค่าที่ผ่าน vote ไม่ได้
+- reasoning ดิบจาก LLM ไม่มี edge ไป Chat Output
+- ป้องกันการแต่ง USD/THB, approval, risk และ causality ใน final stage
+- failure ของ verbalizer เปลี่ยนเป็น safe deterministic fallback
+
+ข้อจำกัด:
+
+- ความถูกต้องยังขึ้นกับ claims ที่ผ่าน consensus; guard ไม่สามารถแก้ correlated worker error
+- คำตอบ fallback อ่านแข็งกว่า natural-language answer
+- ต้อง benchmark Grounded-18 ใหม่ก่อนสรุป improvement เชิงตัวเลข
+
+อ่านรายละเอียดเพิ่มเติมที่ [v8-guarded-verbalizer.md](v8-guarded-verbalizer.md)
+
 ## แนวทางเลือกใช้
 
 - ใช้ v4 เมื่อต้องการ baseline ที่เร็วและคำถามไม่ซับซ้อน
 - ใช้ v5 เมื่อ output เป็น decision enum ที่นิยามชัดและต้องมี deterministic quorum
 - ใช้ v6 เมื่อแต่ละ worker ควรแก้โจทย์เต็มรูปแบบและต้องรวมข้อเท็จจริงหลายรายการ
 - ใช้ v7 เมื่อโจทย์เป็น financial/loan และต้องควบคุมนิยามข้อมูล หน่วย DTI และข้อจำกัดทาง underwriting
+- ใช้ v8 เมื่อโจทย์ financial/loan ต้องการให้ LLM เรียบเรียงภาษา แต่ห้ามเพิ่มหรือแก้ factual claims หลัง vote

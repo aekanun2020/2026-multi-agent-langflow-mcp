@@ -11,6 +11,7 @@ flows/
   LAB-1-4-withlocal-parallel-consensus-v5-thai.json
   LAB-1-4-withlocal-concurrent-consensus-v6-thai.json
   LAB-1-4-withlocal-concurrent-consensus-v7-financial-loan-thai.json
+  LAB-1-4-withlocal-concurrent-consensus-v8-guarded-verbalizer-thai.json
 benchmarks/customer-service-hard10/
   questions.txt
   ground-truth.md
@@ -18,6 +19,7 @@ benchmarks/customer-service-hard10/
 scripts/
   build_v6_concurrent.mjs
   build_v7_financial_loan.mjs
+  build_v8_guarded_verbalizer.mjs
   copy_flow_api_keys.py
   sync_flow_design.py
   run_langflow_hard10.py
@@ -118,6 +120,10 @@ Faithfulness ตรวจว่าข้อสรุปใน final answer ม�
 v7 คง concurrent full-answer 3 agents และ deterministic 2-of-3 claim consensus ของ v6 แต่เพิ่ม data contract สำหรับ `loans_fact`, dimension joins, rate/percent normalization, DTI policy grounding และ data-quality guardrails สำหรับงานวิเคราะห์สินเชื่อ รายละเอียดอยู่ใน [docs/v7-financial-loan.md](docs/v7-financial-loan.md)
 
 ผล Finance/Loan Grounded-18: availability 100%, correctness 81.1%, faithfulness 51.1% และพบ reasoning leakage 18/18 ข้อ ดู [evaluation-v7.md](benchmarks/finance-loan-grounded18/evaluation-v7.md)
+
+## Flow v8: Guarded verbalizer
+
+v8 ให้ LLM ทำหน้าที่เสนอถ้อยคำและ label ภาษาไทยเท่านั้น จากนั้น deterministic Final Claim Guard จะประกอบค่าจริงจาก `agreed_claims` และปฏิเสธข้อความที่เพิ่มตัวเลข หน่วย สกุลเงิน policy หรือ claim ใหม่ รายละเอียดอยู่ใน [docs/v8-guarded-verbalizer.md](docs/v8-guarded-verbalizer.md)
 
 ผล safe-mode รอบแรกถูก invalidated และเก็บเพื่อ audit ไว้ใน `evaluation-safe-mode-invalidated.md`
 
