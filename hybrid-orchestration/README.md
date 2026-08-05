@@ -46,13 +46,15 @@ Hybrid ใช้ Grounded-18 ชุดกลางเดียวกับ orche
 
 ## ไฟล์ใช้งาน
 
-- ไฟล์สำหรับ Upload: [`flows/LAB-hybrid-v1-grounded-consensus-thai-upload-ready.json`](flows/LAB-hybrid-v1-grounded-consensus-thai-upload-ready.json)
+- ไฟล์สำหรับปุ่ม **Upload a flow** ของ Langflow 1.7.3: [`flows/LAB-hybrid-v1-grounded-consensus-thai-ui-upload-20260805.json`](flows/LAB-hybrid-v1-grounded-consensus-thai-ui-upload-20260805.json)
 - Builder: [`scripts/build_v1_grounded_consensus.mjs`](scripts/build_v1_grounded_consensus.mjs)
 - Langflow project: `NT`
 - Flow ID เดิมที่รักษาไว้: `cd488940-5fa4-4567-b5e8-43b26d5643ae`
 
-ไฟล์ `*-upload-ready.json` ไม่มี top-level `id` และ `endpoint_name` ฝังอยู่ Langflow จึงสร้าง identity ใหม่ทุกครั้งที่ใช้ **Upload a flow** และสามารถ upload ซ้ำเป็นสำเนาใหม่ได้ โดยค่า API key ไม่ถูกบันทึกใน JSON ชื่อไฟล์นี้ตั้งใจให้แตกต่างจากชื่อ flow ภายใน เพื่อแยกไฟล์แจกจ่ายออกจาก identity ที่ติดตั้งใน Langflow
+ไฟล์ `*-ui-upload-20260805.json` มี top-level `id` ใหม่และชื่อ flow ใหม่ ไม่ชนกับตัวที่ติดตั้งอยู่ เพราะหน้า **Upload a flow** ของ Langflow 1.7.3 ต้องการรูปแบบเดียวกับไฟล์ export ซึ่งมี identity ครบ ส่วน `endpoint_name` และ API key ไม่ถูกบันทึกใน JSON
 
-ตรวจยืนยันบน Langflow 1.7.3 แล้ว: เมื่อ project `NT` มี flow เดิมอยู่ การ import ไฟล์นี้ซ้ำสำเร็จเป็น `LAB-hybrid-v1-grounded-consensus-thai (1)` ด้วย ID ใหม่ `6963c8cb-2322-40a3-9cf3-1ba81393f657` และ graph ครบ 19 nodes/24 edges
+หมายเหตุ: การตรวจเดิมที่สร้าง `LAB-hybrid-v1-grounded-consensus-thai (1)` ID `6963c8cb-2322-40a3-9cf3-1ba81393f657` เป็นการเรียก create-flow API ไม่ใช่ปุ่ม Upload ใน UI จึงไม่ใช้เป็นหลักฐานว่าไฟล์ซึ่งไม่มี `id` รองรับ UI uploader
+
+ตรวจไฟล์ UI รุ่นใหม่กับ `POST /api/v1/flows/upload/` ของ Langflow 1.7.3 แล้วได้ HTTP 201 และติดตั้งใน project `NT` เป็น `LAB-hybrid-v1-grounded-consensus-thai-ui-upload-20260805` ID `d51de503-d566-40d4-8989-4e88ca07c4c8` โดย graph ครบ 19 nodes/24 edges
 
 ชุดคำถาม, ground truth และ frozen rubric ต้นฉบับเก็บไว้ใน Parallel เพียง canonical copy เดียวเพื่อป้องกัน benchmark drift ส่วน directory `benchmarks/` ของ Hybrid เก็บเฉพาะคำถามย่อยสำหรับ retry/smoke, ผลดิบ, คะแนน และ evaluation ของ Hybrid

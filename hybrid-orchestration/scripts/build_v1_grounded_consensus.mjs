@@ -6,17 +6,17 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, "..", "..");
 const sourcePath = path.join(root, "parallel-orchestration", "flows", "paper-exact", "LAB-concurrent-v4-paper-exact-thai.json");
 const outputDir = path.join(root, "hybrid-orchestration", "flows");
-const outputPath = path.join(outputDir, "LAB-hybrid-v1-grounded-consensus-thai-upload-ready.json");
+const outputPath = path.join(outputDir, "LAB-hybrid-v1-grounded-consensus-thai-ui-upload-20260805.json");
 const flow = JSON.parse(fs.readFileSync(sourcePath, "utf8"));
 const clone = (value) => structuredClone(value);
 const findNode = (id) => flow.data.nodes.find((item) => item.id === id);
 const encoded = (value) => JSON.stringify(value).replaceAll('"', "œ");
 
-flow.name = "LAB-hybrid-v1-grounded-consensus-thai";
+flow.id = "ddee0b5e-2557-43f8-abf6-98ead9b04ae9";
+flow.name = "LAB-hybrid-v1-grounded-consensus-thai-ui-upload-20260805";
 flow.description = "Hybrid of semantic concurrent consensus and evidence verification: no JSON output contract, key parser, or fail-closed guard.";
-// Distribution files must not carry the source flow identity. Langflow assigns
-// a fresh ID/endpoint on every UI upload, allowing the same JSON to be imported repeatedly.
-delete flow.id;
+// Langflow 1.7.3's UI uploader expects the identity field found in an exported
+// flow. Use a fresh UUID and a distinct visible name, never the installed flow's ID.
 delete flow.endpoint_name;
 
 const chatInput = findNode("ChatInput-uc7rV");
