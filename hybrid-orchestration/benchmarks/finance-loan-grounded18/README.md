@@ -8,4 +8,5 @@ Canonical questions, ground truth และ frozen rubric ใช้จาก [`p
 - `scores-v1-final.json`: คะแนนแบบ machine-readable
 - `raw-v1-final-rerun1.jsonl`: full first pass
 - `raw-v1-final-q15-rerun.jsonl`: targeted retry ของ transient MCP failure
+- `evaluation-v1-rerun2.md`, `scores-v1-rerun2.json`, `raw-v1-final-rerun2.jsonl`: ผลล่าสุดที่สำเร็จ 18/18 ใน first pass
 - ไฟล์ `pre-editor`, `smoke`, `targeted` และ `credit-blocked`: หลักฐานระหว่างพัฒนา ห้ามนำมาผสมเป็น final score

@@ -22,13 +22,13 @@ flowchart LR
 
 ## ผลล่าสุด
 
-| Metric | Hybrid v1 recovered |
+| Metric | Hybrid v1 rerun2 |
 |---|---:|
-| Availability | 100.0% หลัง targeted retry Q15 |
-| Correctness | 78.9% |
-| Faithfulness | 93.3% |
+| Availability | 100.0% first pass |
+| Correctness | 84.4% |
+| Faithfulness | 96.7% |
 
-ดู [architecture](docs/v1-grounded-consensus.md), [ผล Grounded-18 รายข้อ](benchmarks/finance-loan-grounded18/evaluation-v1-final.md) และ [คะแนน JSON](benchmarks/finance-loan-grounded18/scores-v1-final.json)
+ดู [architecture](docs/v1-grounded-consensus.md), [ผล Grounded-18 rerun2 รายข้อ](benchmarks/finance-loan-grounded18/evaluation-v1-rerun2.md) และ [คะแนน JSON](benchmarks/finance-loan-grounded18/scores-v1-rerun2.json)
 
 ## ไฟล์ใช้งาน
 

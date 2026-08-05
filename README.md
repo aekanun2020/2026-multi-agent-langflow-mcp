@@ -16,7 +16,7 @@ Microsoft Learn แบ่ง orchestration หลักเป็น Sequential, 
 
 | สายพัฒนา | รุ่นล่าสุด | อะไรใหม่ที่สุด | ผล Grounded-18 ล่าสุด |
 |---|---|---|---|
-| **Hybrid** | [`Hybrid v1`](hybrid-orchestration/docs/v1-grounded-consensus.md) | รวม 3 Parallel Workers, Semantic Consensus, Evidence Verifier ที่เห็นทั้ง raw answers/draft และ Language-only Faithfulness Editor; ไม่มี rigid JSON contract หรือ fail-closed Guard | Correctness **78.9%**, Faithfulness **93.3%**, Availability **100% หลัง retry** |
+| **Hybrid** | [`Hybrid v1`](hybrid-orchestration/docs/v1-grounded-consensus.md) | รวม 3 Parallel Workers, Semantic Consensus, Evidence Verifier ที่เห็นทั้ง raw answers/draft และ Language-only Faithfulness Editor; ไม่มี rigid JSON contract หรือ fail-closed Guard | Correctness **84.4%**, Faithfulness **96.7%**, Availability **100% first pass** |
 | **Concurrent — Deterministic Claim line** | [`Canonical Claims v9`](parallel-orchestration/docs/flow-versions.md) | Workers ส่ง canonical claims แล้วใช้ deterministic 2-of-3 vote, LLM verbalizer และ Final Claim Guard | Full run เคยล้มจาก MCP; มี targeted artifacts แต่ยังไม่มี final aggregate ที่เทียบ v5 ได้ |
 | **Magentic** | [`Resilient Final Guard v3`](magentic-orchestration/docs/v3-resilient-final-guard.md) | Manager ไม่ทำ specialist task เอง; ใช้ SQL/RAG/Verification subflows และ Guard ที่รักษา valid answer เมื่อ audit metadata ขาด | Correctness **51.1%**, Faithfulness **92.2%**, Availability **100%** |
 

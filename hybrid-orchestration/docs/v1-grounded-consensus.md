@@ -46,3 +46,5 @@ Grounded-18 รอบก่อนเพิ่ม Final Editor ได้ผลโ
 การลองรัน Grounded-18 ซ้ำครบ 18 requests ในวันที่ 2026-08-05 ถูก OpenRouter ปฏิเสธด้วย HTTP 402 ทุกข้อก่อน Worker ทำงาน ดู [credit-blocked run](../benchmarks/finance-loan-grounded18/evaluation-v1-final-credit-blocked.md) รอบนี้จึง invalidated และไม่ใช่คะแนน 0 ของ architecture
 
 หลังเครดิตพร้อม รัน final Grounded-18 สำเร็จ 17/18 ข้อใน first pass และกู้ Q15 ซึ่งเป็น transient MCP failure ด้วย targeted retry ผล recovered คือ availability 100.0%, correctness 78.9% และ faithfulness 93.3% ดู [ผล final รายข้อ](../benchmarks/finance-loan-grounded18/evaluation-v1-final.md)
+
+Rerun2 หลังแยกเป็น Hybrid v1 สำเร็จครบ 18/18 ใน first pass โดยไม่ retry ได้ correctness 84.4% และ faithfulness 96.7% ซึ่งเป็นผลล่าสุด ดู [ผล rerun2 รายข้อ](../benchmarks/finance-loan-grounded18/evaluation-v1-rerun2.md)

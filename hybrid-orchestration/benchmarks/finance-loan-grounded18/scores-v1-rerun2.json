@@ -1,0 +1,28 @@
+{
+  "flow_id": "cd488940-5fa4-4567-b5e8-43b26d5643ae",
+  "flow_name": "LAB-hybrid-v1-grounded-consensus-thai",
+  "run": "rerun2",
+  "availability": {"passed": 18, "total": 18, "percent": 100.0, "retry_required": false},
+  "correctness": {"points": 76, "max_points": 90, "percent": 84.4},
+  "faithfulness": {"points": 87, "max_points": 90, "percent": 96.7},
+  "per_question": [
+    {"id":"Q1","correctness":5,"faithfulness":5,"result":"exact_complete"},
+    {"id":"Q2","correctness":5,"faithfulness":5,"result":"exact_counts_high_precision_percentages"},
+    {"id":"Q3","correctness":4,"faithfulness":4,"result":"rounded_percentages_and_extra_status_grouping"},
+    {"id":"Q4","correctness":4,"faithfulness":5,"result":"complete_minor_rounding"},
+    {"id":"Q5","correctness":5,"faithfulness":5,"result":"all_labels_high_precision_metrics"},
+    {"id":"Q6","correctness":4,"faithfulness":5,"result":"correct_extrema_missing_requested_counts"},
+    {"id":"Q7","correctness":4,"faithfulness":5,"result":"complete_buckets_correct_order_but_coarse_rates"},
+    {"id":"Q8","correctness":3,"faithfulness":5,"result":"correct_metrics_missing_observed_income_min_max"},
+    {"id":"Q9","correctness":5,"faithfulness":5,"result":"exact_complete_ratio"},
+    {"id":"Q10","correctness":5,"faithfulness":5,"result":"complete_benchmarks_segments_counts_and_labels"},
+    {"id":"Q11","correctness":5,"faithfulness":5,"result":"exact_complete"},
+    {"id":"Q12","correctness":4,"faithfulness":5,"result":"correct_mix_rounded_percentages"},
+    {"id":"Q13","correctness":4,"faithfulness":5,"result":"complete_distribution_minor_rounding"},
+    {"id":"Q14","correctness":2,"faithfulness":3,"result":"funded_total_instead_of_expected_average"},
+    {"id":"Q15","correctness":5,"faithfulness":5,"result":"complete_first_pass"},
+    {"id":"Q16","correctness":5,"faithfulness":5,"result":"correct_extrema_no_currency"},
+    {"id":"Q17","correctness":3,"faithfulness":5,"result":"correct_bucket_counts_only"},
+    {"id":"Q18","correctness":4,"faithfulness":5,"result":"complete_metrics_with_ratio_truncation"}
+  ]
+}
