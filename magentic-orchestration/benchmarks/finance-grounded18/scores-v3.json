@@ -1,0 +1,33 @@
+{
+  "flow_id": "8eaf7f25-fee0-4b77-be4d-ae4f9d2414bf",
+  "question_count": 18,
+  "availability": {"passed": 18, "total": 18, "percent": 100.0},
+  "task_completion": {"passed": 13, "total": 18, "percent": 72.2},
+  "correctness": {"points": 46, "max_points": 90, "percent": 51.1},
+  "faithfulness": {"points": 83, "max_points": 90, "percent": 92.2},
+  "latency_seconds": {"average": 63.62, "median": 54.85, "minimum": 24.87, "maximum": 133.68},
+  "guard_rejection": {"count": 5, "total": 18, "percent": 27.8},
+  "http_error": {"count": 0, "total": 18, "percent": 0.0},
+  "reasoning_leakage": {"count": 0, "total": 18, "percent": 0.0},
+  "invented_currency": {"count": 0, "total": 18, "percent": 0.0},
+  "per_question": [
+    {"id": "Q1", "correctness": 0, "faithfulness": 5, "comparison_v2": "worse", "result": "guard_rejection"},
+    {"id": "Q2", "correctness": 4, "faithfulness": 5, "comparison_v2": "worse", "result": "rounded_percentages"},
+    {"id": "Q3", "correctness": 4, "faithfulness": 5, "comparison_v2": "worse", "result": "rounded_percentages"},
+    {"id": "Q4", "correctness": 4, "faithfulness": 5, "comparison_v2": "better_faithfulness", "result": "complete_without_currency"},
+    {"id": "Q5", "correctness": 4, "faithfulness": 5, "comparison_v2": "better", "result": "complete"},
+    {"id": "Q6", "correctness": 4, "faithfulness": 5, "comparison_v2": "better", "result": "correct_extrema_missing_counts"},
+    {"id": "Q7", "correctness": 0, "faithfulness": 5, "comparison_v2": "same", "result": "unauthorized_currency_rejection"},
+    {"id": "Q8", "correctness": 3, "faithfulness": 5, "comparison_v2": "better_faithfulness", "result": "missing_income_min_max"},
+    {"id": "Q9", "correctness": 5, "faithfulness": 5, "comparison_v2": "better", "result": "serialized_structured_answer"},
+    {"id": "Q10", "correctness": 3, "faithfulness": 5, "comparison_v2": "same", "result": "missing_segment_details"},
+    {"id": "Q11", "correctness": 0, "faithfulness": 5, "comparison_v2": "worse", "result": "guard_rejection"},
+    {"id": "Q12", "correctness": 4, "faithfulness": 5, "comparison_v2": "worse", "result": "rounded_percentages"},
+    {"id": "Q13", "correctness": 0, "faithfulness": 5, "comparison_v2": "worse", "result": "guard_rejection"},
+    {"id": "Q14", "correctness": 2, "faithfulness": 3, "comparison_v2": "mixed", "result": "funded_total_instead_of_average"},
+    {"id": "Q15", "correctness": 2, "faithfulness": 3, "comparison_v2": "mixed", "result": "funded_total_instead_of_average"},
+    {"id": "Q16", "correctness": 4, "faithfulness": 4, "comparison_v2": "worse", "result": "wrong_highest_metric_value"},
+    {"id": "Q17", "correctness": 3, "faithfulness": 3, "comparison_v2": "mixed", "result": "counts_only_and_wrong_person_unit"},
+    {"id": "Q18", "correctness": 0, "faithfulness": 5, "comparison_v2": "safer_same_correctness", "result": "unlinked_claim_rejection"}
+  ]
+}

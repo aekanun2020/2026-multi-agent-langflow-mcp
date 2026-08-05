@@ -80,6 +80,8 @@ v3 ใช้ specialist subflows ของ v2 แต่ปรับ Final Guard 
 
 นำเข้าโปรเจกต์ `NT` แล้วด้วย flow ID `8eaf7f25-fee0-4b77-be4d-ae4f9d2414bf` และ smoke test ยืนยันว่า Q5 ที่ v2 เคย reject ตอบได้ครบ รวมทั้งกรณีจงใจละ audit keys ยังรักษา answer/claims แล้วเติม defaults พร้อมลดสถานะเป็น `partial` ดู [ผล smoke test v3](benchmarks/v3-smoke.md)
 
+ผล Grounded-18 ของ v3: availability 100%, task completion 72.2%, correctness 51.1% และ faithfulness 92.2% เมื่อเทียบ v2 correctness เท่าเดิม, faithfulness +1.1 points, guard rejection ลด 5.5 points และ invented currency ถูกกำจัด แต่มีทั้งข้อที่ดีขึ้นและ regression ดู [ตารางเปรียบเทียบรายข้อ](benchmarks/finance-grounded18/evaluation-v3.md)
+
 สร้างไฟล์ flow ด้วย:
 
 ```bash
