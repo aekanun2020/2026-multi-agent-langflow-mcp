@@ -1,0 +1,33 @@
+{
+  "flow_id": "a2026d54-dda8-4eef-a3e8-876e0f94d674",
+  "question_count": 18,
+  "availability": {"passed": 18, "total": 18, "percent": 100.0},
+  "task_completion": {"passed": 11, "total": 18, "percent": 61.1},
+  "correctness": {"points": 46, "max_points": 90, "percent": 51.1},
+  "faithfulness": {"points": 82, "max_points": 90, "percent": 91.1},
+  "latency_seconds": {"average": 62.18, "median": 48.41, "minimum": 29.01, "maximum": 149.15},
+  "guard_rejection": {"count": 6, "total": 18, "percent": 33.3},
+  "http_error": {"count": 0, "total": 18, "percent": 0.0},
+  "reasoning_leakage": {"count": 0, "total": 18, "percent": 0.0},
+  "invented_currency": {"count": 3, "total": 18, "percent": 16.7},
+  "per_question": [
+    {"id": "Q1", "correctness": 5, "faithfulness": 5, "result": "complete"},
+    {"id": "Q2", "correctness": 5, "faithfulness": 5, "result": "complete_after_replan"},
+    {"id": "Q3", "correctness": 5, "faithfulness": 5, "result": "complete"},
+    {"id": "Q4", "correctness": 4, "faithfulness": 4, "result": "invented_currency"},
+    {"id": "Q5", "correctness": 0, "faithfulness": 5, "result": "guard_rejection"},
+    {"id": "Q6", "correctness": 2, "faithfulness": 3, "result": "wrong_population_and_omissions"},
+    {"id": "Q7", "correctness": 0, "faithfulness": 5, "result": "guard_rejection"},
+    {"id": "Q8", "correctness": 3, "faithfulness": 4, "result": "missing_income_range_and_invented_currency"},
+    {"id": "Q9", "correctness": 0, "faithfulness": 5, "result": "guard_rejection"},
+    {"id": "Q10", "correctness": 3, "faithfulness": 5, "result": "missing_segment_counts"},
+    {"id": "Q11", "correctness": 4, "faithfulness": 4, "result": "invented_currency"},
+    {"id": "Q12", "correctness": 5, "faithfulness": 5, "result": "complete"},
+    {"id": "Q13", "correctness": 5, "faithfulness": 5, "result": "complete"},
+    {"id": "Q14", "correctness": 0, "faithfulness": 5, "result": "guard_rejection"},
+    {"id": "Q15", "correctness": 0, "faithfulness": 5, "result": "guard_rejection"},
+    {"id": "Q16", "correctness": 5, "faithfulness": 5, "result": "complete_after_replan"},
+    {"id": "Q17", "correctness": 0, "faithfulness": 5, "result": "guard_rejection"},
+    {"id": "Q18", "correctness": 0, "faithfulness": 2, "result": "wrong_semantic_mapping"}
+  ]
+}

@@ -71,3 +71,5 @@ node magentic-orchestration/scripts/build_v1_magentic.mjs
 v2 แยก SQL, RAG และ Verification Specialists เป็น subflows อิสระ Manager ทำเฉพาะ plan/delegate/ledger/re-plan และเรียกผ่าน Subflow Gateway tools แทน Agent-as-tool ดู [architecture และ diagram](docs/v2-subflow-architecture.md)
 
 นำทั้ง 4 flows เข้าโปรเจกต์ `NT` แล้ว และ smoke test แบบครบ SQL + RAG + Verification ผ่าน โดย Main คืน typed ledger, verified claims และ execution trace ที่ไม่มี placeholder ดู [หลักฐานการทดสอบ v2](benchmarks/v2-smoke.md)
+
+ผล Grounded-18 ของ v2: availability 100%, task completion 61.1%, correctness 51.1% และ faithfulness 91.1% โดยให้คะแนนจาก Final Answer เท่านั้น ดู [ผลรายข้อและการเปรียบเทียบ v1 revised](benchmarks/finance-grounded18/evaluation-v2.md)
