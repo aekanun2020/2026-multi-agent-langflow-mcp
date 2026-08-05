@@ -51,4 +51,8 @@ Hybrid ใช้ Grounded-18 ชุดกลางเดียวกับ orche
 - Langflow project: `NT`
 - Flow ID เดิมที่รักษาไว้: `cd488940-5fa4-4567-b5e8-43b26d5643ae`
 
+ไฟล์ Flow สำหรับแจกจ่ายไม่มี top-level `id` และ `endpoint_name` ฝังอยู่ Langflow จึงสร้าง identity ใหม่ทุกครั้งที่ใช้ **Upload a flow** และสามารถ upload ซ้ำเป็นสำเนาใหม่ได้ โดยค่า API key ไม่ถูกบันทึกใน JSON
+
+ตรวจยืนยันบน Langflow 1.7.3 แล้ว: เมื่อ project `NT` มี flow เดิมอยู่ การ import ไฟล์นี้ซ้ำสำเร็จเป็น `LAB-hybrid-v1-grounded-consensus-thai (1)` ด้วย ID ใหม่ `6963c8cb-2322-40a3-9cf3-1ba81393f657` และ graph ครบ 19 nodes/24 edges
+
 ชุดคำถาม, ground truth และ frozen rubric ต้นฉบับเก็บไว้ใน Parallel เพียง canonical copy เดียวเพื่อป้องกัน benchmark drift ส่วน directory `benchmarks/` ของ Hybrid เก็บเฉพาะคำถามย่อยสำหรับ retry/smoke, ผลดิบ, คะแนน และ evaluation ของ Hybrid

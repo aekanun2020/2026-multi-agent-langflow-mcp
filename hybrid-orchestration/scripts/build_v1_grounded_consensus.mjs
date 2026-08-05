@@ -14,7 +14,10 @@ const encoded = (value) => JSON.stringify(value).replaceAll('"', "œ");
 
 flow.name = "LAB-hybrid-v1-grounded-consensus-thai";
 flow.description = "Hybrid of semantic concurrent consensus and evidence verification: no JSON output contract, key parser, or fail-closed guard.";
-flow.endpoint_name = "hybrid_v1_grounded_consensus";
+// Distribution files must not carry the source flow identity. Langflow assigns
+// a fresh ID/endpoint on every UI upload, allowing the same JSON to be imported repeatedly.
+delete flow.id;
+delete flow.endpoint_name;
 
 const chatInput = findNode("ChatInput-uc7rV");
 const chatOutput = findNode("ChatOutput-BDIVy");

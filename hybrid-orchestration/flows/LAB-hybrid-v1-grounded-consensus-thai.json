@@ -9529,8 +9529,6 @@
     }
   },
   "description": "Hybrid of semantic concurrent consensus and evidence verification: no JSON output contract, key parser, or fail-closed guard.",
-  "endpoint_name": "hybrid_v1_grounded_consensus",
-  "id": "011903b0-d1ef-4079-ac6b-db16f05d4df2",
   "is_component": false,
   "last_tested_version": "1.7.3",
   "name": "LAB-hybrid-v1-grounded-consensus-thai",
