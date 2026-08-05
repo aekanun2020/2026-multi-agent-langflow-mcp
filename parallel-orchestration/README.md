@@ -1,5 +1,9 @@
 # Parallel Orchestration: Multi-Agent Langflow MCP
 
+## v4: Paper-exact semantic consensus
+
+`LAB-concurrent-v4-paper-exact-thai` ไม่มี JSON contract, key/value parsing, deterministic vote, Verifier หรือ Final Guard Workers สามตัวตอบคำถามเดียวกันเป็นภาษาธรรมชาติ แล้ว Semantic Consensus Agent อ่านความหมายและสรุปคำตอบสุดท้าย ดู [architecture และ smoke test](docs/v4-paper-exact.md) Flow นี้ถูกติดตั้งใน project `NT` ด้วย ID `ec0c57d5-fca9-4f86-b9a8-8b50207691c0`
+
 ตัวอย่าง Langflow 1.7.3 สำหรับงาน multi-agent แบบ parallel workers และ deterministic vote aggregation พร้อม benchmark ที่ใช้ MSSQL + RAG เป็น ground
 
 Directory นี้เก็บเฉพาะ **Parallel Orchestration** ซึ่งตรงกับชื่อ **Concurrent orchestration** ใน Microsoft Learn: Agents หลายตัวประมวลผล task เดียวกันพร้อมกันอย่างอิสระ ก่อนรวบรวมและ aggregate ผลลัพธ์ ดู [Microsoft Learn: Concurrent orchestration](https://learn.microsoft.com/en-us/agent-framework/workflows/orchestrations/concurrent)
@@ -10,6 +14,8 @@ Directory นี้เก็บเฉพาะ **Parallel Orchestration** ซึ
 
 ```text
 flows/
+  paper-exact/
+    LAB-concurrent-v4-paper-exact-thai.json
   LAB-1-4-withlocal-parallel-consensus-v5-thai.json
   LAB-1-4-withlocal-concurrent-consensus-v6-thai.json
   LAB-1-4-withlocal-concurrent-consensus-v7-financial-loan-thai.json
