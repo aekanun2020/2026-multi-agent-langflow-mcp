@@ -1,0 +1,29 @@
+{
+  "flow_id": "ec0c57d5-fca9-4f86-b9a8-8b50207691c0",
+  "flow_name": "LAB-concurrent-v4-paper-exact-thai",
+  "baseline": "LAB-magentic-v3-resilient-final-guard-thai",
+  "question_count": 18,
+  "availability": {"passed": 17, "total": 18, "percent": 94.4},
+  "correctness": {"points": 63, "max_points": 90, "percent": 70.0},
+  "faithfulness": {"points": 61, "max_points": 90, "percent": 67.8},
+  "per_question": [
+    {"id":"Q1","correctness":3,"faithfulness":5,"comparison_v3":"better","result":"correct_count_and_averages_but_rounded_totals"},
+    {"id":"Q2","correctness":4,"faithfulness":5,"comparison_v3":"same","result":"correct_counts_rounded_percentages"},
+    {"id":"Q3","correctness":4,"faithfulness":4,"comparison_v3":"worse_faithfulness","result":"correct_distribution_with_extra_risk_grouping"},
+    {"id":"Q4","correctness":4,"faithfulness":3,"comparison_v3":"worse_faithfulness","result":"correct_metrics_but_invented_currency_and_period_speculation"},
+    {"id":"Q5","correctness":4,"faithfulness":3,"comparison_v3":"worse_faithfulness","result":"complete_groups_but_unsupported_risk_interpretation"},
+    {"id":"Q6","correctness":3,"faithfulness":3,"comparison_v3":"worse","result":"correct_extrema_but_missing_counts_and_invented_currency"},
+    {"id":"Q7","correctness":5,"faithfulness":4,"comparison_v3":"mixed","result":"complete_buckets_but_invented_currency"},
+    {"id":"Q8","correctness":3,"faithfulness":3,"comparison_v3":"worse_faithfulness","result":"missing_income_ranges_invented_currency_and_extra_interpretation"},
+    {"id":"Q9","correctness":5,"faithfulness":4,"comparison_v3":"worse_faithfulness","result":"complete_yearly_metrics_but_invented_currency"},
+    {"id":"Q10","correctness":3,"faithfulness":4,"comparison_v3":"worse_faithfulness","result":"correct_segments_and_benchmarks_but_missing_counts_and_risk_language"},
+    {"id":"Q11","correctness":3,"faithfulness":2,"comparison_v3":"mixed","result":"answered_after_prior_rejection_but_rounded_totals_currency_and_approval_claim"},
+    {"id":"Q12","correctness":4,"faithfulness":5,"comparison_v3":"same","result":"correct_mix_rounded_percentages"},
+    {"id":"Q13","correctness":3,"faithfulness":3,"comparison_v3":"mixed","result":"correct_rows_but_wrong_total_and_risk_grouping"},
+    {"id":"Q14","correctness":2,"faithfulness":2,"comparison_v3":"worse_faithfulness","result":"funded_total_instead_of_average_invented_currency_and_period_speculation"},
+    {"id":"Q15","correctness":0,"faithfulness":0,"comparison_v3":"worse","result":"mcp_stream_execution_failure"},
+    {"id":"Q16","correctness":5,"faithfulness":4,"comparison_v3":"better_correctness","result":"correct_extrema_but_invented_currency"},
+    {"id":"Q17","correctness":3,"faithfulness":3,"comparison_v3":"same","result":"counts_only_with_unsupported_risk_interpretation"},
+    {"id":"Q18","correctness":5,"faithfulness":4,"comparison_v3":"mixed","result":"complete_yearly_metrics_but_invented_currency"}
+  ]
+}

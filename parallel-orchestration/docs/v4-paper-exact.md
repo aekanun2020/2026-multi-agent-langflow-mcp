@@ -31,3 +31,5 @@ Workers ตอบอย่างอิสระเป็นภาษาธรร
 ทดสอบด้วยคำถามหาจำนวนสินเชื่อ ผลรวม `loan_amnt`/`funded_amnt` และค่าเฉลี่ยต่อรายการ ผลจาก Workers ทั้งสามตรงกัน และ Final Answer ตอบว่า 1,432,440 รายการ, `loan_amnt` รวม 22,017,160,000, `funded_amnt` รวม 22,017,130,000, ค่าเฉลี่ย 15,370.39 และ 15,370.37 ตามลำดับ โดยไม่สร้างสกุลเงินขึ้นเอง
 
 Semantic Consensus Agent ปิด reasoning output ผ่านพารามิเตอร์ของโมเดล เพื่อไม่ให้ hidden reasoning ปรากฏแก่ผู้ใช้ การตั้งค่านี้ไม่ได้ parse, แก้ไข, validate หรือคัดทิ้งคำตอบหลังโมเดลสร้างผล จึงไม่ใช่ Final Guard หรือ output contract
+
+ผลทดสอบ Grounded-18 เทียบ Magentic v3: availability 94.4%, correctness 70.0% และ faithfulness 67.8% ดู [ผลเปรียบเทียบรายข้อ](../benchmarks/finance-loan-grounded18/evaluation-v4-paper-exact-vs-magentic-v3.md)

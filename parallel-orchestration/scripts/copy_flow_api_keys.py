@@ -5,6 +5,10 @@ import urllib.request
 
 
 base_url, source_flow_id, target_flow_id = sys.argv[1:4]
+explicit_mappings = {}
+for item in sys.argv[4:]:
+    source_node, target_node = item.split(":", 1)
+    explicit_mappings[target_node] = source_node
 
 
 def request_json(path, method="GET", payload=None):
@@ -37,8 +41,9 @@ for node in source["data"]["nodes"]:
 copied = []
 for node in target["data"]["nodes"]:
     api_key = node.get("data", {}).get("node", {}).get("template", {}).get("api_key")
-    if api_key is not None and node["id"] in source_keys:
-        api_key["value"] = source_keys[node["id"]]
+    source_node = explicit_mappings.get(node["id"], node["id"])
+    if api_key is not None and source_node in source_keys:
+        api_key["value"] = source_keys[source_node]
         copied.append(node["id"])
 
 if not copied:
