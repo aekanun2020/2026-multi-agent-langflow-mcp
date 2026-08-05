@@ -57,4 +57,6 @@ Hybrid ใช้ Grounded-18 ชุดกลางเดียวกับ orche
 
 ตรวจไฟล์ UI รุ่นใหม่กับ `POST /api/v1/flows/upload/` ของ Langflow 1.7.3 แล้วได้ HTTP 201 และติดตั้งใน project `NT` เป็น `LAB-hybrid-v1-grounded-consensus-thai-ui-upload-20260805` ID `d51de503-d566-40d4-8989-4e88ca07c4c8` โดย graph ครบ 19 nodes/24 edges
 
+Builder บังคับให้ `node.id` และ `node.data.id` ตรงกันทุก node หลัง clone/rename เพื่อให้ Langflow ตรวจ source/target handles ของ edges ได้ถูกต้อง หากสองค่านี้ต่างกัน UI จะแสดงแถบแดงว่า connection เสียทั้งฝั่ง output และ input แม้ edge ใน JSON จะไม่ได้ซ้ำกัน
+
 ชุดคำถาม, ground truth และ frozen rubric ต้นฉบับเก็บไว้ใน Parallel เพียง canonical copy เดียวเพื่อป้องกัน benchmark drift ส่วน directory `benchmarks/` ของ Hybrid เก็บเฉพาะคำถามย่อยสำหรับ retry/smoke, ผลดิบ, คะแนน และ evaluation ของ Hybrid

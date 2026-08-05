@@ -249,6 +249,12 @@ flow.data.edges.push(
   makeEdge(editor, chatOutput, "response", "Agent", ["Message"], "input_value", ["Data", "DataFrame", "Message"], "other"),
 );
 
+// React Flow uses the top-level node ID while Langflow's handle validation also
+// reads data.id. Every cloned/renamed node must keep both identities aligned.
+for (const node of flow.data.nodes) {
+  node.data.id = node.id;
+}
+
 fs.mkdirSync(outputDir, {recursive: true});
 fs.writeFileSync(outputPath, JSON.stringify(flow, null, 2) + "\n");
 console.log(`Wrote ${outputPath}`);

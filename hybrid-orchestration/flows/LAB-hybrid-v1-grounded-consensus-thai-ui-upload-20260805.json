@@ -1280,7 +1280,7 @@
       },
       {
         "data": {
-          "id": "MCPTools-DfqZq",
+          "id": "MCPTools-SQL-Worker1",
           "node": {
             "base_classes": [
               "DataFrame"
@@ -1620,7 +1620,7 @@
       },
       {
         "data": {
-          "id": "MCP-A5mYz",
+          "id": "MCP-RAG-Worker1",
           "node": {
             "base_classes": [
               "DataFrame"
@@ -5424,7 +5424,7 @@
       },
       {
         "data": {
-          "id": "MCPTools-DfqZq",
+          "id": "MCPTools-SQL-Worker2",
           "node": {
             "base_classes": [
               "DataFrame"
@@ -5764,7 +5764,7 @@
       },
       {
         "data": {
-          "id": "MCP-A5mYz",
+          "id": "MCP-RAG-Worker2",
           "node": {
             "base_classes": [
               "DataFrame"
@@ -6131,7 +6131,7 @@
       },
       {
         "data": {
-          "id": "MCPTools-DfqZq",
+          "id": "MCPTools-SQL-Worker3",
           "node": {
             "base_classes": [
               "DataFrame"
@@ -6471,7 +6471,7 @@
       },
       {
         "data": {
-          "id": "MCP-A5mYz",
+          "id": "MCP-RAG-Worker3",
           "node": {
             "base_classes": [
               "DataFrame"
@@ -6838,7 +6838,7 @@
       },
       {
         "data": {
-          "id": "MCPTools-DfqZq",
+          "id": "MCPTools-SQL-Verifier",
           "node": {
             "base_classes": [
               "DataFrame"
@@ -7178,7 +7178,7 @@
       },
       {
         "data": {
-          "id": "MCP-A5mYz",
+          "id": "MCP-RAG-Verifier",
           "node": {
             "base_classes": [
               "DataFrame"
@@ -7545,7 +7545,7 @@
       },
       {
         "data": {
-          "id": "ConsensusVoteAggregator-main",
+          "id": "DraftReviewBundle-main",
           "node": {
             "base_classes": [
               "Message"
@@ -7722,7 +7722,7 @@
         "data": {
           "description": "Define the agent's instructions, then enter a task to complete using tools.",
           "display_name": "Agent",
-          "id": "Agent-ycwYQ",
+          "id": "Agent-EvidenceVerifier",
           "node": {
             "base_classes": [
               "Message"
@@ -8534,7 +8534,7 @@
       },
       {
         "data": {
-          "id": "ConsensusVoteAggregator-main",
+          "id": "FinalEditBundle-main",
           "node": {
             "base_classes": [
               "Message"
@@ -8711,7 +8711,7 @@
         "data": {
           "description": "Define the agent's instructions, then enter a task to complete using tools.",
           "display_name": "Agent",
-          "id": "Agent-ycwYQ",
+          "id": "Agent-FaithfulnessEditor",
           "node": {
             "base_classes": [
               "Message"
