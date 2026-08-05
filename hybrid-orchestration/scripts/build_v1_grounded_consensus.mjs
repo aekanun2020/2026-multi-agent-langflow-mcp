@@ -5,16 +5,16 @@ import {fileURLToPath} from "node:url";
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, "..", "..");
 const sourcePath = path.join(root, "parallel-orchestration", "flows", "paper-exact", "LAB-concurrent-v4-paper-exact-thai.json");
-const outputDir = path.join(root, "parallel-orchestration", "flows", "hybrid-grounded");
-const outputPath = path.join(outputDir, "LAB-concurrent-v5-hybrid-grounded-consensus-thai.json");
+const outputDir = path.join(root, "hybrid-orchestration", "flows");
+const outputPath = path.join(outputDir, "LAB-hybrid-v1-grounded-consensus-thai.json");
 const flow = JSON.parse(fs.readFileSync(sourcePath, "utf8"));
 const clone = (value) => structuredClone(value);
 const findNode = (id) => flow.data.nodes.find((item) => item.id === id);
 const encoded = (value) => JSON.stringify(value).replaceAll('"', "œ");
 
-flow.name = "LAB-concurrent-v5-hybrid-grounded-consensus-thai";
+flow.name = "LAB-hybrid-v1-grounded-consensus-thai";
 flow.description = "Hybrid of semantic concurrent consensus and evidence verification: no JSON output contract, key parser, or fail-closed guard.";
-flow.endpoint_name = "concurrent_v5_hybrid_grounded";
+flow.endpoint_name = "hybrid_v1_grounded_consensus";
 
 const chatInput = findNode("ChatInput-uc7rV");
 const chatOutput = findNode("ChatOutput-BDIVy");

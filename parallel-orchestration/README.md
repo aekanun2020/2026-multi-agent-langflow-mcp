@@ -2,26 +2,13 @@
 
 ## อะไรใหม่สุดในสาย Concurrent
 
-สายนี้มีสองแนวทดลองที่ไม่ควรอ่านจากเลข version อย่างเดียว:
-
-| แนวพัฒนา | ล่าสุด | เหมาะสำหรับ | สถานะ |
-|---|---|---|---|
-| **Semantic/Paper line** | **Hybrid v5** | ต้องการคำตอบภาษาธรรมชาติที่ไม่ถูก reject จาก schema แต่ยังตรวจ ground ก่อนตอบ | รุ่นแนะนำ; Correctness 78.9%, Faithfulness 93.3% |
-| **Deterministic Claim line** | **v9 Canonical Claims** | ต้องการ normalize claims และ vote 2-of-3 แบบตรวจสอบได้ด้วย code | ล่าสุดเชิง deterministic; full benchmark ยังไม่สมบูรณ์จาก MCP failure |
-
-Hybrid v5 ใหม่กว่าในเชิงงานพัฒนาปัจจุบัน แม้เลข version ต่ำกว่า v9 เพราะเป็นคนละสายทดลอง v9 สืบทอด v5–v8 ชุดเดิม ส่วน Hybrid v5 แตกสายจาก v4 paper-exact หลังเปรียบเทียบกับ Magentic v3
+รุ่นล่าสุดของ directory นี้คือ **v9 Canonical Claims** ซึ่ง normalize claims และใช้ deterministic 2-of-3 vote ก่อน LLM verbalizer และ Final Claim Guard ส่วนงานที่ผสม Evidence Verification กับ Language-only Editing ถูกแยกไปเป็น [Hybrid v1](../hybrid-orchestration/) แล้ว
 
 ## v4: Paper-exact semantic consensus
 
 `LAB-concurrent-v4-paper-exact-thai` ไม่มี JSON contract, key/value parsing, deterministic vote, Verifier หรือ Final Guard Workers สามตัวตอบคำถามเดียวกันเป็นภาษาธรรมชาติ แล้ว Semantic Consensus Agent อ่านความหมายและสรุปคำตอบสุดท้าย ดู [architecture และ smoke test](docs/v4-paper-exact.md) Flow นี้ถูกติดตั้งใน project `NT` ด้วย ID `ec0c57d5-fca9-4f86-b9a8-8b50207691c0`
 
 ผล Finance/Loan Grounded-18 เทียบ Magentic v3: correctness ดีขึ้นจาก 51.1% เป็น 70.0% แต่ faithfulness ลดจาก 92.2% เป็น 67.8% ดู [ผลเปรียบเทียบรายข้อ](benchmarks/finance-loan-grounded18/evaluation-v4-paper-exact-vs-magentic-v3.md)
-
-## v5: Hybrid grounded consensus
-
-`LAB-concurrent-v5-hybrid-grounded-consensus-thai` รวม Parallel Semantic Consensus ของ v4 กับ Evidence Verification แนว v3 แต่ไม่ใช้ JSON contract หรือ fail-closed Guard Verifier เห็นทั้ง raw worker answers และ consensus draft ก่อนตรวจ MSSQL/RAG จากนั้น Language-only Faithfulness Editor ตัด unsupported interpretation โดยห้ามเพิ่มหรือคำนวณ claim ใหม่ ดู [architecture และสถานะทดสอบ](docs/v5-hybrid-grounded.md)
-
-Flow ถูกติดตั้งใน project `NT` ด้วย ID `cd488940-5fa4-4567-b5e8-43b26d5643ae` ผล final หลัง targeted retry ของ transient Q15: availability 100.0%, correctness 78.9%, faithfulness 93.3% ซึ่งสูงกว่า v3 และ v4 ในทั้งสองมิติ ดู [evaluation-v5-final.md](benchmarks/finance-loan-grounded18/evaluation-v5-final.md)
 
 ตัวอย่าง Langflow 1.7.3 สำหรับงาน multi-agent แบบ parallel workers และ deterministic vote aggregation พร้อม benchmark ที่ใช้ MSSQL + RAG เป็น ground
 
@@ -35,8 +22,6 @@ Directory นี้เก็บเฉพาะ **Parallel Orchestration** ซึ
 flows/
   paper-exact/
     LAB-concurrent-v4-paper-exact-thai.json
-  hybrid-grounded/
-    LAB-concurrent-v5-hybrid-grounded-consensus-thai.json
   LAB-1-4-withlocal-parallel-consensus-v5-thai.json
   LAB-1-4-withlocal-concurrent-consensus-v6-thai.json
   LAB-1-4-withlocal-concurrent-consensus-v7-financial-loan-thai.json

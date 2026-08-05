@@ -1,10 +1,10 @@
-# v5 Final Grounded-18 — Credit-blocked Run
+# Hybrid v1 Final Grounded-18 — Credit-blocked Run
 
 วันที่รัน: 2026-08-05
 
-- Flow: `LAB-concurrent-v5-hybrid-grounded-consensus-thai`
+- Flow: `LAB-hybrid-v1-grounded-consensus-thai`
 - Flow ID: `cd488940-5fa4-4567-b5e8-43b26d5643ae`
-- Raw artifact: `raw-v5-final.jsonl`
+- Raw artifact: `raw-v1-final-credit-blocked.jsonl`
 - Requests attempted: 18/18
 - Successful Final Answers: 0/18
 - Failure: OpenRouter HTTP 402 `Insufficient credits` ที่ Paper Worker 3 ก่อน flow ประมวลผลคำถาม

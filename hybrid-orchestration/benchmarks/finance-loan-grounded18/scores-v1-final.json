@@ -1,6 +1,6 @@
 {
   "flow_id": "cd488940-5fa4-4567-b5e8-43b26d5643ae",
-  "flow_name": "LAB-concurrent-v5-hybrid-grounded-consensus-thai",
+  "flow_name": "LAB-hybrid-v1-grounded-consensus-thai",
   "protocol": "Grounded-18 final answers only; Q15 replaced by documented targeted retry after transient MCP stream failure",
   "first_pass_availability": {"passed": 17, "total": 18, "percent": 94.4},
   "recovered_availability": {"passed": 18, "total": 18, "percent": 100.0},
