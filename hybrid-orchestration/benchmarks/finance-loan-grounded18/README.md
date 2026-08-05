@@ -16,4 +16,5 @@ Canonical benchmark ใช้ไฟล์ต่อไปนี้โดยไม
 - `raw-v1-final-rerun1.jsonl`: full first pass
 - `raw-v1-final-q15-rerun.jsonl`: targeted retry ของ transient MCP failure
 - [`evaluation-v1-rerun2.md`](evaluation-v1-rerun2.md), [`scores-v1-rerun2.json`](scores-v1-rerun2.json), [`raw-v1-final-rerun2.jsonl`](raw-v1-final-rerun2.jsonl): ผลล่าสุดที่สำเร็จ 18/18 ใน first pass
+- [`evaluation-v1-ui-duplicate1-20260805.md`](evaluation-v1-ui-duplicate1-20260805.md), [`scores-v1-ui-duplicate1-20260805.json`](scores-v1-ui-duplicate1-20260805.json), [`raw-v1-ui-duplicate1-20260805.jsonl`](raw-v1-ui-duplicate1-20260805.jsonl): ทดสอบ flow ที่ duplicate ผ่าน UI ชื่อ `(1)` สำเร็จ 18/18; Correctness 81.1%, Faithfulness 94.4%
 - ไฟล์ `pre-editor`, `smoke`, `targeted` และ `credit-blocked`: หลักฐานระหว่างพัฒนา ห้ามนำมาผสมเป็น final score
