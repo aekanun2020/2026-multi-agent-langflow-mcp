@@ -1,5 +1,16 @@
 # Parallel Orchestration: Multi-Agent Langflow MCP
 
+## อะไรใหม่สุดในสาย Concurrent
+
+สายนี้มีสองแนวทดลองที่ไม่ควรอ่านจากเลข version อย่างเดียว:
+
+| แนวพัฒนา | ล่าสุด | เหมาะสำหรับ | สถานะ |
+|---|---|---|---|
+| **Semantic/Paper line** | **Hybrid v5** | ต้องการคำตอบภาษาธรรมชาติที่ไม่ถูก reject จาก schema แต่ยังตรวจ ground ก่อนตอบ | รุ่นแนะนำ; Correctness 78.9%, Faithfulness 93.3% |
+| **Deterministic Claim line** | **v9 Canonical Claims** | ต้องการ normalize claims และ vote 2-of-3 แบบตรวจสอบได้ด้วย code | ล่าสุดเชิง deterministic; full benchmark ยังไม่สมบูรณ์จาก MCP failure |
+
+Hybrid v5 ใหม่กว่าในเชิงงานพัฒนาปัจจุบัน แม้เลข version ต่ำกว่า v9 เพราะเป็นคนละสายทดลอง v9 สืบทอด v5–v8 ชุดเดิม ส่วน Hybrid v5 แตกสายจาก v4 paper-exact หลังเปรียบเทียบกับ Magentic v3
+
 ## v4: Paper-exact semantic consensus
 
 `LAB-concurrent-v4-paper-exact-thai` ไม่มี JSON contract, key/value parsing, deterministic vote, Verifier หรือ Final Guard Workers สามตัวตอบคำถามเดียวกันเป็นภาษาธรรมชาติ แล้ว Semantic Consensus Agent อ่านความหมายและสรุปคำตอบสุดท้าย ดู [architecture และ smoke test](docs/v4-paper-exact.md) Flow นี้ถูกติดตั้งใน project `NT` ด้วย ID `ec0c57d5-fca9-4f86-b9a8-8b50207691c0`

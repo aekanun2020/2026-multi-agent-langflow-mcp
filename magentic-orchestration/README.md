@@ -1,5 +1,17 @@
 # Magentic Orchestration
 
+## อะไรใหม่สุดในสาย Magentic
+
+รุ่นล่าสุดคือ **v3: Resilient Final Guard** ไม่ใช่ v1 โดยลำดับการพัฒนาคือ:
+
+| รุ่น | การเปลี่ยนหลัก | สถานะ |
+|---|---|---|
+| v1 | Manager เรียก Agents เป็น tools โดยตรง | correctness 0%; Agent-as-tool path ใช้งานจริงไม่ได้ |
+| v2 | แยก SQL, RAG และ Verification เป็น subflows; Manager ทำเฉพาะ plan/delegate/re-plan | correctness 51.1%, faithfulness 91.1% |
+| **v3 (ล่าสุด)** | รักษาสถาปัตยกรรม specialist subflows และทำ Final Guard ให้ resilient ต่อ audit metadata ที่ขาด พร้อมกำจัด invented currency | correctness 51.1%, faithfulness 92.2%, availability 100% |
+
+ถ้าจะนำสาย Magentic ไปพัฒนาต่อ ให้เริ่มจาก [`flows/v3/LAB-magentic-v3-resilient-final-guard-thai.json`](flows/v3/LAB-magentic-v3-resilient-final-guard-thai.json) ไม่ใช่ flow v1
+
 ชุดนี้เป็น Langflow implementation ของ **Magentic orchestration** สำหรับปัญหา Finance/Loan แบบซับซ้อนและไม่มีลำดับแก้ปัญหาตายตัว โดยอ้างอิง [Microsoft Learn: AI Agent Orchestration Patterns](https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/ai-agent-design-patterns#magentic-orchestration) และ [Semantic Kernel: Magentic Agent Orchestration](https://learn.microsoft.com/en-us/semantic-kernel/frameworks/agent/agent-orchestration/magentic)
 
 > ชื่อที่ถูกต้องคือ **Magentic** ไม่ใช่ `mgentic` ชื่อมาจากแนวคิด Magentic-One
