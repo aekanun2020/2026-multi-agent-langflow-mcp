@@ -58,4 +58,8 @@ node magentic-orchestration/scripts/build_v1_magentic.mjs
 
 - Import เข้า Langflow 1.7.3 โปรเจกต์ NT แล้ว: flow ID `4d5c6b59-027d-467e-b2ec-720d84bf7dcb`
 - Structural smoke test ผ่าน: graph build สำเร็จ, Manager ตอบผ่าน deterministic Output Guard และ Chat Output ได้เฉพาะ JSON
-- ยังไม่ได้รันคำถาม Finance แบบ end-to-end เพราะรอบนั้นจะส่ง evidence จาก MSSQL/RAG ไปประมวลผลผ่าน model provider และควรได้รับอนุญาตสำหรับชุดทดสอบนี้ก่อน
+- รัน Finance/Loan Grounded-18 แบบ end-to-end แล้วหลังได้รับอนุญาต ผลดิบและ evaluation ถูกบันทึกใน `benchmarks/finance-grounded18/`
+
+### Grounded-18 result
+
+หลังได้รับอนุญาต ได้รัน Finance/Loan Grounded-18 ชุดเดียวกับ Parallel แล้ว ผล v1 คือ transport availability 88.9%, task completion 0%, correctness 0.0% และ faithfulness 86.7% Guard ป้องกัน unsupported claims ได้ แต่ Manager/Specialist path ยังใช้งานจริงไม่ได้ ดู [ผลประเมินรายข้อ](benchmarks/finance-grounded18/evaluation-v1.md)

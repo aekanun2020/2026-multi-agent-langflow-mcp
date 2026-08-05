@@ -1,0 +1,35 @@
+{
+  "flow_id": "4d5c6b59-027d-467e-b2ec-720d84bf7dcb",
+  "question_count": 18,
+  "availability": {"passed": 16, "total": 18, "percent": 88.9},
+  "task_completion": {"passed": 0, "total": 18, "percent": 0.0},
+  "correctness": {"points": 0, "max_points": 90, "percent": 0.0},
+  "faithfulness": {"points": 78, "max_points": 90, "percent": 86.7},
+  "latency_seconds": {"average": 19.44, "median": 15.87, "minimum": 2.77, "maximum": 83.24},
+  "guard_rejection": {"count": 14, "total": 18, "percent": 77.8},
+  "blocked_tool_response": {"count": 2, "total": 18, "percent": 11.1},
+  "http_error": {"count": 2, "total": 18, "percent": 11.1},
+  "reasoning_leakage": {"count": 0, "total": 18, "percent": 0.0},
+  "invented_currency": {"count": 0, "total": 18, "percent": 0.0},
+  "per_question": [
+    {"id": "Q1", "correctness": 0, "faithfulness": 5, "result": "guard_rejection"},
+    {"id": "Q2", "correctness": 0, "faithfulness": 5, "result": "guard_rejection"},
+    {"id": "Q3", "correctness": 0, "faithfulness": 3, "result": "blocked_tool_response"},
+    {"id": "Q4", "correctness": 0, "faithfulness": 0, "result": "http_error"},
+    {"id": "Q5", "correctness": 0, "faithfulness": 5, "result": "guard_rejection"},
+    {"id": "Q6", "correctness": 0, "faithfulness": 0, "result": "http_error"},
+    {"id": "Q7", "correctness": 0, "faithfulness": 5, "result": "guard_rejection"},
+    {"id": "Q8", "correctness": 0, "faithfulness": 5, "result": "guard_rejection"},
+    {"id": "Q9", "correctness": 0, "faithfulness": 5, "result": "guard_rejection"},
+    {"id": "Q10", "correctness": 0, "faithfulness": 5, "result": "guard_rejection"},
+    {"id": "Q11", "correctness": 0, "faithfulness": 5, "result": "guard_rejection"},
+    {"id": "Q12", "correctness": 0, "faithfulness": 5, "result": "guard_rejection"},
+    {"id": "Q13", "correctness": 0, "faithfulness": 5, "result": "guard_rejection"},
+    {"id": "Q14", "correctness": 0, "faithfulness": 5, "result": "guard_rejection"},
+    {"id": "Q15", "correctness": 0, "faithfulness": 5, "result": "guard_rejection"},
+    {"id": "Q16", "correctness": 0, "faithfulness": 5, "result": "guard_rejection"},
+    {"id": "Q17", "correctness": 0, "faithfulness": 5, "result": "guard_rejection"},
+    {"id": "Q18", "correctness": 0, "faithfulness": 5, "result": "blocked_tool_response"}
+  ]
+}
+
