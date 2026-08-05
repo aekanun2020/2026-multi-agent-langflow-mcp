@@ -42,3 +42,5 @@ Q1 smoke test ผ่านด้วย exact totals/averages และไม่�
 Grounded-18 รอบก่อนเพิ่ม Final Editor ได้ผลโดยประมาณ correctness 80.0% และ faithfulness 86.7% เมื่อเลือก targeted rerun ล่าสุดแทนข้อที่แก้แล้ว ตัวเลขนี้ใช้สำหรับวินิจฉัย architecture เท่านั้น ไม่ใช่คะแนน final v5 ที่ frozen อย่างเป็นทางการ
 
 การทดสอบ final architecture ที่ Q8/Q10/Q11 หยุดด้วย OpenRouter HTTP 402 (`Insufficient credits`) จึงยังห้ามสรุปคะแนนรวมของ final v5 ต้องรัน Grounded-18 ใหม่ทั้ง 18 ข้อเมื่อมีเครดิต และเก็บ raw artifact ชุดใหม่โดยไม่ผสมกับรอบก่อนแก้ architecture
+
+การลองรัน Grounded-18 ซ้ำครบ 18 requests ในวันที่ 2026-08-05 ถูก OpenRouter ปฏิเสธด้วย HTTP 402 ทุกข้อก่อน Worker ทำงาน ดู [credit-blocked run](../benchmarks/finance-loan-grounded18/evaluation-v5-final-credit-blocked.md) รอบนี้จึง invalidated และไม่ใช่คะแนน 0 ของ architecture
