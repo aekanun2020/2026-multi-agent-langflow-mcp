@@ -73,3 +73,15 @@ v2 แยก SQL, RAG และ Verification Specialists เป็น subflows �
 นำทั้ง 4 flows เข้าโปรเจกต์ `NT` แล้ว และ smoke test แบบครบ SQL + RAG + Verification ผ่าน โดย Main คืน typed ledger, verified claims และ execution trace ที่ไม่มี placeholder ดู [หลักฐานการทดสอบ v2](benchmarks/v2-smoke.md)
 
 ผล Grounded-18 ของ v2: availability 100%, task completion 61.1%, correctness 51.1% และ faithfulness 91.1% โดยให้คะแนนจาก Final Answer เท่านั้น ดู [ผลรายข้อและการเปรียบเทียบ v1 revised](benchmarks/finance-grounded18/evaluation-v2.md)
+
+## v3: Resilient Final Guard
+
+v3 ใช้ specialist subflows ของ v2 แต่ปรับ Final Guard ให้เข้มกับ claim integrity และผ่อนปรนกับ audit metadata ที่ขาด โดยเติม deterministic defaults พร้อม `audit_warnings` แทนการทิ้งทั้งคำตอบ อีกทั้งปฏิเสธ `$`, `บาท` หรือ `฿` เมื่อ verified claim ไม่ได้อนุญาต ดู [รายละเอียด v3](docs/v3-resilient-final-guard.md)
+
+นำเข้าโปรเจกต์ `NT` แล้วด้วย flow ID `8eaf7f25-fee0-4b77-be4d-ae4f9d2414bf` และ smoke test ยืนยันว่า Q5 ที่ v2 เคย reject ตอบได้ครบ รวมทั้งกรณีจงใจละ audit keys ยังรักษา answer/claims แล้วเติม defaults พร้อมลดสถานะเป็น `partial` ดู [ผล smoke test v3](benchmarks/v3-smoke.md)
+
+สร้างไฟล์ flow ด้วย:
+
+```bash
+node magentic-orchestration/scripts/build_v3_resilient_guard.mjs
+```
