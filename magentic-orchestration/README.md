@@ -63,3 +63,5 @@ node magentic-orchestration/scripts/build_v1_magentic.mjs
 ### Grounded-18 result
 
 หลังได้รับอนุญาต ได้รัน Finance/Loan Grounded-18 ชุดเดียวกับ Parallel แล้ว ผล v1 คือ transport availability 88.9%, task completion 0%, correctness 0.0% และ faithfulness 86.7% Guard ป้องกัน unsupported claims ได้ แต่ Manager/Specialist path ยังใช้งานจริงไม่ได้ ดู [ผลประเมินรายข้อ](benchmarks/finance-grounded18/evaluation-v1.md)
+
+ผู้ใช้ปรับ flow เป็น `LAB-magentic-v1-finance-research-thai-revised` และทดสอบ Grounded-18 ซ้ำ ผล revised คือ availability 100%, task completion 0%, correctness 0.0% และ faithfulness 91.1% การรายงาน failure ดีขึ้น แต่ Agent-as-tool ยังชน `skip_db_update` และไม่สามารถดึง evidence ได้ ดู [ผล revised รายข้อ](benchmarks/finance-grounded18/evaluation-v1-revised.md)
