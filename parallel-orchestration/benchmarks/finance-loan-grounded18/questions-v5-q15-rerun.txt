@@ -1,0 +1,1 @@
+Q15: จำแนกทุกกลุ่ม home_ownership แล้วรายงาน funded_amnt, int_rate และ dti

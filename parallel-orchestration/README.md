@@ -10,7 +10,7 @@
 
 `LAB-concurrent-v5-hybrid-grounded-consensus-thai` รวม Parallel Semantic Consensus ของ v4 กับ Evidence Verification แนว v3 แต่ไม่ใช้ JSON contract หรือ fail-closed Guard Verifier เห็นทั้ง raw worker answers และ consensus draft ก่อนตรวจ MSSQL/RAG จากนั้น Language-only Faithfulness Editor ตัด unsupported interpretation โดยห้ามเพิ่มหรือคำนวณ claim ใหม่ ดู [architecture และสถานะทดสอบ](docs/v5-hybrid-grounded.md)
 
-Flow ถูกติดตั้งใน project `NT` ด้วย ID `cd488940-5fa4-4567-b5e8-43b26d5643ae` การทดสอบ final Grounded-18 ยังไม่สมบูรณ์เพราะ OpenRouter เครดิตหมด จึงยังไม่มี aggregate score ที่อ้างเป็นผล final ได้
+Flow ถูกติดตั้งใน project `NT` ด้วย ID `cd488940-5fa4-4567-b5e8-43b26d5643ae` ผล final หลัง targeted retry ของ transient Q15: availability 100.0%, correctness 78.9%, faithfulness 93.3% ซึ่งสูงกว่า v3 และ v4 ในทั้งสองมิติ ดู [evaluation-v5-final.md](benchmarks/finance-loan-grounded18/evaluation-v5-final.md)
 
 ตัวอย่าง Langflow 1.7.3 สำหรับงาน multi-agent แบบ parallel workers และ deterministic vote aggregation พร้อม benchmark ที่ใช้ MSSQL + RAG เป็น ground
 

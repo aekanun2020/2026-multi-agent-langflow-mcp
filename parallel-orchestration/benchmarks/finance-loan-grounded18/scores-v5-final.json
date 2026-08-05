@@ -1,0 +1,31 @@
+{
+  "flow_id": "cd488940-5fa4-4567-b5e8-43b26d5643ae",
+  "flow_name": "LAB-concurrent-v5-hybrid-grounded-consensus-thai",
+  "protocol": "Grounded-18 final answers only; Q15 replaced by documented targeted retry after transient MCP stream failure",
+  "first_pass_availability": {"passed": 17, "total": 18, "percent": 94.4},
+  "recovered_availability": {"passed": 18, "total": 18, "percent": 100.0},
+  "first_pass_correctness": {"points": 66, "max_points": 90, "percent": 73.3},
+  "first_pass_faithfulness": {"points": 79, "max_points": 90, "percent": 87.8},
+  "recovered_correctness": {"points": 71, "max_points": 90, "percent": 78.9},
+  "recovered_faithfulness": {"points": 84, "max_points": 90, "percent": 93.3},
+  "per_question": [
+    {"id":"Q1","correctness":5,"faithfulness":5,"result":"exact_totals_and_averages_no_currency"},
+    {"id":"Q2","correctness":5,"faithfulness":5,"result":"exact_counts_and_high_precision_percentages"},
+    {"id":"Q3","correctness":4,"faithfulness":4,"result":"rounded_percentages_and_extra_risk_grouping"},
+    {"id":"Q4","correctness":4,"faithfulness":5,"result":"complete_without_currency_or_speculation"},
+    {"id":"Q5","correctness":4,"faithfulness":5,"result":"all_labels_and_metrics_minor_rounding"},
+    {"id":"Q6","correctness":4,"faithfulness":5,"result":"correct_extrema_missing_requested_counts"},
+    {"id":"Q7","correctness":3,"faithfulness":4,"result":"complete_buckets_but_coarse_rates_and_incorrect_descriptive_order"},
+    {"id":"Q8","correctness":3,"faithfulness":5,"result":"correct_metrics_but_missing_observed_income_min_max"},
+    {"id":"Q9","correctness":4,"faithfulness":5,"result":"complete_metrics_with_ratio_truncation"},
+    {"id":"Q10","correctness":3,"faithfulness":4,"result":"correct_benchmarks_and_segments_but_missing_counts_and_translated_labels"},
+    {"id":"Q11","correctness":5,"faithfulness":5,"result":"exact_complete_no_approval_claim"},
+    {"id":"Q12","correctness":4,"faithfulness":5,"result":"correct_mix_rounded_percentages"},
+    {"id":"Q13","correctness":4,"faithfulness":4,"result":"complete_distribution_with_extra_problem_grouping"},
+    {"id":"Q14","correctness":2,"faithfulness":3,"result":"funded_total_instead_of_expected_average"},
+    {"id":"Q15","correctness":5,"faithfulness":5,"result":"complete_after_targeted_mcp_retry"},
+    {"id":"Q16","correctness":5,"faithfulness":5,"result":"correct_extrema_no_currency"},
+    {"id":"Q17","correctness":3,"faithfulness":5,"result":"correct_bucket_counts_only"},
+    {"id":"Q18","correctness":4,"faithfulness":5,"result":"complete_metrics_with_ratio_truncation"}
+  ]
+}
