@@ -43,10 +43,12 @@ value เป็น object มี highest, lowest_overall, lowest_excluding_na �
 claims: dti_buckets
 value เป็น list ตามลำดับ <10, 10-<20, 20-<30, 30+, NULL แต่ละรายการมี dti_bucket, loan_count, avg_funded_amnt, avg_int_rate_pct
 นี่คือ RAW BUCKET CONTRACT: ห้ามตัด negative, 999 หรือ outlier เพิ่ม เพราะค่าดังกล่าวต้องตกใน bucket ตาม CASE ของโจทย์ เว้นแต่โจทย์ขอ validated DTI policy analysis โดยตรง
+คำถาม paraphrase ที่กล่าวเพียงการแบ่งภาระหนี้ต่อรายได้เป็นช่วงต่ำกว่า 10, 10 ถึงต่ำกว่า 20, 20 ถึงต่ำกว่า 30, ตั้งแต่ 30 และข้อมูลว่าง ให้ใช้ contract นี้เต็มรูปแบบและคืน count, avg_funded_amnt, avg_int_rate_pct ทุก bucket ห้ามตอบเฉพาะ policy หรือ valid-DTI count
 
 8. finance_fixed_income_bands
 claims: income_bands
 value เป็น list <50000, 50000-<70000, 70000-<100000, 100000+ สำหรับ Individual และ annual_inc NOT NULL แต่ละรายการมี income_band, loan_count, min_annual_inc, max_annual_inc, avg_funded_amnt, avg_int_rate_pct, avg_dti
+จำนวน loan_count และ AVG DTI ใช้ population เดียวกันคือ Individual + annual_inc NOT NULL ห้ามตัดแถวเพราะ dti เป็น NULL/negative/outlier; AVG(dti) ให้ SQL จัดการ NULL ตามปกติ
 
 9. finance_funding_gap_by_year
 claims: funding_gap_by_year
@@ -62,6 +64,7 @@ PRECISION CONTRACT:
 - หาก tool แสดง SUM เป็น scientific notation ให้ query ซ้ำโดย CAST เป็น VARCHAR(50) หรือ DECIMAL(38,2) ก่อนสร้าง claim
 - totals/counts ต้อง exact ห้ามปัดเป็นหลักพัน/ล้าน
 - averages/rates query ด้วย DECIMAL อย่างน้อย 6 ตำแหน่ง และค่อยปัดเฉพาะค่าที่ schema ขอ
+- สำหรับ composite list/object claims ให้แสดง avg_funded_amnt, avg_int_rate_pct, avg_dti, min/max เป็น JSON number ที่ ROUND 2 ตำแหน่งเหมือนกันทุก Agent และ counts เป็น integer
 - int_rate เก็บเป็น fraction; avg_int_rate_pct = AVG(int_rate) * 100
 
 ค่า claim แบบ list/object ต้องรักษาชื่อ field และลำดับตาม contract เพื่อให้ deterministic canonicalization จับ consensus ได้`;

@@ -2,7 +2,7 @@
 
 ตัวอย่าง Langflow 1.7.3 สำหรับงาน multi-agent แบบ parallel workers และ deterministic vote aggregation พร้อม benchmark ที่ใช้ MSSQL + RAG เป็น ground
 
-ภาพรวมและความแตกต่างของ v4, v5, v6 และ v7 อยู่ที่ [docs/flow-versions.md](docs/flow-versions.md)
+ภาพรวมและความแตกต่างของ v4–v9 อยู่ที่ [docs/flow-versions.md](docs/flow-versions.md)
 
 ## โครงสร้าง
 
@@ -24,6 +24,9 @@ benchmarks/finance-loan-grounded18/
   sql/ground-queries.sql
   raw-v7.jsonl
   raw-v8.jsonl
+  raw-v9-targeted8.jsonl
+  raw-v9-targeted2-rerun.jsonl
+  raw-v9.jsonl  # full run ล้มจาก MCP connection; ห้ามใช้คำนวณคะแนน
 scripts/
   build_v6_concurrent.mjs
   build_v7_financial_loan.mjs
@@ -35,6 +38,85 @@ scripts/
   inspect_mcp_servers.py
   call_mcp_tool.py
 ```
+
+## คำศัพท์และความสัมพันธ์ในกระบวนการ
+
+### คำศัพท์หลัก
+
+| คำ | ความหมายในระบบนี้ | ตัวอย่าง |
+|---|---|---|
+| **Answer** | คำตอบฉบับเต็มที่ Agent หนึ่งตัวสร้างจากคำถาม | คำอธิบายพอร์ตสินเชื่อพร้อมตัวเลขหลายรายการ |
+| **Candidate Answer** | Answer ของ Worker แต่ละตัวก่อนรวมผล โดย Workers ทำงานแยกจากกัน | Candidate 1, 2 และ 3 |
+| **Claim** | ข้อเท็จจริงย่อยหนึ่งรายการภายใน Answer ประกอบด้วย key และ value | `loan_count = 1432440` |
+| **Canonical Claim** | Claim ที่กำหนดชื่อ key, metric, grain, unit และโครงสร้างมาตรฐานไว้ล่วงหน้า เพื่อให้ Workers โหวตค่าเดียวกันได้ | ทุก Worker ต้องใช้ `requested_total` ไม่ใช้ชื่ออื่นที่ความหมายคล้ายกัน |
+| **Evidence** | หลักฐานที่รองรับ Claim เช่นผล SQL จาก MSSQL, policy จาก RAG หรือสมมติฐานที่โจทย์กำหนด | `COUNT_BIG(*)` จาก `loans_fact` |
+| **Calculation** | สูตรและการแทนค่าที่ใช้สร้าง derived Claim | `portfolio_pct = loan_count / total_count × 100` |
+| **Consensus** | ผลที่ Claim key และ value ตรงกันถึงเกณฑ์ที่กำหนด ในระบบนี้ใช้ quorum อย่างน้อย 2 ใน 3 | Workers 1 และ 2 ให้ `loan_count = 1432440` |
+| **Agreed Claim** | Claim ที่ผ่าน quorum แล้วและอนุญาตให้เข้าสู่คำตอบสุดท้าย | `loan_count = 1432440`, support 2/3 |
+| **Disputed Claim** | Claim ที่มีหลายค่า หรือไม่มีค่าใดได้เสียงถึง quorum | Workers ให้ยอดรวมคนละค่า |
+| **Aggregator** | Custom component แบบ deterministic ที่ normalize และนับ consensus ไม่ใช่ LLM | Claim Consensus Aggregator |
+| **Verbalizer** | LLM ที่เสนอถ้อยคำหรือ label ภาษาไทย แต่ไม่มีสิทธิ์เปลี่ยนค่าข้อเท็จจริง | เปลี่ยน `loan_count` เป็น “จำนวนสินเชื่อ” |
+| **Final Claim Guard** | Component แบบ deterministic ที่ประกอบค่าจาก Agreed Claims และปฏิเสธข้อมูลใหม่จาก LLM | ไม่อนุญาตให้เพิ่ม USD/THB หากไม่มี metadata |
+| **Ground Truth** | คำตอบมาตรฐานภายนอก SUT ที่ใช้ประเมิน Final Answer | `benchmarks/finance-loan-grounded18/ground-truth.json` |
+
+### ความสัมพันธ์ของคำเหล่านี้
+
+```mermaid
+flowchart LR
+    Q["คำถามเดียวกัน"]
+    DB["MSSQL Evidence"]
+    RAG["RAG Policy Evidence"]
+
+    subgraph W["Concurrent Workers"]
+        W1["Worker 1<br/>Candidate Answer"]
+        W2["Worker 2<br/>Candidate Answer"]
+        W3["Worker 3<br/>Candidate Answer"]
+    end
+
+    C1["Canonical Claims<br/>key + value + evidence"]
+    AGG["Deterministic Aggregator<br/>normalize + vote 2-of-3"]
+    AGREED["Agreed Claims"]
+    DISPUTED["Disputed Claims"]
+    V["LLM Verbalizer<br/>ถ้อยคำและ labels เท่านั้น"]
+    G["Deterministic Final Claim Guard<br/>ล็อก values และห้ามเพิ่ม claims"]
+    OUT["Final Answer<br/>Chat Output"]
+    GT["Ground Truth + Rubric<br/>Correctness / Faithfulness"]
+
+    Q --> W1
+    Q --> W2
+    Q --> W3
+    DB --> W1
+    DB --> W2
+    DB --> W3
+    RAG --> W1
+    RAG --> W2
+    RAG --> W3
+    W1 --> C1
+    W2 --> C1
+    W3 --> C1
+    C1 --> AGG
+    AGG -->|"ผ่าน quorum"| AGREED
+    AGG -->|"ไม่ถึง quorum"| DISPUTED
+    AGREED --> V
+    AGREED --> G
+    V --> G
+    G --> OUT
+    OUT -. "ประเมินภายนอก SUT" .-> GT
+    DISPUTED -. "ไม่เข้าสู่ Final Answer อัตโนมัติ" .-> GT
+```
+
+ตัวอย่างการโหวต Claim:
+
+```text
+Worker 1: loan_count = 1,432,440
+Worker 2: loan_count = 1,432,440
+Worker 3: loan_count = 1,432,441
+                          │
+                          └─ 2-of-3 consensus
+                             Agreed Claim: loan_count = 1,432,440
+```
+
+ชื่อ key เป็นส่วนหนึ่งของการโหวตด้วย หาก Workers ใช้ `loan_count`, `total_loans` และ `portfolio_size` แม้ value เท่ากัน Aggregator อาจมองเป็นคนละ Claim นี่คือเหตุผลที่ v9 เพิ่ม Canonical Claim Contract ก่อน vote
 
 ## Flow v6: Concurrent Full-Answer Consensus
 
@@ -157,7 +239,7 @@ v8 ให้ LLM ทำหน้าที่เสนอถ้อยคำแล
 
 v9 รักษา Final Claim Guard ของ v8 และเพิ่ม canonical claim schema สำหรับ 10 Finance/Loan contracts, alias normalization, precision-safe SQL และ raw-DTI semantics เพื่อเพิ่ม completeness โดยไม่คืนอำนาจสร้างข้อเท็จจริงให้ Final LLM รายละเอียดอยู่ใน [docs/v9-canonical-claims.md](docs/v9-canonical-claims.md)
 
-สถานะ: implemented และ import เข้าโปรเจกต์ NT แล้ว; evaluation pending การอนุญาตส่งข้อมูล Finance/Loan สำหรับ v9 ผ่าน OpenRouter
+สถานะ: implemented และ import เข้าโปรเจกต์ NT แล้ว การทดสอบ targeted 8 ข้อบันทึกใน `raw-v9-targeted8.jsonl` และ rerun 2 ข้อบันทึกใน `raw-v9-targeted2-rerun.jsonl` ส่วน `raw-v9.jsonl` เป็น full run ที่ล้มจาก MCP connection ทั้งชุด จึงเก็บไว้เป็นหลักฐานด้าน infrastructure และห้ามนำไปคำนวณคะแนนคุณภาพของ v9
 
 ผล safe-mode รอบแรกถูก invalidated และเก็บเพื่อ audit ไว้ใน `evaluation-safe-mode-invalidated.md`
 
