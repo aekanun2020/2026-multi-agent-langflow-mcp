@@ -6,7 +6,7 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, "..", "..");
 const sourcePath = path.join(root, "parallel-orchestration", "flows", "paper-exact", "LAB-concurrent-v4-paper-exact-thai.json");
 const outputDir = path.join(root, "hybrid-orchestration", "flows");
-const outputPath = path.join(outputDir, "LAB-hybrid-v1-grounded-consensus-thai.json");
+const outputPath = path.join(outputDir, "LAB-hybrid-v1-grounded-consensus-thai-upload-ready.json");
 const flow = JSON.parse(fs.readFileSync(sourcePath, "utf8"));
 const clone = (value) => structuredClone(value);
 const findNode = (id) => flow.data.nodes.find((item) => item.id === id);

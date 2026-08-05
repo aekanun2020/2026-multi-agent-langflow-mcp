@@ -46,12 +46,12 @@ Hybrid ใช้ Grounded-18 ชุดกลางเดียวกับ orche
 
 ## ไฟล์ใช้งาน
 
-- Flow: [`flows/LAB-hybrid-v1-grounded-consensus-thai.json`](flows/LAB-hybrid-v1-grounded-consensus-thai.json)
+- ไฟล์สำหรับ Upload: [`flows/LAB-hybrid-v1-grounded-consensus-thai-upload-ready.json`](flows/LAB-hybrid-v1-grounded-consensus-thai-upload-ready.json)
 - Builder: [`scripts/build_v1_grounded_consensus.mjs`](scripts/build_v1_grounded_consensus.mjs)
 - Langflow project: `NT`
 - Flow ID เดิมที่รักษาไว้: `cd488940-5fa4-4567-b5e8-43b26d5643ae`
 
-ไฟล์ Flow สำหรับแจกจ่ายไม่มี top-level `id` และ `endpoint_name` ฝังอยู่ Langflow จึงสร้าง identity ใหม่ทุกครั้งที่ใช้ **Upload a flow** และสามารถ upload ซ้ำเป็นสำเนาใหม่ได้ โดยค่า API key ไม่ถูกบันทึกใน JSON
+ไฟล์ `*-upload-ready.json` ไม่มี top-level `id` และ `endpoint_name` ฝังอยู่ Langflow จึงสร้าง identity ใหม่ทุกครั้งที่ใช้ **Upload a flow** และสามารถ upload ซ้ำเป็นสำเนาใหม่ได้ โดยค่า API key ไม่ถูกบันทึกใน JSON ชื่อไฟล์นี้ตั้งใจให้แตกต่างจากชื่อ flow ภายใน เพื่อแยกไฟล์แจกจ่ายออกจาก identity ที่ติดตั้งใน Langflow
 
 ตรวจยืนยันบน Langflow 1.7.3 แล้ว: เมื่อ project `NT` มี flow เดิมอยู่ การ import ไฟล์นี้ซ้ำสำเร็จเป็น `LAB-hybrid-v1-grounded-consensus-thai (1)` ด้วย ID ใหม่ `6963c8cb-2322-40a3-9cf3-1ba81393f657` และ graph ครบ 19 nodes/24 edges
 
