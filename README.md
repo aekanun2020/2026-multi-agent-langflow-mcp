@@ -59,7 +59,9 @@ scripts/
 | **Final Claim Guard** | Component แบบ deterministic ที่ประกอบค่าจาก Agreed Claims และปฏิเสธข้อมูลใหม่จาก LLM | ไม่อนุญาตให้เพิ่ม USD/THB หากไม่มี metadata |
 | **Ground Truth** | คำตอบมาตรฐานภายนอก SUT ที่ใช้ประเมิน Final Answer | `benchmarks/finance-loan-grounded18/ground-truth.json` |
 
-### ความสัมพันธ์ของคำเหล่านี้
+### Flow v9: Canonical Claim Consensus
+
+Diagram ต่อไปนี้เป็นกระบวนการของ **v9** โดยเฉพาะ ไม่ใช่ภาพรวมที่ทุก version ใช้เหมือนกันทั้งหมด v9 สืบทอด `LLM Verbalizer` และ `Final Claim Guard` จาก v8 แล้วเพิ่ม `Canonical Claim Contract` เพื่อบังคับให้ Workers ใช้ชื่อ key, metric, grain, unit และโครงสร้างเดียวกันก่อนเข้า deterministic vote
 
 ```mermaid
 flowchart LR
@@ -104,6 +106,8 @@ flowchart LR
     OUT -. "ประเมินภายนอก SUT" .-> GT
     DISPUTED -. "ไม่เข้าสู่ Final Answer อัตโนมัติ" .-> GT
 ```
+
+ลำดับในภาพจึงอ่านได้ว่า **Evidence → Candidate Answers → Canonical Claims → 2-of-3 Vote → Agreed Claims → Verbalizer → Final Claim Guard → Final Answer** ส่วน Ground Truth และ Rubric อยู่นอก SUT และใช้ประเมินคำตอบภายหลัง
 
 ตัวอย่างการโหวต Claim:
 
