@@ -1,0 +1,32 @@
+{
+  "flow_id": "d05b8974-53bd-4726-ba56-ca27e9e6d033",
+  "flow_name": "LAB-hybrid-v1-grounded-consensus-thai-ui-upload-20260805 (1)",
+  "run": "ui-duplicate1-full18-consistency-rerun2-20260806",
+  "comparison_run": "ui-duplicate1-full18-rerun-20260806",
+  "same_flow_same_questions_same_ground_same_rubric": true,
+  "scoring_scope": "final_answer_only",
+  "availability": {"first_pass": {"passed": 18, "total": 18, "percent": 100.0}},
+  "correctness": {"points": 78, "max_points": 90, "percent": 86.7, "previous_percent": 83.3, "delta_points": 3.4},
+  "faithfulness": {"points": 74, "max_points": 90, "percent": 82.2, "previous_percent": 81.1, "delta_points": 1.1},
+  "exact_score_pair_consistency": {"unchanged_questions": 8, "total": 18, "percent": 44.4},
+  "per_question": [
+    {"id":"Q1","correctness":5,"faithfulness":5,"previous":"5/5","change":"same"},
+    {"id":"Q2","correctness":4,"faithfulness":3,"previous":"4/4","change":"worse_faithfulness"},
+    {"id":"Q3","correctness":4,"faithfulness":5,"previous":"4/5","change":"same"},
+    {"id":"Q4","correctness":4,"faithfulness":4,"previous":"4/4","change":"same"},
+    {"id":"Q5","correctness":3,"faithfulness":5,"previous":"5/5","change":"worse_missing_counts"},
+    {"id":"Q6","correctness":5,"faithfulness":4,"previous":"5/4","change":"same"},
+    {"id":"Q7","correctness":5,"faithfulness":5,"previous":"4/3","change":"better_removed_unsupported_significance"},
+    {"id":"Q8","correctness":5,"faithfulness":5,"previous":"5/5","change":"same"},
+    {"id":"Q9","correctness":5,"faithfulness":5,"previous":"4/4","change":"better_ratio_precision"},
+    {"id":"Q10","correctness":3,"faithfulness":3,"previous":"5/3","change":"worse_missing_counts"},
+    {"id":"Q11","correctness":5,"faithfulness":4,"previous":"2/3","change":"better_reconciled_denominator"},
+    {"id":"Q12","correctness":4,"faithfulness":3,"previous":"4/3","change":"same"},
+    {"id":"Q13","correctness":5,"faithfulness":4,"previous":"5/5","change":"worse_rag_attribution"},
+    {"id":"Q14","correctness":5,"faithfulness":5,"previous":"5/5","change":"same"},
+    {"id":"Q15","correctness":5,"faithfulness":5,"previous":"5/5","change":"same"},
+    {"id":"Q16","correctness":5,"faithfulness":4,"previous":"3/3","change":"better_complete_filter_waterfall"},
+    {"id":"Q17","correctness":3,"faithfulness":3,"previous":"4/4","change":"worse_policy_threshold_changed"},
+    {"id":"Q18","correctness":3,"faithfulness":2,"previous":"2/3","change":"mixed_more_complete_but_policy_and_arithmetic_claims_worse"}
+  ]
+}

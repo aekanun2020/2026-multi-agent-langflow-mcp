@@ -2,6 +2,8 @@
 
 Repository นี้จัดตัวอย่างตาม **multi-agent orchestration pattern** เพื่อให้แต่ละ pattern มี flow, benchmark, ground truth, scripts และเอกสารของตัวเองโดยไม่ปะปนกัน
 
+> **ผลเปรียบเทียบล่าสุด:** [Finance/Loan Grounded-18 — Flow Comparison](benchmarks/finance-loan-grounded18/FLOW_COMPARISON.md) — เปรียบเทียบเฉพาะ Flow ที่ทดสอบด้วยคำถาม 18 ข้อและ ground/rubric เดียวกัน พร้อมชื่อไฟล์ ตำแหน่งใน repo และ commit สำหรับตรวจสอบย้อนกลับ
+
 Microsoft Learn แบ่ง orchestration หลักเป็น Sequential, Concurrent, Handoff, Group Chat และ Magentic ดู [Workflow orchestrations in Agent Framework](https://learn.microsoft.com/en-us/agent-framework/workflows/orchestrations/) และ [AI Agent Orchestration Patterns](https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/ai-agent-design-patterns)
 
 ## Orchestration catalog
