@@ -8,7 +8,7 @@ Remote repo ของตารางทั้งหมดคือ [`aekanun2020
 
 | Flow/run (flow file; remote repo; result commit) | Availability | Correctness | Faithfulness | Avg latency |
 |---|---:|---:|---:|---:|
-| **Concurrent Vote 2-of-3 current** (`Multi-Agent with Concurrent Orchestration/LAB-concurrent-vote-2of3-retry-thai.json`; `2026-multi-agent-langflow-mcp`; **pending commit below**) | **18/18** | **73/90 (81.1%)** | **79/90 (87.8%)** | **15.29s** |
+| **Concurrent Vote 2-of-3 current** (`Multi-Agent with Concurrent Orchestration/LAB-concurrent-vote-2of3-retry-thai.json`; `2026-multi-agent-langflow-mcp`; [`3ac4151`](https://github.com/aekanun2020/2026-multi-agent-langflow-mcp/commit/3ac4151)) | **18/18** | **73/90 (81.1%)** | **79/90 (87.8%)** | **15.29s** |
 | Parallel v4 paper-exact (`parallel-orchestration/flows/paper-exact/LAB-concurrent-v4-paper-exact-thai.json`; `2026-multi-agent-langflow-mcp`; [`82f4cc2`](https://github.com/aekanun2020/2026-multi-agent-langflow-mcp/commit/82f4cc214307f18b385ef36ab56be8411539ba3e)) | 17/18 | 63/90 (70.0%) | 61/90 (67.8%) | 17.55s |
 | Parallel v7 (`parallel-orchestration/flows/LAB-1-4-withlocal-concurrent-consensus-v7-financial-loan-thai.json`; `2026-multi-agent-langflow-mcp`; [`1364280`](https://github.com/aekanun2020/2026-multi-agent-langflow-mcp/commit/1364280038ae9aecc2b463c7691ffc9386d461b9)) | 18/18 | 73/90 (81.1%) | 46/90 (51.1%) | 56.70s |
 | Parallel v8 (`parallel-orchestration/flows/LAB-1-4-withlocal-concurrent-consensus-v8-guarded-verbalizer-thai.json`; `2026-multi-agent-langflow-mcp`; [`1364280`](https://github.com/aekanun2020/2026-multi-agent-langflow-mcp/commit/1364280038ae9aecc2b463c7691ffc9386d461b9)) | 16/18 | 34/90 (37.8%) | 77/90 (85.6%) | 83.12s |
