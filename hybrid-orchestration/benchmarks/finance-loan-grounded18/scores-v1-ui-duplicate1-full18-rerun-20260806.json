@@ -1,0 +1,33 @@
+{
+  "flow_id": "d05b8974-53bd-4726-ba56-ca27e9e6d033",
+  "flow_name": "LAB-hybrid-v1-grounded-consensus-thai-ui-upload-20260805 (1)",
+  "run": "ui-duplicate1-full18-rerun-20260806",
+  "scoring_scope": "final_answer_only",
+  "scale": "0-5 per metric per question",
+  "availability": {
+    "first_pass": {"passed": 17, "total": 18, "percent": 94.4},
+    "eventual_after_q18_retry": {"passed": 18, "total": 18, "percent": 100.0}
+  },
+  "correctness": {"points": 75, "max_points": 90, "percent": 83.3},
+  "faithfulness": {"points": 73, "max_points": 90, "percent": 81.1},
+  "per_question": [
+    {"id":"Q1","correctness":5,"faithfulness":5,"result":"exact totals and averages; no invented currency"},
+    {"id":"Q2","correctness":4,"faithfulness":4,"result":"exact counts but rounded percentages; semantic descriptions inferred from schema after RAG absence"},
+    {"id":"Q3","correctness":4,"faithfulness":5,"result":"complete canonical statuses with rounded percentages; correctly reports absent RAG definitions"},
+    {"id":"Q4","correctness":4,"faithfulness":4,"result":"correct yearly values with coarse rounding; fraction storage asserted without visible RAG support"},
+    {"id":"Q5","correctness":5,"faithfulness":5,"result":"complete canonical labels and metrics without quality ranking"},
+    {"id":"Q6","correctness":5,"faithfulness":4,"result":"exact extrema, counts and averages; N/A-as-missing interpretation exceeds direct RAG support"},
+    {"id":"Q7","correctness":4,"faithfulness":3,"result":"correct buckets with coarse rates; unsupported statistical-significance wording"},
+    {"id":"Q8","correctness":5,"faithfulness":5,"result":"complete bands, observed extrema and averages; avoids causality"},
+    {"id":"Q9","correctness":4,"faithfulness":4,"result":"totals and gaps exact but 2016 ratio is misrounded and incorrectly described as exact"},
+    {"id":"Q10","correctness":5,"faithfulness":3,"result":"metrics complete; dti_joint design and appropriateness inferred from schema rather than confirmed by RAG"},
+    {"id":"Q11","correctness":2,"faithfulness":3,"result":"quality counts largely correct but policy denominator and stated exclusions do not reconcile; zero DTI records omitted from exclusion explanation"},
+    {"id":"Q12","correctness":4,"faithfulness":3,"result":"rejection is directionally correct, but attributes a single-loan installment definition to RAG without direct evidence"},
+    {"id":"Q13","correctness":5,"faithfulness":5,"result":"exact benchmarks and five strict-match segments; clearly separates statistical reasoning from absent RAG policy"},
+    {"id":"Q14","correctness":5,"faithfulness":5,"result":"exact strict-condition result and benchmarks; avoids unsupported customer-quality label"},
+    {"id":"Q15","correctness":5,"faithfulness":5,"result":"complete yearly winners and comparison values; avoids causality"},
+    {"id":"Q16","correctness":3,"faithfulness":3,"result":"useful conditional calculation but chooses DTI <=42 after admitting no organization policy and does not fully reconcile exclusions from the full portfolio"},
+    {"id":"Q17","correctness":4,"faithfulness":4,"result":"metrics and population-shift explanation are strong, but uses <=36 although cited RAG category is <36"},
+    {"id":"Q18","correctness":2,"faithfulness":3,"result":"retry answered, but requested/funded averages and required RAG chunks are absent; raw/policy bucket boundaries and totals contain material inconsistencies"}
+  ]
+}
