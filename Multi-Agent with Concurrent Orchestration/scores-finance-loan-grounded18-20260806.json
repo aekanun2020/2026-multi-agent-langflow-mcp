@@ -1,0 +1,38 @@
+{
+  "suite": "finance-loan-grounded18-v1",
+  "sut": {
+    "name": "LAB-concurrent-vote-2of3-retry-thai",
+    "flow_id": "4e193ed2-8649-475d-8ecc-db05a23e9839",
+    "endpoint": "http://127.0.0.1:7860/api/v1/run/4e193ed2-8649-475d-8ecc-db05a23e9839"
+  },
+  "scoring_basis": "Final Answer only",
+  "scores": [
+    {"question":"Q1","correctness":4,"faithfulness":4,"note":"count/averages correct; both totals rounded rather than exact"},
+    {"question":"Q2","correctness":5,"faithfulness":5,"note":"counts, percentages and labels correct"},
+    {"question":"Q3","correctness":5,"faithfulness":5,"note":"all statuses, counts and rounded shares correct"},
+    {"question":"Q4","correctness":5,"faithfulness":5,"note":"all four year cohorts and percentage scale correct"},
+    {"question":"Q5","correctness":4,"faithfulness":5,"note":"all labels retained; int_rate shown as fraction without percent clarification"},
+    {"question":"Q6","correctness":2,"faithfulness":5,"note":"missing lowest-overall N/A and requested group counts"},
+    {"question":"Q7","correctness":4,"faithfulness":4,"note":"bucket metrics correct but invents currency"},
+    {"question":"Q8","correctness":5,"faithfulness":4,"note":"band metrics correct; closing wording overstates descriptive association"},
+    {"question":"Q9","correctness":5,"faithfulness":5,"note":"year totals, gap, ratio and non-approval constraint correct"},
+    {"question":"Q10","correctness":3,"faithfulness":5,"note":"benchmarks and five labels correct but segment metrics omitted"},
+    {"question":"Q11","correctness":3,"faithfulness":2,"note":"rounded totals, invented currency, approval interpretation and 30000 instead of exact 28000 difference"},
+    {"question":"Q12","correctness":5,"faithfulness":5,"note":"both portfolio shares correct"},
+    {"question":"Q13","correctness":5,"faithfulness":3,"note":"distribution correct but adds unsupported status interpretations"},
+    {"question":"Q14","correctness":2,"faithfulness":4,"note":"reports funded totals instead of the mapped year-cohort average and invents currency"},
+    {"question":"Q15","correctness":5,"faithfulness":5,"note":"all five labels and three requested averages correct"},
+    {"question":"Q16","correctness":4,"faithfulness":4,"note":"extrema correct but invents currency"},
+    {"question":"Q17","correctness":3,"faithfulness":5,"note":"bucket counts correct but mapped contract metrics are incomplete"},
+    {"question":"Q18","correctness":4,"faithfulness":4,"note":"year calculations correct but invents currency"}
+  ],
+  "summary": {
+    "questions": 18,
+    "successful_http_answers": 18,
+    "errors": 0,
+    "correctness_total": 73,
+    "correctness_average": 4.06,
+    "faithfulness_total": 79,
+    "faithfulness_average": 4.39
+  }
+}
