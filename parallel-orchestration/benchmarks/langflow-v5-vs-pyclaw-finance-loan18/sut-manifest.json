@@ -1,0 +1,26 @@
+{
+  "benchmark_id": "langflow-v5-vs-pyclaw-finance-loan18-rerun-20260806",
+  "tested_at": "2026-08-06",
+  "sut": {
+    "kind": "langflow_parallel_vote_consensus",
+    "file": "parallel-orchestration/flows/LAB-1-4-withlocal-parallel-consensus-v5-thai.json",
+    "file_sha256": "85320a708efbd5e4e5068f7567fd24b5ad6de7fa7439b71ff630ec4e36223c87",
+    "runtime_project": "NT",
+    "runtime_flow_id": "8279ebb2-2592-4557-8b3e-963402aff62e",
+    "runtime_api": "http://127.0.0.1:7860/api/v1/run/8279ebb2-2592-4557-8b3e-963402aff62e",
+    "langflow_version": "1.7.3"
+  },
+  "comparator": {
+    "repository": "aekanun2020/PyClaw",
+    "tested_commit": "d821bb3"
+  },
+  "model": "qwen/qwen3.5-35b-a3b",
+  "mcp": {
+    "mssql_host_endpoint": "http://127.0.0.1:9000/mcp",
+    "rag_endpoint": "http://100.64.102.88:8000/mcp",
+    "langflow_server_names": ["local-mcp-mssql", "vpn-rag"]
+  },
+  "credentials_recorded": false,
+  "questions_sha256": "499164040926cd21f5554e4643dc5ac3840b4cb230539f399c79baaac1eec135",
+  "ground_truth_sha256": "6b62a19f17ccc9eedaf33bb3d34d8ed81c83b578eeae579beeb03122e4b77e94"
+}

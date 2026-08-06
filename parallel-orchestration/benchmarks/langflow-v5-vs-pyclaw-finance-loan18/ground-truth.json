@@ -1,0 +1,145 @@
+{
+  "suite_id": "finance-loan-grounded18-v1",
+  "database": "TestDB",
+  "fact_table": "loans_fact",
+  "data_period": "2016-2019",
+  "row_count": 1432440,
+  "currency_metadata": null,
+  "rate_storage": "fraction",
+  "source": {
+    "repository": "aekanun2020/v5-Python-Agent-LangGraph",
+    "commit": "c34c3b8c300ab0b83a0c371cdaa760c11d318e91",
+    "path": "artifacts/finance_mcp_ground_truth_q1_q10.md",
+    "generated_from_read_only_mssql": "2026-07-30"
+  },
+  "question_mapping": {
+    "Q1": "finance_portfolio_totals",
+    "Q2": "finance_application_mix",
+    "Q3": "finance_status_mix",
+    "Q4": "finance_year_cohorts",
+    "Q5": "finance_home_ownership_segments",
+    "Q6": "finance_employment_extrema",
+    "Q7": "finance_dti_buckets",
+    "Q8": "finance_fixed_income_bands",
+    "Q9": "finance_funding_gap_by_year",
+    "Q10": "finance_dual_risk_screen",
+    "Q11": "finance_portfolio_totals",
+    "Q12": "finance_application_mix",
+    "Q13": "finance_status_mix",
+    "Q14": "finance_year_cohorts",
+    "Q15": "finance_home_ownership_segments",
+    "Q16": "finance_employment_extrema",
+    "Q17": "finance_dti_buckets",
+    "Q18": "finance_funding_gap_by_year"
+  },
+  "contracts": {
+    "finance_portfolio_totals": {
+      "grain": "one row over all loans_fact rows",
+      "expected": {
+        "loan_count": 1432440,
+        "requested_total": 22017159100,
+        "funded_total": 22017131100,
+        "requested_avg": 15370.388358,
+        "funded_avg": 15370.368811
+      },
+      "tolerance": {"counts_and_totals": 0, "averages": 0.01},
+      "forbidden_claims": ["invented_currency"]
+    },
+    "finance_application_mix": {
+      "grain": "one row per canonical application_type; denominator is all loans",
+      "expected": [
+        {"application_type": "Individual", "loan_count": 1320357, "portfolio_pct": 92.1754},
+        {"application_type": "Joint App", "loan_count": 112083, "portfolio_pct": 7.8246}
+      ],
+      "tolerance": {"counts": 0, "percentages": 0.0001}
+    },
+    "finance_status_mix": {
+      "grain": "one row per canonical loan_status; denominator is all loans",
+      "expected": [
+        {"loan_status": "Current", "loan_count": 702223, "portfolio_pct": 49.0229},
+        {"loan_status": "Fully Paid", "loan_count": 551955, "portfolio_pct": 38.5325},
+        {"loan_status": "Charged Off", "loan_count": 147348, "portfolio_pct": 10.2865},
+        {"loan_status": "Late (31-120 days)", "loan_count": 18752, "portfolio_pct": 1.3091},
+        {"loan_status": "In Grace Period", "loan_count": 7928, "portfolio_pct": 0.5535},
+        {"loan_status": "Late (16-30 days)", "loan_count": 4207, "portfolio_pct": 0.2937},
+        {"loan_status": "Default", "loan_count": 27, "portfolio_pct": 0.0019}
+      ],
+      "forbidden_claims": ["approval_interpretation", "invented_status_grouping"]
+    },
+    "finance_year_cohorts": {
+      "grain": "one row per issue_d_dim.year",
+      "expected": [
+        {"year": 2016, "loan_count": 434407, "avg_funded_amnt": 14733.974591, "avg_int_rate_pct": 13.0414},
+        {"year": 2017, "loan_count": 387116, "avg_funded_amnt": 14858.279947, "avg_int_rate_pct": 13.3674},
+        {"year": 2018, "loan_count": 495242, "avg_funded_amnt": 16025.020394, "avg_int_rate_pct": 12.7284},
+        {"year": 2019, "loan_count": 115675, "avg_funded_amnt": 16671.263021, "avg_int_rate_pct": 12.7200}
+      ],
+      "forbidden_claims": ["invented_currency", "replace_average_with_total", "replace_average_with_weighted_rate"]
+    },
+    "finance_home_ownership_segments": {
+      "grain": "one row per exact home_ownership label; retain small groups",
+      "expected": [
+        {"home_ownership": "MORTGAGE", "loan_count": 701646, "avg_funded_amnt": 17024.786039, "avg_int_rate_pct": 12.5888, "avg_dti": 19.747853},
+        {"home_ownership": "RENT", "loan_count": 556961, "avg_funded_amnt": 13544.125890, "avg_int_rate_pct": 13.4838, "avg_dti": 18.540844},
+        {"home_ownership": "OWN", "loan_count": 170888, "avg_funded_amnt": 14549.707557, "avg_int_rate_pct": 13.0753, "avg_dti": 19.213482},
+        {"home_ownership": "ANY", "loan_count": 2940, "avg_funded_amnt": 14206.037415, "avg_int_rate_pct": 12.8239, "avg_dti": 18.384255},
+        {"home_ownership": "NONE", "loan_count": 5, "avg_funded_amnt": 14400.000000, "avg_int_rate_pct": 13.1400, "avg_dti": 23.902000}
+      ],
+      "forbidden_claims": ["invented_currency", "weighted_rate_substitution", "causal_interpretation"]
+    },
+    "finance_employment_extrema": {
+      "grain": "one row per exact emp_length; extrema by avg_funded_amnt",
+      "expected": {
+        "highest": {"emp_length": "10+ years", "loan_count": 478304, "avg_funded_amnt": 16514.623963, "avg_int_rate_pct": 12.8512, "avg_dti": 19.227889},
+        "lowest_overall": {"emp_length": "N/A", "loan_count": 108470, "avg_funded_amnt": 12263.196506, "avg_int_rate_pct": 13.2071, "avg_dti": 22.875127},
+        "lowest_excluding_na": {"emp_length": "1 year", "loan_count": 95926, "avg_funded_amnt": 14488.151023}
+      },
+      "forbidden_claims": ["invented_currency", "causal_interpretation"]
+    },
+    "finance_dti_buckets": {
+      "grain": "one row per raw DTI bucket; NULL is separate and no additional outlier filter is applied",
+      "boundaries": ["<10", "10-<20", "20-<30", "30+", "NULL"],
+      "expected": [
+        {"dti_bucket": "<10", "loan_count": 254841, "avg_funded_amnt": 14533.541699, "avg_int_rate_pct": 11.8884},
+        {"dti_bucket": "10-<20", "loan_count": 575531, "avg_funded_amnt": 15471.560611, "avg_int_rate_pct": 12.4218},
+        {"dti_bucket": "20-<30", "loan_count": 432491, "avg_funded_amnt": 15527.219815, "avg_int_rate_pct": 13.5834},
+        {"dti_bucket": "30+", "loan_count": 167993, "avg_funded_amnt": 15845.435524, "avg_int_rate_pct": 15.1157},
+        {"dti_bucket": "NULL", "loan_count": 1584, "avg_funded_amnt": 20025.868056, "avg_int_rate_pct": 14.0461}
+      ],
+      "allowed_interpretation": "ordered non-null buckets show increasing average interest; descriptive association only",
+      "forbidden_claims": ["causality", "approval_decision", "changing_raw_bucket_population"]
+    },
+    "finance_fixed_income_bands": {
+      "grain": "Individual applications with annual_inc not NULL; one row per fixed band",
+      "expected": [
+        {"income_band": "<50000", "loan_count": 334020, "min_annual_inc": 1900, "max_annual_inc": 49999.00, "avg_funded_amnt": 9057.922205, "avg_int_rate_pct": 13.7220, "avg_dti": 19.632060},
+        {"income_band": "50000-<70000", "loan_count": 324848, "min_annual_inc": 50000, "max_annual_inc": 69999.48, "avg_funded_amnt": 12879.194808, "avg_int_rate_pct": 13.1425, "avg_dti": 19.062727},
+        {"income_band": "70000-<100000", "loan_count": 333863, "min_annual_inc": 70000, "max_annual_inc": 99999.84, "avg_funded_amnt": 16428.018079, "avg_int_rate_pct": 12.8034, "avg_dti": 18.100492},
+        {"income_band": "100000+", "loan_count": 327626, "min_annual_inc": 100000, "max_annual_inc": 61000000, "avg_funded_amnt": 21591.207734, "avg_int_rate_pct": 12.0991, "avg_dti": 15.801032}
+      ],
+      "forbidden_claims": ["invented_currency", "causal_risk_interpretation", "changing_population_for_dti"]
+    },
+    "finance_funding_gap_by_year": {
+      "grain": "one row per year; funding_ratio = SUM(funded_amnt) / SUM(loan_amnt)",
+      "expected": [
+        {"year": 2016, "requested_total": 6400569700, "funded_total": 6400541700, "funding_gap": 28000, "funding_ratio": 0.999996},
+        {"year": 2017, "requested_total": 5751877900, "funded_total": 5751877900, "funding_gap": 0, "funding_ratio": 1.000000},
+        {"year": 2018, "requested_total": 7936263150, "funded_total": 7936263150, "funding_gap": 0, "funding_ratio": 1.000000},
+        {"year": 2019, "requested_total": 1928448350, "funded_total": 1928448350, "funding_gap": 0, "funding_ratio": 1.000000}
+      ],
+      "forbidden_claims": ["approval_rate", "invented_currency"]
+    },
+    "finance_dual_risk_screen": {
+      "grain": "portfolio benchmarks then one row per emp_length; both comparisons are strict greater-than",
+      "benchmarks": {"avg_int_rate_pct": 12.9953, "charged_off_share_pct": 10.2865},
+      "expected_segments": [
+        {"emp_length": "N/A", "loan_count": 108470, "avg_int_rate_pct": 13.2071, "charged_off_share_pct": 13.2119},
+        {"emp_length": "1 year", "loan_count": 95926, "avg_int_rate_pct": 13.1982, "charged_off_share_pct": 10.8875},
+        {"emp_length": "2 years", "loan_count": 130251, "avg_int_rate_pct": 13.0903, "charged_off_share_pct": 10.5603},
+        {"emp_length": "3 years", "loan_count": 116802, "avg_int_rate_pct": 13.1003, "charged_off_share_pct": 10.5520},
+        {"emp_length": "5 years", "loan_count": 88686, "avg_int_rate_pct": 13.0683, "charged_off_share_pct": 10.3139}
+      ],
+      "forbidden_claims": ["causal_model", "individual_lending_decision"]
+    }
+  }
+}

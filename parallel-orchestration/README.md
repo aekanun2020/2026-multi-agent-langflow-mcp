@@ -10,6 +10,8 @@
 
 ผล Finance/Loan Grounded-18 เทียบ Magentic v3: correctness ดีขึ้นจาก 51.1% เป็น 70.0% แต่ faithfulness ลดจาก 92.2% เป็น 67.8% ดู [ผลเปรียบเทียบรายข้อ](benchmarks/finance-loan-grounded18/evaluation-v4-paper-exact-vs-magentic-v3.md)
 
+ผล rerun แบบทีละข้อของ **Langflow parallel-consensus v5 เทียบ PyClaw** บน Finance/Loan 18 ข้อ: Langflow correctness 71.1% / faithfulness 62.2%; PyClaw correctness 62.2% / faithfulness 70.0% ดู [benchmark พร้อม raw evidence ทั้ง 36 responses](benchmarks/langflow-v5-vs-pyclaw-finance-loan18/README.md)
+
 ตัวอย่าง Langflow 1.7.3 สำหรับงาน multi-agent แบบ parallel workers และ deterministic vote aggregation พร้อม benchmark ที่ใช้ MSSQL + RAG เป็น ground
 
 Directory นี้เก็บเฉพาะ **Parallel Orchestration** ซึ่งตรงกับชื่อ **Concurrent orchestration** ใน Microsoft Learn: Agents หลายตัวประมวลผล task เดียวกันพร้อมกันอย่างอิสระ ก่อนรวบรวมและ aggregate ผลลัพธ์ ดู [Microsoft Learn: Concurrent orchestration](https://learn.microsoft.com/en-us/agent-framework/workflows/orchestrations/concurrent)
@@ -41,6 +43,14 @@ benchmarks/finance-loan-grounded18/
   raw-v9-targeted8.jsonl
   raw-v9-targeted2-rerun.jsonl
   raw-v9.jsonl  # full run ล้มจาก MCP connection; ห้ามใช้คำนวณคะแนน
+benchmarks/langflow-v5-vs-pyclaw-finance-loan18/
+  README.md
+  evaluation-per-question.md
+  scores.json
+  questions.json
+  ground-truth.json
+  raw/langflow-v5/Q01.jsonl ... Q18.jsonl
+  raw/pyclaw/Q01.json ... Q18.json
 scripts/
   build_v6_concurrent.mjs
   build_v7_financial_loan.mjs

@@ -32,6 +32,9 @@ def extract_text(payload):
 
 
 questions = load_questions(sys.argv[1])
+case_id = os.getenv("LANGFLOW_CASE_ID")
+if case_id:
+    questions = [(label, question) for label, question in questions if label == case_id]
 if len(sys.argv) > 2:
     questions = questions[: int(sys.argv[2])]
 
