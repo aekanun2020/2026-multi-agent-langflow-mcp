@@ -51,6 +51,22 @@ Hybrid ใช้ Grounded-18 ชุดกลางเดียวกับ orche
 - Langflow project: `NT`
 - Flow ID เดิมที่รักษาไว้: `cd488940-5fa4-4567-b5e8-43b26d5643ae`
 
+### ประวัติชื่อ Flow file
+
+Flow เดียวกันในสาย Hybrid v1 เคยปรากฏภายใต้ชื่อไฟล์ต่อไปนี้ตามลำดับ:
+
+1. `flows/LAB-hybrid-v1-grounded-consensus-thai.json`
+2. `flows/LAB-hybrid-v1-grounded-consensus-thai-upload-ready.json`
+3. `flows/LAB-hybrid-v1-grounded-consensus-thai-ui-upload-20260805.json` — ชื่อปัจจุบันบน `main`
+
+การ rename ครั้งแรกใน commit [`82fb128`](https://github.com/aekanun2020/2026-multi-agent-langflow-mcp/commit/82fb1289ed0c575a6bbfe54675d3d7f218fb456d) เป็น pure rename (`R100`) และไม่เปลี่ยนเนื้อหาไฟล์เลย ส่วนขั้นตอนเตรียม UI upload ภายหลังเปลี่ยนเฉพาะ Flow identity/metadata และทำให้ `node.id` ตรงกับ `node.data.id` ได้แก่:
+
+- ลบ `endpoint_name` เพื่อไม่ให้ชนเมื่อ upload ซ้ำ
+- เปลี่ยน top-level Flow `id` และ `name`
+- แก้ internal `data.id` ของ cloned nodes 12 จุดให้ตรงกับ outer node ID
+
+การเปลี่ยนดังกล่าวไม่ได้เปลี่ยน prompts, agent roles, MCP tools, จำนวน 19 nodes/24 edges, architecture หรือ business logic อย่างไรก็ตาม ไฟล์ชื่อเดิมกับไฟล์ UI-upload ปัจจุบันไม่เหมือนกันแบบ byte-for-byte จึงควรใช้เฉพาะรอบที่ยิง Flow file/Flow ID เดียวกันเมื่อวัด consistency แบบควบคุมตัวแปร
+
 ไฟล์ `*-ui-upload-20260805.json` มี top-level `id` ใหม่และชื่อ flow ใหม่ ไม่ชนกับตัวที่ติดตั้งอยู่ เพราะหน้า **Upload a flow** ของ Langflow 1.7.3 ต้องการรูปแบบเดียวกับไฟล์ export ซึ่งมี identity ครบ ส่วน `endpoint_name` และ API key ไม่ถูกบันทึกใน JSON
 
 หมายเหตุ: การตรวจเดิมที่สร้าง `LAB-hybrid-v1-grounded-consensus-thai (1)` ID `6963c8cb-2322-40a3-9cf3-1ba81393f657` เป็นการเรียก create-flow API ไม่ใช่ปุ่ม Upload ใน UI จึงไม่ใช้เป็นหลักฐานว่าไฟล์ซึ่งไม่มี `id` รองรับ UI uploader
