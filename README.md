@@ -1,6 +1,6 @@
 # 2026 Multi-Agent Langflow MCP
 
-Repository นี้จัดตัวอย่างตาม **multi-agent orchestration pattern** เพื่อให้แต่ละ pattern มี flow, benchmark, ground truth, scripts และเอกสารของตัวเองโดยไม่ปะปนกัน
+Repository นี้จัดตัวอย่างตาม **multi-agent orchestration pattern และสายการทดลอง** เพื่อให้แต่ละสายมี Flow, benchmark, ground truth, scripts และเอกสารที่ตรวจสอบย้อนกลับได้ โดยสอง directory ที่เป็น Concurrent แยกกันเพราะศึกษาคนละแนวทาง: answer-level vote กับ claim-level voting
 
 > **ผลเปรียบเทียบล่าสุด:** [Finance/Loan Grounded-18 — Flow Comparison](benchmarks/finance-loan-grounded18/FLOW_COMPARISON.md) — เปรียบเทียบเฉพาะ Flow ที่ทดสอบด้วยคำถาม 18 ข้อและ ground/rubric เดียวกัน พร้อมชื่อไฟล์ ตำแหน่งใน repo และ commit สำหรับตรวจสอบย้อนกลับ
 
@@ -10,8 +10,8 @@ Microsoft Learn แบ่ง orchestration หลักเป็น Sequential, 
 
 | Directory | Microsoft pattern | สถานะ | เนื้อหา |
 |---|---|---|---|
-| [`Multi-Agent with Concurrent Orchestration/`](Multi-Agent%20with%20Concurrent%20Orchestration/) | **Concurrent orchestration** | ล่าสุด: 2-of-3 Answer Vote | Worker 3 ตัวรับคำถามเดียวกันพร้อมกัน ใช้ MSSQL/RAG tools เหมือนกัน แล้วส่งคำตอบให้ Vote Agent ที่ไม่มี tool; ตอบเมื่อสาระสำคัญตรงกันอย่างน้อย 2 ใน 3 |
-| [`parallel-orchestration/`](parallel-orchestration/) | **Concurrent orchestration** | ล่าสุด: v9 | Agents รับ task เดียวกันพร้อมกัน แล้วรวมผลแบบ semantic consensus หรือ deterministic claim voting |
+| [`Multi-Agent with Concurrent Orchestration/`](Multi-Agent%20with%20Concurrent%20Orchestration/) | **Concurrent orchestration** | [`LAB-concurrent-vote-2of3-retry-thai.json`](Multi-Agent%20with%20Concurrent%20Orchestration/LAB-concurrent-vote-2of3-retry-thai.json) | Worker 3 ตัวรับคำถามเดียวกันพร้อมกัน ใช้ MSSQL/RAG tools เหมือนกัน แล้วส่งคำตอบให้ Vote Agent ที่ไม่มี tool; ตอบเมื่อสาระสำคัญตรงกันอย่างน้อย 2 ใน 3 |
+| [`parallel-orchestration/`](parallel-orchestration/) | **Concurrent orchestration** | ล่าสุด: [`v9`](parallel-orchestration/flows/LAB-1-4-withlocal-concurrent-consensus-v9-canonical-claims-thai.json) | Agents รับ task เดียวกันพร้อมกัน แล้วรวมผลแบบ semantic consensus หรือ deterministic claim voting ระดับ claim |
 | [`magentic-orchestration/`](magentic-orchestration/) | **Magentic orchestration** | ล่าสุด: v3 | Manager สร้าง task ledger, delegate งานให้ specialist subflows, ตรวจ progress, re-plan และผ่าน Resilient Final Guard |
 | [`hybrid-orchestration/`](hybrid-orchestration/) | **Hybrid orchestration** | ล่าสุด: v1 | ผสม Concurrent Workers, Semantic Consensus, Evidence Verification และ Language-only Editing |
 
@@ -26,18 +26,21 @@ Microsoft Learn แบ่ง orchestration หลักเป็น Sequential, 
 
 ถ้าต้องการ Flow ที่สมดุลด้านความเร็วและคุณภาพ ให้เริ่มจาก **Concurrent 2-of-3 Answer Vote** ถ้าต้องการคะแนนคุณภาพสูงสุดในผลที่บันทึกไว้ให้ดู **Hybrid v1** ถ้าต้องการศึกษาการ vote claim แบบ deterministic ให้ดู **Concurrent v9** และถ้าต้องการ dynamic planning/delegation ให้ดู **Magentic v3**
 
-ชื่อ directory `parallel-orchestration` ใช้ตามชื่อที่โครงการนี้เลือก ส่วนคำที่ Microsoft Learn ใช้ในเอกสารปัจจุบันคือ **Concurrent orchestration** ซึ่งหมายถึง pattern เดียวกันในบริบทนี้
+ชื่อ directory `parallel-orchestration` ใช้ตามชื่อเดิมของโครงการ ส่วนคำที่ Microsoft Learn ใช้คือ **Concurrent orchestration** ดังนั้น `parallel-orchestration/` และ `Multi-Agent with Concurrent Orchestration/` จัดอยู่ใน pattern เดียวกัน แต่ต่างกันที่หน่วยลงคะแนน:
 
-Directory สำหรับ pattern อื่นจะเพิ่มที่ระดับเดียวกันในอนาคต เช่น:
+- `Multi-Agent with Concurrent Orchestration/` ลงคะแนนจากสาระสำคัญของคำตอบทั้งฉบับแบบ 2 ใน 3
+- `parallel-orchestration/` สายล่าสุดลงคะแนนจาก canonical claim แต่ละรายการ
+
+## โครงสร้างปัจจุบันและสายที่วางแผนไว้
 
 ```text
-Multi-Agent with Concurrent Orchestration/  # Concurrent 2-of-3 answer vote
-parallel-orchestration/     # Concurrent orchestration
-hybrid-orchestration/       # Concurrent consensus + grounded verification
-sequential-orchestration/   # Sequential pipeline
-handoff-orchestration/      # Dynamic transfer of control
-group-chat-orchestration/   # Shared collaborative conversation
-magentic-orchestration/     # Manager-directed dynamic planning (latest: v3)
+Multi-Agent with Concurrent Orchestration/  # มีแล้ว: Concurrent 2-of-3 answer vote
+parallel-orchestration/                     # มีแล้ว: Concurrent claim/consensus experiments
+hybrid-orchestration/                       # มีแล้ว: Concurrent + verification + editing
+magentic-orchestration/                     # มีแล้ว: Manager-directed planning/delegation
+sequential-orchestration/                   # วางแผน: Sequential pipeline
+handoff-orchestration/                      # วางแผน: Dynamic transfer of control
+group-chat-orchestration/                   # วางแผน: Shared collaborative conversation
 ```
 
-รายละเอียด flow, diagram, benchmark และวิธีใช้งานอยู่ที่ [Concurrent 2-of-3 README](Multi-Agent%20with%20Concurrent%20Orchestration/README.md), [Parallel README](parallel-orchestration/README.md), [Magentic README](magentic-orchestration/README.md) และ [Hybrid README](hybrid-orchestration/README.md)
+รายละเอียด Flow, diagram, benchmark และวิธีใช้งานอยู่ที่ [Concurrent 2-of-3 README](Multi-Agent%20with%20Concurrent%20Orchestration/README.md), [Parallel README](parallel-orchestration/README.md), [Magentic README](magentic-orchestration/README.md) และ [Hybrid README](hybrid-orchestration/README.md) ส่วนผลเปรียบเทียบข้ามสายให้อ้างอิง [ตาราง Grounded-18 กลาง](benchmarks/finance-loan-grounded18/FLOW_COMPARISON.md) เพื่อหลีกเลี่ยงการนำคะแนนจากคนละชุดคำถามมาเทียบกัน
