@@ -1,0 +1,44 @@
+{
+  "suite": "finance-loan-grounded18-v1",
+  "sut": {
+    "name": "LAB-hybrid-vote-2of3-verified-thai",
+    "flow_file": "Hybrid with Vote-Based Orchestration/LAB-hybrid-vote-2of3-verified-thai.json",
+    "flow_id": "5aa21611-7510-4e68-a8ab-5f72ec179550",
+    "endpoint": "http://127.0.0.1:7860/api/v1/run/5aa21611-7510-4e68-a8ab-5f72ec179550"
+  },
+  "scoring_basis": "Final Answer only",
+  "scores": [
+    {"question":"Q1","correctness":4,"faithfulness":4,"note":"values are substantively correct but totals are rounded rather than exact"},
+    {"question":"Q2","correctness":5,"faithfulness":5,"note":"counts, percentages and labels are correct"},
+    {"question":"Q3","correctness":4,"faithfulness":4,"note":"all status rows are correct but the stated portfolio total is 100 too high"},
+    {"question":"Q4","correctness":5,"faithfulness":5,"note":"all year cohorts and requested metrics are correct without invented currency"},
+    {"question":"Q5","correctness":5,"faithfulness":5,"note":"all labels and requested metrics are correct"},
+    {"question":"Q6","correctness":2,"faithfulness":5,"note":"group counts are omitted and N/A lacks requested rate and DTI"},
+    {"question":"Q7","correctness":3,"faithfulness":4,"note":"counts and trend endpoints are correct, but intermediate bucket metrics are omitted and statistical significance is unsupported"},
+    {"question":"Q8","correctness":5,"faithfulness":5,"note":"all fixed bands, populations and metrics are correct"},
+    {"question":"Q9","correctness":5,"faithfulness":5,"note":"year totals, gap, ratio and non-approval constraint are correct"},
+    {"question":"Q10","correctness":0,"faithfulness":0,"note":"HTTP response contained no Flow output and therefore no Final Answer"},
+    {"question":"Q11","correctness":3,"faithfulness":3,"note":"totals are rounded; approximate gap and funded-amnt interpretation are unsupported or inaccurate"},
+    {"question":"Q12","correctness":5,"faithfulness":5,"note":"both portfolio shares are correct"},
+    {"question":"Q13","correctness":5,"faithfulness":3,"note":"distribution is correct but status grouping and interpretations are unsupported"},
+    {"question":"Q14","correctness":2,"faithfulness":3,"note":"reports funded totals instead of mapped cohort averages and calls funded_amnt actually disbursed lending"},
+    {"question":"Q15","correctness":5,"faithfulness":5,"note":"all groups and requested metrics are correct without invented currency"},
+    {"question":"Q16","correctness":0,"faithfulness":0,"note":"HTTP response contained no Flow output and therefore no Final Answer"},
+    {"question":"Q17","correctness":3,"faithfulness":5,"note":"bucket counts and derived shares are correct but mapped contract metrics are incomplete"},
+    {"question":"Q18","correctness":5,"faithfulness":5,"note":"year calculations are correct without invented currency"}
+  ],
+  "summary": {
+    "questions": 18,
+    "successful_http_responses": 18,
+    "valid_final_answers": 16,
+    "missing_final_answers": 2,
+    "correctness_total": 66,
+    "correctness_average": 3.67,
+    "faithfulness_total": 71,
+    "faithfulness_average": 3.94,
+    "latency_average_seconds": 30.82,
+    "latency_min_seconds": 13.40,
+    "latency_max_seconds": 148.20,
+    "latency_total_seconds": 554.73
+  }
+}
