@@ -32,7 +32,7 @@ Flow file ถูกสร้างด้วย builder โดยนำ component
 
 ## สำหรับผู้อ่านที่ไม่เคยใช้ Langflow: วิธีอ่านชื่อและเส้นเชื่อม
 
-ใน Langflow กล่องแต่ละกล่องบน canvas เรียกว่า **Component** เช่น `Chat Input`, `Worker Agent 1` และ `Collect 3 Worker Answers`
+ใน Langflow พื้นที่ที่ใช้วางและลากเส้นเชื่อมกล่องต่าง ๆ เรียกว่า **พื้นที่ทำงาน (canvas)** ส่วนกล่องแต่ละกล่องเรียกว่า **Component** เช่น `Chat Input`, `Worker Agent 1` และ `Collect 3 Worker Answers`
 
 Component มี **port (จุดเชื่อมต่อ)** สองด้าน จากจุดนี้เป็นต้นไปเอกสารจะใช้คำว่า **port** อย่างสม่ำเสมอ:
 
@@ -46,7 +46,7 @@ Component มี **port (จุดเชื่อมต่อ)** สองด้
 ชื่อ Component.ชื่อ port
 ```
 
-รูปแบบ `Component.port` อ่านว่า **“port ชื่อ `port` ของ Component ชื่อ `Component`”** เครื่องหมายจุด `.` มีไว้แบ่งชื่อ Component ออกจากชื่อ port เท่านั้น รูปแบบนี้เป็น notation ที่ README ใช้อธิบายเส้นเชื่อม ไม่ใช่ syntax, คำสั่ง หรือ operator ของ Langflow
+รูปแบบ `Component.port` อ่านว่า **“port ชื่อ `port` ของ Component ชื่อ `Component`”** เครื่องหมายจุด `.` มีไว้แบ่งชื่อ Component ออกจากชื่อ port เท่านั้น รูปแบบนี้เป็นเพียงวิธีเขียนย่อที่ README ใช้อธิบายเส้นเชื่อม ไม่ใช่รูปแบบคำสั่งของ Langflow และไม่ต้องพิมพ์ข้อความนี้ลงใน Langflow
 
 ตัวอย่าง:
 
@@ -56,7 +56,7 @@ Collect 3 Worker Answers.original_request
 
 อ่านว่า:
 
-- `Collect 3 Worker Answers` คือชื่อ Component บน canvas
+- `Collect 3 Worker Answers` คือชื่อ Component บนพื้นที่ทำงาน
 - `original_request` คือชื่อภายในของ input port
 - ทั้งข้อความอ่านว่า “input port ชื่อ `original_request` ของ Component ชื่อ `Collect 3 Worker Answers`”
 
@@ -70,16 +70,16 @@ Chat Input.message
 หมายถึง:
 
 1. หา Component ชื่อ `Chat Input`
-2. จับวงกลม output port ด้านขวาของ `Chat Input`; เมื่อ hover ใน Langflow 1.7.3 จะเห็น tooltip `Output type: Message`
+2. เอาเม้าส์มาวางไว้ที่วงกลม output port ด้านขวาของ `Chat Input` จะมีกล่องข้อความเล็ก ๆ แสดงว่า `Output type: Message` จากนั้นกดค้างที่วงกลมดังกล่าว
 3. ลากเส้นไปยัง Component ชื่อ `Collect 3 Worker Answers`
 4. ปล่อยที่ input port ชื่อ `original_request`
-5. ข้อมูลชนิด `Message` ซึ่งมีคำถามต้นฉบับของผู้ใช้จะไหลตามลูกศรจากซ้ายไปขวา
+5. ข้อมูลชนิด `Message` ซึ่งมีทั้งข้อความคำถามต้นฉบับและข้อมูลประกอบของข้อความ จะไหลตามเส้นจากซ้ายไปขวา
 
 ### ใครเป็นผู้ตั้งชื่อ port
 
 - **Built-in Component:** ผู้พัฒนา Langflow กำหนดชื่อ port มาให้แล้ว ผู้ใช้เลือกและลากเส้นจาก port ที่มีอยู่
 - **Custom Component:** ผู้เขียน Python component เป็นผู้กำหนดชื่อ port ใน code
-- การลากเส้นบน canvas ไม่ได้เป็นการตั้งชื่อ port ใหม่ แต่เป็นการเชื่อม port ที่ Component ประกาศไว้แล้ว
+- การลากเส้นบนพื้นที่ทำงานไม่ได้เป็นการตั้งชื่อ port ใหม่ แต่เป็นการเชื่อม port ที่ Component มีอยู่แล้ว
 
 Custom component สามารถมีทั้งชื่อภายในและชื่อที่แสดงบน UI เช่น:
 
@@ -90,27 +90,27 @@ MessageTextInput(
 )
 ```
 
-- `name="original_request"` คือชื่อภายในที่ใช้ใน Flow JSON และ notation ของ README
-- `display_name="Original Request"` คือชื่ออ่านง่ายที่ Component schema เตรียมไว้ให้ UI แต่ตำแหน่งหรือรูปแบบการแสดงขึ้นอยู่กับชนิด Component และสถานะย่อ/ขยาย
+- `name="original_request"` คือชื่อภายในที่ใช้ใน Flow JSON และวิธีเขียนย่อของ README
+- `display_name="Original Request"` คือชื่ออ่านง่ายที่กำหนดไว้ให้หน้าจอ Langflow แต่จะปรากฏที่ใดหรือไม่ ขึ้นอยู่กับชนิด Component และการแสดงผลแบบย่อหรือแบบขยาย
 
-ดังนั้นชื่อที่ UI แสดงอาจเป็น **Original Request**, อาจแสดงเฉพาะชนิดข้อมูล หรืออาจไม่แสดง label บน canvas เลย ขณะที่เอกสารเขียน `original_request` เพื่อให้ตรวจเทียบกับ JSON ได้ตรงกัน
+ดังนั้นชื่อที่หน้าจอแสดงอาจเป็น **Original Request**, อาจแสดงเฉพาะชนิดข้อมูล หรืออาจไม่แสดงชื่อกำกับ port บนพื้นที่ทำงานเลย ขณะที่เอกสารเขียน `original_request` เพื่อให้ตรวจเทียบกับ JSON ได้ตรงกัน
 
-### สิ่งที่เห็นจริงบน canvas อาจไม่มีชื่อ port
+### สิ่งที่เห็นจริงบนพื้นที่ทำงานอาจไม่มีชื่อ port
 
-Component แบบ compact เช่น `Chat Input` แสดงเพียงวงกลม output port ด้านขวา เมื่อวางเมาส์เหนือวงกลม Langflow 1.7.3 แสดง tooltip ว่า:
+Component ที่แสดงแบบย่อ เช่น `Chat Input` จะแสดงเพียงวงกลม output port ด้านขวา ให้เอาเม้าส์มาวางไว้ที่วงกลมนั้น แล้ว Langflow 1.7.3 จะแสดงกล่องข้อความเล็ก ๆ ว่า:
 
 ```text
 Output type: Message
 Drag to connect compatible inputs
 ```
 
-ในกรณีนี้ผู้ใช้ไม่ต้องค้นหาคำว่า `message` บน canvas ให้ระบุ port จาก:
+ในกรณีนี้ผู้ใช้ไม่ต้องค้นหาคำว่า `message` บนพื้นที่ทำงาน ให้สังเกต port จาก:
 
 1. ตำแหน่ง — output port อยู่ด้านขวาของ Component
-2. Tooltip — แสดงชนิดข้อมูล `Message`
+2. กล่องข้อความที่ปรากฏเมื่อเอาเม้าส์มาวางไว้ที่ port — แสดงชนิดข้อมูล `Message`
 3. เส้นเดิม — หากมีการเชื่อมอยู่แล้วให้ดูเส้นที่ออกจากวงกลมนั้น
 
-ชื่อภายใน `message` ใช้สำหรับอ่าน Flow JSON, builder และตารางอ้างอิงใน README ไม่ใช่ label ที่รับประกันว่าจะมองเห็นบน canvas
+ชื่อภายใน `message` ใช้สำหรับอ่าน Flow JSON, โปรแกรมที่ใช้สร้าง Flow และตารางอ้างอิงใน README ไม่ใช่ชื่อกำกับที่รับประกันว่าจะมองเห็นบนพื้นที่ทำงาน
 
 ### วิธีอ่านลูกศรและชนิดข้อมูล
 
@@ -132,19 +132,19 @@ Question for Workers.result (Message)
 
 คำที่ใช้ในเอกสารนี้:
 
-- **Source**: Component ต้นทางที่ส่งข้อมูล
-- **Target**: Component ปลายทางที่รับข้อมูล
-- **Payload**: ตัวข้อมูลที่วิ่งอยู่ในเส้น เช่นคำถามหรือคำตอบ
-- **Fan-out**: output เดียวลากไปหลาย Components เช่นส่งคำถามเดียวกันให้ Workers สามตัว
-- **Fan-in**: หลาย outputs ไหลมารวมที่ Component เดียว เช่นคำตอบ Workers สามตัวไหลเข้า Collector
-- **Loop-back**: เส้นที่ย้อนจาก Component ด้านหลังกลับไปยัง Component ก่อนหน้าเพื่อทำงานซ้ำ
-- **Handle**: คำที่ใช้เฉพาะเมื่อกล่าวถึงข้อมูลภายใน Flow JSON ซึ่งระบุว่า edge ผูกกับ port ใด เช่น `sourceHandle` และ `targetHandle`; บนหน้า canvas ให้เรียกว่า port
+- **ต้นทาง (Source)**: Component ที่ส่งข้อมูล
+- **ปลายทาง (Target)**: Component ที่รับข้อมูล
+- **ข้อมูลที่ส่ง (Payload)**: ตัวข้อมูลที่ไหลอยู่ในเส้น เช่น คำถามหรือคำตอบ
+- **แยกออกหลายทาง (Fan-out)**: output เดียวเชื่อมไปหลาย Components เช่น ส่งคำถามเดียวกันให้ Workers สามตัว
+- **รวมจากหลายทาง (Fan-in)**: หลาย outputs ไหลมารวมที่ Component เดียว เช่น คำตอบ Workers สามตัวไหลเข้า Collector
+- **เส้นวนกลับ (Loop-back)**: เส้นที่ย้อนจาก Component ด้านหลังกลับไปยัง Component ก่อนหน้าเพื่อทำงานซ้ำ
+- **Handle**: ชื่อทางเทคนิคที่พบเฉพาะใน Flow JSON ใช้ระบุว่าเส้นเชื่อมผูกกับ port ใด เช่น `sourceHandle` และ `targetHandle`; บนพื้นที่ทำงานให้เรียกว่า port
 
 ### ชนิดข้อมูลหลักที่พบใน Flow
 
 | ชนิด | ความหมายแบบง่าย | ตัวอย่างใน Flow |
 |---|---|---|
-| `Message` | ข้อความสนทนาพร้อม metadata | คำถามผู้ใช้และคำตอบ Agent |
+| `Message` | ข้อความสนทนาพร้อมข้อมูลประกอบ เช่น ผู้ส่งและเวลา | คำถามผู้ใช้และคำตอบ Agent |
 | `Data` | ข้อมูลหนึ่งรายการที่ไม่จำเป็นต้องเป็นข้อความสนทนา | คำถามหนึ่งรายการที่ออกจาก Loop |
 | `DataFrame` | กลุ่มของ `Data` หลายรายการ | รายการคำถามที่เตรียมให้ Loop |
 
@@ -172,7 +172,7 @@ flowchart LR
     R -->|"False Message"| L
 ```
 
-## วิธีสร้างและ Configure แต่ละ Component
+## วิธีสร้างและตั้งค่าแต่ละ Component
 
 ### 1. Chat Input
 
@@ -180,23 +180,23 @@ flowchart LR
 
 วิธีสร้าง:
 
-1. ลาก `Chat Input` ลงบน canvas
+1. ลาก `Chat Input` ลงบนพื้นที่ทำงาน
 2. ตั้ง `Sender = User` และ `Sender Name = User`
 3. เปิด `Store Messages` หากต้องการเก็บประวัติใน Langflow; Flow file นี้ตั้งเป็น `true`
 
 output port ที่ใช้มีชื่อภายในว่า `message` และส่งข้อมูลชนิด `Message` โดยลากออกสามทาง:
 
-บน canvas แบบ compact จะเห็นเป็นวงกลม output port ด้านขวาของ `Chat Input` และ tooltip `Output type: Message`; คำว่า `message` เป็นชื่อภายใน JSON
+เมื่อ Component แสดงแบบย่อ จะเห็นเป็นวงกลม output port ด้านขวาของ `Chat Input` ให้เอาเม้าส์มาวางไว้ที่วงกลม แล้วจะเห็นกล่องข้อความ `Output type: Message`; คำว่า `message` เป็นชื่อภายใน JSON จึงอาจไม่ปรากฏบนพื้นที่ทำงาน
 
 - ไป `Prepare Original Question.original_question` เพื่อเริ่มเส้นทางทำงานของ Workers
 - ไป `Collect 3 Worker Answers.original_request` เพื่อให้ Vote Agent เห็นคำถามต้นฉบับ
 - ไป `Pass or Retry.false_case_message` เพื่อให้ทางออก RETRY ส่งคำถามเดิมกลับเข้า Loop
 
-ข้อมูลที่ไหลคือข้อความคำถามของผู้ใช้พร้อม metadata ของ `Message` ไม่ใช่ string เปล่า
+ข้อมูลที่ไหลคือข้อความคำถามของผู้ใช้พร้อมข้อมูลประกอบของ `Message` เช่น ผู้ส่งและเวลา ไม่ใช่ข้อความธรรมดาเพียงอย่างเดียว
 
 ### 2. Prepare Original Question
 
-ชนิด: custom component `RetryQuestionSeed` ชื่อบน canvas ว่า `Prepare Original Question`
+ชนิด: custom component `RetryQuestionSeed` ชื่อบนพื้นที่ทำงานว่า `Prepare Original Question`
 
 วิธีสร้าง:
 
@@ -214,11 +214,11 @@ output port ที่ใช้มีชื่อภายในว่า `messag
 
 ### 3. Retry Original Question
 
-ชนิด: built-in `LoopComponent` จากหมวด **Flow Control** ชื่อบน canvas ว่า `Retry Original Question`
+ชนิด: built-in `LoopComponent` จากหมวด **Flow Control** ชื่อบนพื้นที่ทำงานว่า `Retry Original Question`
 
 วิธีสร้างและตั้งค่า:
 
-1. ลาก `Loop` ลงบน canvas
+1. ลาก `Loop` ลงบนพื้นที่ทำงาน
 2. ไม่ต้องแก้ Python code ของ built-in component
 3. ต่อ `Prepare Original Question.result` เข้า input port ชื่อภายใน `data` ซึ่งมี `display_name` ว่า `Inputs`
 4. ใช้ output port ชื่อภายใน `item` ซึ่งมี `display_name` ว่า `Item` เป็นข้อมูลของรอบปัจจุบัน
@@ -239,7 +239,7 @@ output port ที่ใช้มีชื่อภายในว่า `messag
 
 ### 4. Question for Workers
 
-ชนิด: custom component `RetryQuestionMessage` ชื่อบน canvas ว่า `Question for Workers`
+ชนิด: custom component `RetryQuestionMessage` ชื่อบนพื้นที่ทำงานว่า `Question for Workers`
 
 วิธีสร้าง:
 
@@ -250,14 +250,14 @@ output port ที่ใช้มีชื่อภายในว่า `messag
 
 หน้าที่คืออ่าน `Data.text` จาก Loop แล้วแปลงกลับเป็น `Message(text=...)` เพราะ Agent รับคำถามผ่าน `input_value` ชนิด `Message`
 
-ลากเส้นแบบ fan-out:
+ลากเส้นแบบแยกออกสามทาง:
 
 - `Retry Original Question.item (Data)` → `Question for Workers.item (Data)`
 - `Question for Workers.result (Message)` → `Worker Agent 1.input_value (Message)`
 - `Question for Workers.result (Message)` → `Worker Agent 2.input_value (Message)`
 - `Question for Workers.result (Message)` → `Worker Agent 3.input_value (Message)`
 
-เมื่อ `Message` เดียวกันพร้อมที่ทั้งสาม branch Langflow สามารถ schedule Worker ทั้งสามโดยไม่ต้องรอคำตอบของ Worker ตัวอื่น จึงเป็นส่วน concurrent ของ Flow
+เมื่อ `Message` เดียวกันไปถึงเส้นทางทั้งสาม Langflow สามารถเริ่ม Worker ทั้งสามพร้อมกัน โดย Worker ตัวหนึ่งไม่ต้องรอคำตอบของอีกตัว นี่คือส่วนที่ทำงานพร้อมกันของ Flow
 
 ### 5. Worker Agent 1, 2 และ 3
 
@@ -265,7 +265,7 @@ output port ที่ใช้มีชื่อภายในว่า `messag
 
 ค่าที่เหมือนกัน:
 
-| ค่า | Configuration |
+| รายการ | ค่าที่ตั้งไว้ |
 |---|---|
 | Model Provider | OpenAI-compatible |
 | Model Name | `qwen/qwen3.5-35b-a3b` |
@@ -282,7 +282,7 @@ output port ที่ใช้มีชื่อภายในว่า `messag
 - Worker 2: `seed = 202`
 - Worker 3: `seed = 303`
 
-Agent Instructions ของทั้งสามตัวกำหนดเหมือนกันว่าให้ตอบคำถามเดียวกันอย่างอิสระ ใช้หลักฐานจริง รักษาตัวเลข สูตร หน่วย label ขอบเขตประชากรและ business conditions ห้ามดูคำตอบของ Worker ตัวอื่น และตอบภาษาไทยเป็นหลัก
+คำสั่งประจำ Agent ของทั้งสามตัวกำหนดเหมือนกันว่าให้ตอบคำถามเดียวกันอย่างอิสระ ใช้หลักฐานจริง รักษาตัวเลข สูตร หน่วย ชื่อกำกับ ขอบเขตประชากร และเงื่อนไขทางธุรกิจ ห้ามดูคำตอบของ Worker ตัวอื่น และตอบภาษาไทยเป็นหลัก
 
 การเชื่อมต่อข้อมูลที่ไม่ใช่ MCP:
 
@@ -302,7 +302,7 @@ Agent Instructions ของทั้งสามตัวกำหนดเห�
 3. สร้าง input port ชนิด `Message` จำนวนสี่รายการ: `original_request`, `candidate_1`, `candidate_2`, `candidate_3`
 4. สร้าง output port ชื่อ `result` ชนิด `Message`
 
-หน้าที่คือรอ dependency ให้ครบทั้งคำถามเดิมและคำตอบ Worker สามตัว แล้วประกอบเป็นข้อความ bundle โดยไม่ลงคะแนน ไม่ parse JSON และไม่แก้ claim
+หน้าที่คือรอรับให้ครบทั้งคำถามเดิมและคำตอบจาก Worker สามตัว แล้วรวมเป็นข้อความชุดเดียว โดยไม่ลงคะแนน ไม่แยกวิเคราะห์ JSON และไม่แก้ข้อความยืนยันข้อเท็จจริง (claim)
 
 ลากเส้น:
 
@@ -312,15 +312,15 @@ Agent Instructions ของทั้งสามตัวกำหนดเห�
 - `Worker Agent 3.response` → `candidate_3`
 - `Collect 3 Worker Answers.result (Message)` → `Vote Agent.input_value (Message)`
 
-ข้อมูลใน output เป็น `Message` ที่มีคำถามต้นฉบับและคำตอบทั้งสามชุด เพื่อให้ Vote Agent เห็นข้อมูลทั้งหมดใน invocation เดียว
+ข้อมูลใน output เป็น `Message` ที่มีคำถามต้นฉบับและคำตอบทั้งสามชุด เพื่อให้ Vote Agent ได้รับข้อมูลทั้งหมดพร้อมกันในการทำงานหนึ่งครั้ง
 
 ### 7. Vote Agent — 2 of 3
 
 ชนิด: built-in `Agent` แต่ **ไม่ต่อ tool ใด ๆ**
 
-Configuration:
+ค่าที่ตั้งไว้:
 
-| ค่า | Configuration |
+| รายการ | ค่าที่ตั้งไว้ |
 |---|---|
 | Model | `qwen/qwen3.5-35b-a3b` ผ่าน OpenRouter |
 | Temperature | `0` |
@@ -343,15 +343,15 @@ Agent Instructions กำหนดให้ตรวจว่าคำตอบ�
 - `Vote Agent.response (Message)` → `Pass or Retry.input_text (Message)`
 - `Vote Agent.response (Message)` → `Pass or Retry.true_case_message (Message)`
 
-เส้นแรกใช้ตัดสินเงื่อนไข ส่วนเส้นที่สองเป็น payload ที่ส่งต่อเมื่อผ่าน
+เส้นแรกใช้ตัดสินเงื่อนไข ส่วนเส้นที่สองส่งตัวคำตอบต่อไปเมื่อผ่าน
 
 ### 8. Pass or Retry
 
 ชนิด: built-in `If-Else` หรือ `ConditionalRouter` จากหมวด **Flow Control**
 
-Configuration:
+ค่าที่ตั้งไว้:
 
-| ค่า | Configuration |
+| รายการ | ค่าที่ตั้งไว้ |
 |---|---|
 | Operator | `starts with` |
 | Match Text | `PASS` |
@@ -362,8 +362,8 @@ Configuration:
 Inputs มีสามเส้น:
 
 - `Vote Agent.response` → `input_text`: ข้อความที่ใช้ตรวจว่าขึ้นต้นด้วย `PASS` หรือไม่
-- `Vote Agent.response` → `true_case_message`: payload เมื่อเงื่อนไขเป็นจริง
-- `Chat Input.message` → `false_case_message`: คำถามต้นฉบับที่ส่งออกเมื่อเงื่อนไขเป็นเท็จ
+- `Vote Agent.response` → `true_case_message`: ตัวคำตอบที่ส่งต่อเมื่อเงื่อนไขเป็นจริง
+- `Chat Input.message` → `false_case_message`: คำถามต้นฉบับที่ส่งต่อเมื่อเงื่อนไขเป็นเท็จ
 
 Outputs:
 
@@ -383,7 +383,7 @@ Outputs:
 3. Input `approved_answer` เป็น `MessageTextInput`
 4. Output `result` เป็น `Message`
 
-หน้าที่มีเพียงลบ routing marker `PASS` และ newline/colon ที่ตามหลังออกจากต้นข้อความ ไม่ตรวจความถูกต้อง ไม่คำนวณ ไม่แก้เนื้อหา และไม่เพิ่ม claim
+หน้าที่มีเพียงลบคำควบคุมเส้นทาง `PASS` รวมถึงการขึ้นบรรทัดใหม่หรือเครื่องหมายทวิภาค (`:`) ที่ตามหลังออกจากต้นข้อความ ไม่ตรวจความถูกต้อง ไม่คำนวณ ไม่แก้เนื้อหา และไม่เพิ่มข้อความยืนยันข้อเท็จจริงใหม่
 
 ลากเส้น:
 
@@ -394,7 +394,7 @@ Outputs:
 
 ชนิด: built-in `Chat Output` จากหมวด **Input & Output**
 
-Configuration ใน Flow file:
+ค่าที่ตั้งไว้ใน Flow file:
 
 - `Sender = Machine`
 - `Sender Name = AI`
@@ -410,42 +410,42 @@ Configuration ใน Flow file:
 | 1 | Chat Input.message | Message | Prepare Original Question.original_question | Message | คำถามเดิมเข้าสู่เส้นทาง Worker |
 | 2 | Prepare Original Question.result | DataFrame | Retry Original Question.data | DataFrame | เตรียมรายการสำหรับ Loop |
 | 3 | Retry Original Question.item | Data | Question for Workers.item | Data | item ของรอบปัจจุบัน |
-| 4–6 | Question for Workers.result | Message | Worker Agent 1–3.input_value | Message | fan-out คำถามเดียวกันไปสาม Workers |
+| 4–6 | Question for Workers.result | Message | Worker Agent 1–3.input_value | Message | แยกคำถามเดียวกันไปยัง Workers สามตัว |
 | 7 | Chat Input.message | Message | Collect 3 Worker Answers.original_request | Message | เก็บโจทย์เดิมไว้ใน vote bundle |
-| 8–10 | Worker Agent 1–3.response | Message | Collect 3 Worker Answers.candidate_1–3 | Message | fan-in คำตอบสามชุด |
+| 8–10 | Worker Agent 1–3.response | Message | Collect 3 Worker Answers.candidate_1–3 | Message | รวมคำตอบสามชุดเข้าสู่ Component เดียว |
 | 11 | Collect 3 Worker Answers.result | Message | Vote Agent.input_value | Message | bundle สำหรับ vote |
 | 12 | Vote Agent.response | Message | Pass or Retry.input_text | Message | ข้อความสำหรับตรวจ PASS |
-| 13 | Vote Agent.response | Message | Pass or Retry.true_case_message | Message | payload เมื่อผ่าน |
-| 14 | Chat Input.message | Message | Pass or Retry.false_case_message | Message | payload คำถามเดิมเมื่อไม่ผ่าน |
+| 13 | Vote Agent.response | Message | Pass or Retry.true_case_message | Message | ตัวคำตอบที่ส่งต่อเมื่อผ่าน |
+| 14 | Chat Input.message | Message | Pass or Retry.false_case_message | Message | คำถามเดิมที่ส่งต่อเมื่อไม่ผ่าน |
 | 15 | Pass or Retry.true_result | Message | Remove PASS Marker.approved_answer | Message | คำตอบที่ผ่าน vote |
-| 16 | Remove PASS Marker.result | Message | Chat Output.input_value | Message | Final Answer ที่ลบ marker แล้ว |
+| 16 | Remove PASS Marker.result | Message | Chat Output.input_value | Message | คำตอบสุดท้ายที่ลบคำควบคุม `PASS` แล้ว |
 | 17 | Pass or Retry.false_result | Message | Retry Original Question.item | Data/Message loop port | ส่งคำถามเดิมกลับเข้า Loop |
 
 ## ทิศทางการไหลของข้อมูล
 
 1. `Message` จาก Chat Input ถูกเก็บเป็น original request และถูกแปลงเป็น `DataFrame` สำหรับ Loop
 2. Loop ปล่อย `Data` หนึ่ง item แล้ว utility แปลงเป็น `Message`
-3. `Message` เดียวกันแตกออกสาม branch ไป Worker Agents พร้อมกัน
+3. `Message` เดียวกันแยกออกสามทางไปยัง Worker Agents พร้อมกัน
 4. คำตอบ `Message` สามชุดรวมกลับเป็น `Message bundle`
 5. Vote Agent คืน `Message` ที่เป็น PASS พร้อมคำตอบ หรือ RETRY
 6. If-Else ส่ง PASS ไปทาง Chat Output หรือส่ง original-question `Message` กลับเข้า Loop
-7. ทาง PASS ลบเฉพาะ marker แล้วจึงแสดง Final Answer
+7. ทาง PASS ลบเฉพาะคำควบคุม `PASS` แล้วจึงแสดงคำตอบสุดท้าย
 
-ไม่มี JSON contract, parser, evidence verifier หรือ final guard ใน Flow นี้ การตัดสินใจมีเพียง Vote Agent ว่าสาระสำคัญตรงกันอย่างน้อย 2 ใน 3 หรือไม่
+Flow นี้ไม่มีข้อบังคับเรื่องโครงสร้าง JSON, ตัวแยกวิเคราะห์ JSON, Agent ตรวจหลักฐาน หรือด่านตรวจคำตอบสุดท้าย การตัดสินใจมีเพียง Vote Agent ว่าสาระสำคัญตรงกันอย่างน้อย 2 ใน 3 หรือไม่
 
 ## ไฟล์
 
 - `LAB-concurrent-vote-2of3-retry-thai.json` — ไฟล์สำหรับ Upload a flow ใน Langflow 1.7.3
 - `build_concurrent_vote_retry.mjs` — builder ที่สร้าง Flow จาก Hybrid v1 โดยตัด Verifier, Final Editor และส่วนอื่นที่ไม่อยู่ใน design นี้ออก
 
-`Remove PASS Marker` เป็น routing utility ที่ลบคำว่า `PASS` ก่อน Chat Output เท่านั้น ไม่ตรวจ แก้ หรือเพิ่มสาระของคำตอบ
+`Remove PASS Marker` เป็น Component ช่วยจัดเส้นทาง โดยลบคำว่า `PASS` ก่อนส่งเข้า Chat Output เท่านั้น ไม่ตรวจ แก้ หรือเพิ่มสาระของคำตอบ
 
-จุดวนกลับใช้ `LoopComponent` มาตรฐานของ Langflow 1.7.3 โดยตรง เพื่อให้เส้น `RETRY → Loop` ไม่ถูกหน้า UI ลบทิ้ง ส่วน `Prepare Original Question` และ `Question for Workers` มีหน้าที่แปลงชนิดข้อมูลเข้า–ออกจาก Loop เท่านั้น ไม่ลงคะแนน ไม่แก้คำตอบ และไม่ทำหน้าที่แทน Agent
+จุดวนกลับใช้ `LoopComponent` มาตรฐานของ Langflow 1.7.3 โดยตรง เพื่อให้เส้น `RETRY → Loop` ไม่ถูกหน้าจอ Langflow ลบทิ้ง ส่วน `Prepare Original Question` และ `Question for Workers` มีหน้าที่แปลงชนิดข้อมูลเข้า–ออกจาก Loop เท่านั้น ไม่ลงคะแนน ไม่แก้คำตอบ และไม่ทำหน้าที่แทน Agent
 
 ## ผลตรวจล่าสุด
 
 - หน้า Langflow แสดงเส้น `False/RETRY → Retry Original Question` และไม่ขึ้นข้อความ invalid connection
 - Runtime smoke test ผ่าน HTTP 200 และส่งคำตอบออก Chat Output ได้
-- Worker Agent แต่ละตัวมี MCP tool edges 2 เส้น: MSSQL และ RAG
-- Vote Agent มี tool edges 0 เส้น
+- Worker Agent แต่ละตัวมีเส้นเชื่อมไปยัง MCP tools 2 เส้น: MSSQL และ RAG
+- Vote Agent ไม่มีเส้นเชื่อมไปยัง tool
 - ไฟล์ JSON ใน repo ไม่บันทึก API key; key อยู่เฉพาะใน flow ที่ติดตั้งใน Langflow
