@@ -73,3 +73,18 @@ flowchart LR
 - Smoke test Q1 ผ่านครบทั้ง Workers, Vote, Evidence Verifier, Final Editor และ Chat Output
 - Evidence Verifier เรียก MSSQL ตรวจคำตอบซ้ำ และ Final Answer ไม่เติมสกุลเงิน
 - API key อยู่เฉพาะใน Flow ที่ติดตั้งใน Langflow; ไฟล์ JSON ใน repo ไม่เก็บ key
+
+## Grounded-18 run 1 — 2026-08-08
+
+| Metric | Result |
+|---|---:|
+| Final Answer | 16/18 |
+| Correctness | 66/90 |
+| Faithfulness | 71/90 |
+| Average latency | 30.82s |
+
+รอบแรกยังด้อยกว่า Concurrent Vote baseline เฉลี่ย 5 รอบ Verifier ลด unsupported currency ได้หลายข้อ แต่ยังปล่อยตัวเลขผิด คำตอบไม่ครบ และ semantic interpretation บางจุด อีกทั้ง Q10/Q16 ไม่มี Final Answer จึงยังต้องยิงซ้ำก่อนประเมิน non-determinism
+
+- [รายงานและคะแนนรายข้อ](evaluation-finance-loan-grounded18-run1-20260808.md)
+- [Raw Final Answers](raw-finance-loan-grounded18-run1-20260808.jsonl)
+- [คะแนน JSON](scores-finance-loan-grounded18-run1-20260808.json)

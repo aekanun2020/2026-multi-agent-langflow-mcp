@@ -21,6 +21,7 @@ Remote repository: [`aekanun2020/2026-multi-agent-langflow-mcp`](https://github.
 - คะแนนของแต่ละแถวอ้างอิง Final Answer เท่านั้น ไม่ได้นำคำตอบของ Worker ทุกตัวมาคิดคะแนน
 - Concurrent Vote 2-of-3 rerun 4 เป็นรอบล่าสุดและผ่านเกณฑ์ของตาราง; [ดูผลห้ารอบและผลรายข้อ](../../Multi-Agent%20with%20Concurrent%20Orchestration/evaluation-finance-loan-grounded18-nondeterminism-rerun4-20260807.md)
 - รอบซ้ำ 2 ได้ 69/90 correctness และ 74/90 faithfulness จึงไม่อยู่ในตารางที่กรอง correctness ≥ 70; [ดูผลสามรอบและกรณี Q3 ไม่มี Final Answer](../../Multi-Agent%20with%20Concurrent%20Orchestration/evaluation-finance-loan-grounded18-nondeterminism-rerun2-20260807.md)
+- Hybrid Vote-Based run 1 ได้ correctness 66/90 และ faithfulness 71/90 จึงไม่อยู่ในตารางที่กรอง correctness ≥ 70; [ดูรายงานเต็มและคะแนนรายข้อ](../../Hybrid%20with%20Vote-Based%20Orchestration/evaluation-finance-loan-grounded18-run1-20260808.md)
 
 ## Canonical benchmark
 
