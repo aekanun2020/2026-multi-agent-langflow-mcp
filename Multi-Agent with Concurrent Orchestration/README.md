@@ -506,3 +506,20 @@ Q3 ของรอบซ้ำ 2 ได้ HTTP response แต่ไม่ม�
 - [รายงานรอบซ้ำ 2 และการเปรียบเทียบสามรอบ](evaluation-finance-loan-grounded18-nondeterminism-rerun2-20260807.md)
 - [Raw output รอบซ้ำ 2](raw-finance-loan-grounded18-nondeterminism-rerun2-20260807.jsonl)
 - [คะแนนรอบซ้ำ 2 แบบ JSON](scores-finance-loan-grounded18-nondeterminism-rerun2-20260807.json)
+
+### การยิงซ้ำรอบที่สาม — 2026-08-07
+
+รอบที่สี่ของการวัด (รอบแรกหนึ่งครั้งและรอบซ้ำสามครั้ง) กลับมามี Final Answer 18/18 โดย Q3 ซึ่งไม่มี output ในรอบก่อนกลับมาตอบถูกต้อง:
+
+| Run | Final Answer ใช้งานได้ | Correctness | Faithfulness | เวลาเฉลี่ย |
+|---|---:|---:|---:|---:|
+| รอบแรก | 18/18 | 73/90 | 79/90 | 15.29s |
+| รอบซ้ำ 1 | 18/18 | 73/90 | 78/90 | 14.25s |
+| รอบซ้ำ 2 | 17/18 | 69/90 | 74/90 | 15.36s |
+| **รอบซ้ำ 3** | **18/18** | **73/90** | **80/90** | **15.45s** |
+
+ช่วงผลลัพธ์หลังสี่รอบคือ Final Answer 17–18/18, correctness 69–73/90 และ faithfulness 74–80/90 ระบบจึงยังมี non-determinism แม้คะแนนรอบล่าสุดฟื้นกลับมาอยู่ในระดับดี
+
+- [รายงานรอบซ้ำ 3 และการเปรียบเทียบสี่รอบ](evaluation-finance-loan-grounded18-nondeterminism-rerun3-20260807.md)
+- [Raw output รอบซ้ำ 3](raw-finance-loan-grounded18-nondeterminism-rerun3-20260807.jsonl)
+- [คะแนนรอบซ้ำ 3 แบบ JSON](scores-finance-loan-grounded18-nondeterminism-rerun3-20260807.json)
