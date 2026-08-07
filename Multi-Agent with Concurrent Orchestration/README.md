@@ -490,3 +490,19 @@ Flow นี้ไม่มีข้อบังคับเรื่องโค
 - [รายงานเปรียบเทียบรายข้อ](evaluation-finance-loan-grounded18-nondeterminism-rerun-20260807.md)
 - [Raw Final Answers ทั้ง 18 ข้อ](raw-finance-loan-grounded18-nondeterminism-rerun-20260807.jsonl)
 - [คะแนนแบบ JSON](scores-finance-loan-grounded18-nondeterminism-rerun-20260807.json)
+
+### การยิงซ้ำรอบที่สอง — 2026-08-07
+
+ยังคงยิงคำถามชุดเดิมไปยัง Flow ID และ endpoint เดิม ผลรวมสามรอบคือ:
+
+| Run | Final Answer ใช้งานได้ | Correctness | Faithfulness | เวลาเฉลี่ย |
+|---|---:|---:|---:|---:|
+| รอบแรก | 18/18 | 73/90 | 79/90 | 15.29s |
+| รอบซ้ำ 1 | 18/18 | 73/90 | 78/90 | 14.25s |
+| **รอบซ้ำ 2** | **17/18** | **69/90** | **74/90** | **15.36s** |
+
+Q3 ของรอบซ้ำ 2 ได้ HTTP response แต่ไม่มี Final Answer จึงได้ 0 ทั้งสองด้าน นี่ทำให้เห็นว่า non-determinism ไม่ได้เกิดเฉพาะกับภาษาหรือรายละเอียดของ claim แต่เกิดกับการมี output จาก Flow ด้วย
+
+- [รายงานรอบซ้ำ 2 และการเปรียบเทียบสามรอบ](evaluation-finance-loan-grounded18-nondeterminism-rerun2-20260807.md)
+- [Raw output รอบซ้ำ 2](raw-finance-loan-grounded18-nondeterminism-rerun2-20260807.jsonl)
+- [คะแนนรอบซ้ำ 2 แบบ JSON](scores-finance-loan-grounded18-nondeterminism-rerun2-20260807.json)
