@@ -6,7 +6,7 @@ Remote repository: [`aekanun2020/2026-multi-agent-langflow-mcp`](https://github.
 
 | Flow/run | Correctness | Faithfulness | สำเร็จ | เวลาเฉลี่ย | Flow file และ directory | Result commit |
 |---|---:|---:|---:|---:|---|---|
-| **Concurrent Vote 2-of-3 rerun 3 ล่าสุด** | **73/90** | **80/90** | **18/18** | **15.45s** | [`Multi-Agent with Concurrent Orchestration/LAB-concurrent-vote-2of3-retry-thai.json`](../../Multi-Agent%20with%20Concurrent%20Orchestration/LAB-concurrent-vote-2of3-retry-thai.json) | [`884e367`](https://github.com/aekanun2020/2026-multi-agent-langflow-mcp/commit/884e367) |
+| **Concurrent Vote 2-of-3 rerun 4 ล่าสุด** | **72/90** | **73/90** | **18/18** | **15.17s** | [`Multi-Agent with Concurrent Orchestration/LAB-concurrent-vote-2of3-retry-thai.json`](../../Multi-Agent%20with%20Concurrent%20Orchestration/LAB-concurrent-vote-2of3-retry-thai.json) | [`08a71f4`](https://github.com/aekanun2020/2026-multi-agent-langflow-mcp/commit/08a71f4) |
 | Hybrid UI initial | 73/90 | 85/90 | 18/18 | 25.41s | [`hybrid-orchestration/flows/LAB-hybrid-v1-grounded-consensus-thai-ui-upload-20260805.json`](../../hybrid-orchestration/flows/LAB-hybrid-v1-grounded-consensus-thai-ui-upload-20260805.json) | [`1d90867`](https://github.com/aekanun2020/2026-multi-agent-langflow-mcp/commit/1d9086737b55e68504c0cd75e8c60a419fa99119) |
 | Hybrid consistency rerun 2 | 78/90 | 74/90 | 18/18 | 50.68s | [`hybrid-orchestration/flows/LAB-hybrid-v1-grounded-consensus-thai-ui-upload-20260805.json`](../../hybrid-orchestration/flows/LAB-hybrid-v1-grounded-consensus-thai-ui-upload-20260805.json) | [`d7a2eeb`](https://github.com/aekanun2020/2026-multi-agent-langflow-mcp/commit/d7a2eeb5fbb47347c0fc3585f9a88b5a320a4d84) |
 | Hybrid v1 rerun 2 | 76/90 | 87/90 | 18/18 | 31.26s | ไฟล์เดิม `hybrid-orchestration/flows/LAB-hybrid-v1-grounded-consensus-thai.json` ซึ่งถูก rename เป็น [`LAB-hybrid-v1-grounded-consensus-thai-ui-upload-20260805.json`](../../hybrid-orchestration/flows/LAB-hybrid-v1-grounded-consensus-thai-ui-upload-20260805.json) | [`44189e3`](https://github.com/aekanun2020/2026-multi-agent-langflow-mcp/commit/44189e32c01a0e07084e46044c9e5c7d8e984aaf) |
@@ -19,7 +19,7 @@ Remote repository: [`aekanun2020/2026-multi-agent-langflow-mcp`](https://github.
 - Hybrid v1 rerun 2 มี Correctness + Faithfulness รวมสูงที่สุด
 - Hybrid UI initial และ Hybrid consistency rerun 2 ใช้ Flow file เดียวกัน แต่เป็นคนละรอบทดสอบ
 - คะแนนของแต่ละแถวอ้างอิง Final Answer เท่านั้น ไม่ได้นำคำตอบของ Worker ทุกตัวมาคิดคะแนน
-- Concurrent Vote 2-of-3 rerun 3 เป็นรอบล่าสุดและผ่านเกณฑ์ของตาราง; [ดูผลสี่รอบและผลรายข้อ](../../Multi-Agent%20with%20Concurrent%20Orchestration/evaluation-finance-loan-grounded18-nondeterminism-rerun3-20260807.md)
+- Concurrent Vote 2-of-3 rerun 4 เป็นรอบล่าสุดและผ่านเกณฑ์ของตาราง; [ดูผลห้ารอบและผลรายข้อ](../../Multi-Agent%20with%20Concurrent%20Orchestration/evaluation-finance-loan-grounded18-nondeterminism-rerun4-20260807.md)
 - รอบซ้ำ 2 ได้ 69/90 correctness และ 74/90 faithfulness จึงไม่อยู่ในตารางที่กรอง correctness ≥ 70; [ดูผลสามรอบและกรณี Q3 ไม่มี Final Answer](../../Multi-Agent%20with%20Concurrent%20Orchestration/evaluation-finance-loan-grounded18-nondeterminism-rerun2-20260807.md)
 
 ## Canonical benchmark

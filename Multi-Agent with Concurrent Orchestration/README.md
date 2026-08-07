@@ -523,3 +523,21 @@ Q3 ของรอบซ้ำ 2 ได้ HTTP response แต่ไม่ม�
 - [รายงานรอบซ้ำ 3 และการเปรียบเทียบสี่รอบ](evaluation-finance-loan-grounded18-nondeterminism-rerun3-20260807.md)
 - [Raw output รอบซ้ำ 3](raw-finance-loan-grounded18-nondeterminism-rerun3-20260807.jsonl)
 - [คะแนนรอบซ้ำ 3 แบบ JSON](scores-finance-loan-grounded18-nondeterminism-rerun3-20260807.json)
+
+### การยิงซ้ำรอบที่สี่ — 2026-08-07
+
+รอบที่ห้าของการวัดมี Final Answer 18/18 แต่คะแนนลดลงเพราะมี claim ที่ไม่มี ground มากขึ้น:
+
+| Run | Final Answer ใช้งานได้ | Correctness | Faithfulness | เวลาเฉลี่ย |
+|---|---:|---:|---:|---:|
+| รอบแรก | 18/18 | 73/90 | 79/90 | 15.29s |
+| รอบซ้ำ 1 | 18/18 | 73/90 | 78/90 | 14.25s |
+| รอบซ้ำ 2 | 17/18 | 69/90 | 74/90 | 15.36s |
+| รอบซ้ำ 3 | 18/18 | 73/90 | 80/90 | 15.45s |
+| **รอบซ้ำ 4** | **18/18** | **72/90** | **73/90** | **15.17s** |
+
+ช่วงผลลัพธ์หลังห้ารอบคือ Final Answer 17–18/18, correctness 69–73/90 และ faithfulness 73–80/90 รอบล่าสุดไม่มี output หาย แต่ faithfulness ต่ำที่สุด เพราะคำตอบเพิ่มสกุลเงิน การตีความ approval และการจัดกลุ่มที่ไม่มี ground
+
+- [รายงานรอบซ้ำ 4 และการเปรียบเทียบห้ารอบ](evaluation-finance-loan-grounded18-nondeterminism-rerun4-20260807.md)
+- [Raw output รอบซ้ำ 4](raw-finance-loan-grounded18-nondeterminism-rerun4-20260807.jsonl)
+- [คะแนนรอบซ้ำ 4 แบบ JSON](scores-finance-loan-grounded18-nondeterminism-rerun4-20260807.json)
