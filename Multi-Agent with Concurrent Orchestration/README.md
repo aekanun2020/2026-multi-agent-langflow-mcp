@@ -25,14 +25,38 @@ flowchart LR
 
 - Flow file: [`LAB-concurrent-vote-2of3-retry-thai.json`](LAB-concurrent-vote-2of3-retry-thai.json)
 - Langflow: 1.7.3
-- Builder: [`build_concurrent_vote_retry.mjs`](build_concurrent_vote_retry.mjs)
+- โปรแกรมสร้าง Flow: [`build_concurrent_vote_retry.mjs`](build_concurrent_vote_retry.mjs)
 - ขอบเขตของหัวข้อนี้: อธิบายทุก component ยกเว้นรายละเอียดการตั้งค่า MCP Server
 
-Flow file ถูกสร้างด้วย builder โดยนำ component พื้นฐานจาก Hybrid v1 มาเฉพาะส่วนที่ต้องใช้ แล้วเพิ่ม built-in `If-Else`, built-in `Loop` และ custom utility components สำหรับแปลงชนิดข้อมูล การสร้างผ่าน builder ช่วยรักษา node ID, `sourceHandle`/`targetHandle` ภายใน JSON และชนิดข้อมูลของ edge ให้ตรงกับ Langflow 1.7.3 มากกว่าการแก้ JSON ด้วยมือ
+Flow file ถูกสร้างด้วยโปรแกรมดังกล่าว โดยนำ Component พื้นฐานจาก Hybrid v1 มาเฉพาะส่วนที่ต้องใช้ แล้วเพิ่ม built-in `If-Else`, built-in `Loop` และ Custom Components สำหรับแปลงชนิดข้อมูล วิธีนี้ช่วยรักษา node ID, `sourceHandle`/`targetHandle` ภายใน JSON และชนิดข้อมูลของเส้นเชื่อมให้ตรงกับ Langflow 1.7.3 มากกว่าการแก้ JSON ด้วยมือ
+
+### `build_concurrent_vote_retry.mjs` มีไว้ทำอะไร
+
+ไฟล์นี้เป็นโปรแกรม Node.js ที่ใช้ **สร้าง** [`LAB-concurrent-vote-2of3-retry-thai.json`](LAB-concurrent-vote-2of3-retry-thai.json) ก่อนนำ JSON ไปอัปโหลดเข้า Langflow โดยทำงานตามลำดับดังนี้:
+
+1. อ่าน Flow ตั้งต้นจาก `hybrid-orchestration/flows/LAB-hybrid-v1-grounded-consensus-thai-ui-upload-20260805.json`
+2. เก็บเฉพาะ Chat Input, Chat Output, Worker Agents สามตัว, MCP ของ Workers, Collector และ Vote Agent ที่ต้องใช้
+3. ตั้งคำสั่งและค่าของ Worker Agents และ Vote Agent
+4. ขอรายละเอียดของ built-in `Loop` และ `If-Else` จาก Langflow 1.7.3 ที่กำลังทำงานอยู่ที่ `http://localhost:7860/api/v1/all`
+5. เพิ่ม Custom Components สำหรับเตรียมคำถาม แปลงคำถาม และลบคำว่า `PASS`
+6. กำหนดตำแหน่ง Component และสร้างเส้นเชื่อมทั้งหมด
+7. เขียนผลลัพธ์เป็นไฟล์ `LAB-concurrent-vote-2of3-retry-thai.json`
+
+ไฟล์ `.mjs` **ไม่ใช่ Component ใน Flow และไม่ได้ถูก Langflow รันขณะผู้ใช้ถามคำถาม** จึงไม่มีตำแหน่งของไฟล์ `.mjs` บน canvas เมื่ออัปโหลด Flow แล้ว Langflow ใช้ข้อมูลที่ถูกเขียนไว้ใน JSON โดยไม่ต้องใช้ไฟล์ `.mjs` อีก
+
+อย่างไรก็ตาม Python code บางส่วนซึ่งเขียนเป็นข้อความอยู่ภายในไฟล์ `.mjs` จะถูกคัดลอกไปไว้ในช่อง **Code** ของ Custom Component ดังนี้:
+
+| ชื่อตัวแปรใน `.mjs` | ถูกวางใน Component ใดบน canvas | ตำแหน่งใน Component | หน้าที่ |
+|---|---|---|---|
+| `seedCode` | `Prepare Original Question` | ปุ่ม **Code** → ช่องแก้ไข Python code | แปลงคำถามต้นฉบับเป็น `DataFrame` สำหรับ Loop |
+| `dataToMessageCode` | `Question for Workers` | ปุ่ม **Code** → ช่องแก้ไข Python code | แปลง `Data` ที่ออกจาก Loop กลับเป็น `Message` |
+| `stripCode` | `Remove PASS Marker` | ปุ่ม **Code** → ช่องแก้ไข Python code | ลบคำควบคุม `PASS` ก่อนแสดงคำตอบ |
+
+ส่วน JavaScript ที่อ่านไฟล์ สร้าง Component สร้างเส้นเชื่อม และเขียน JSON **ไม่ถูกวางใน Component ใด** เพราะทำงานเฉพาะตอนนักพัฒนารันไฟล์ `.mjs` เพื่อสร้าง Flow เท่านั้น นอกจากนี้ `routerCode` ที่ยังพบในไฟล์เป็นโค้ดระหว่างการพัฒนา แต่ผลลัพธ์สุดท้ายแทนที่ส่วนนั้นด้วย built-in `If-Else`; ดังนั้น `routerCode` ไม่ได้ถูกฝังและไม่ได้ทำงานใน Flow JSON ปัจจุบัน
 
 ## สำหรับผู้อ่านที่ไม่เคยใช้ Langflow: วิธีอ่านชื่อและเส้นเชื่อม
 
-ใน Langflow พื้นที่ที่ใช้วางและลากเส้นเชื่อมกล่องต่าง ๆ เรียกว่า **พื้นที่ทำงาน (canvas)** ส่วนกล่องแต่ละกล่องเรียกว่า **Component** เช่น `Chat Input`, `Worker Agent 1` และ `Collect 3 Worker Answers`
+ใน Langflow พื้นที่ที่ใช้วางและลากเส้นเชื่อมกล่องต่าง ๆ เรียกว่า **canvas** ส่วนกล่องแต่ละกล่องเรียกว่า **Component** เช่น `Chat Input`, `Worker Agent 1` และ `Collect 3 Worker Answers`
 
 Component มี **port (จุดเชื่อมต่อ)** สองด้าน จากจุดนี้เป็นต้นไปเอกสารจะใช้คำว่า **port** อย่างสม่ำเสมอ:
 
@@ -56,7 +80,7 @@ Collect 3 Worker Answers.original_request
 
 อ่านว่า:
 
-- `Collect 3 Worker Answers` คือชื่อ Component บนพื้นที่ทำงาน
+- `Collect 3 Worker Answers` คือชื่อ Component บน canvas
 - `original_request` คือชื่อภายในของ input port
 - ทั้งข้อความอ่านว่า “input port ชื่อ `original_request` ของ Component ชื่อ `Collect 3 Worker Answers`”
 
@@ -79,7 +103,7 @@ Chat Input.message
 
 - **Built-in Component:** ผู้พัฒนา Langflow กำหนดชื่อ port มาให้แล้ว ผู้ใช้เลือกและลากเส้นจาก port ที่มีอยู่
 - **Custom Component:** ผู้เขียน Python component เป็นผู้กำหนดชื่อ port ใน code
-- การลากเส้นบนพื้นที่ทำงานไม่ได้เป็นการตั้งชื่อ port ใหม่ แต่เป็นการเชื่อม port ที่ Component มีอยู่แล้ว
+- การลากเส้นบน canvas ไม่ได้เป็นการตั้งชื่อ port ใหม่ แต่เป็นการเชื่อม port ที่ Component มีอยู่แล้ว
 
 Custom component สามารถมีทั้งชื่อภายในและชื่อที่แสดงบน UI เช่น:
 
@@ -93,9 +117,9 @@ MessageTextInput(
 - `name="original_request"` คือชื่อภายในที่ใช้ใน Flow JSON และวิธีเขียนย่อของ README
 - `display_name="Original Request"` คือชื่ออ่านง่ายที่กำหนดไว้ให้หน้าจอ Langflow แต่จะปรากฏที่ใดหรือไม่ ขึ้นอยู่กับชนิด Component และการแสดงผลแบบย่อหรือแบบขยาย
 
-ดังนั้นชื่อที่หน้าจอแสดงอาจเป็น **Original Request**, อาจแสดงเฉพาะชนิดข้อมูล หรืออาจไม่แสดงชื่อกำกับ port บนพื้นที่ทำงานเลย ขณะที่เอกสารเขียน `original_request` เพื่อให้ตรวจเทียบกับ JSON ได้ตรงกัน
+ดังนั้นชื่อที่หน้าจอแสดงอาจเป็น **Original Request**, อาจแสดงเฉพาะชนิดข้อมูล หรืออาจไม่แสดงชื่อกำกับ port บน canvas เลย ขณะที่เอกสารเขียน `original_request` เพื่อให้ตรวจเทียบกับ JSON ได้ตรงกัน
 
-### สิ่งที่เห็นจริงบนพื้นที่ทำงานอาจไม่มีชื่อ port
+### สิ่งที่เห็นจริงบน canvas อาจไม่มีชื่อ port
 
 Component ที่แสดงแบบย่อ เช่น `Chat Input` จะแสดงเพียงวงกลม output port ด้านขวา ให้เอาเม้าส์มาวางไว้ที่วงกลมนั้น แล้ว Langflow 1.7.3 จะแสดงกล่องข้อความเล็ก ๆ ว่า:
 
@@ -104,13 +128,13 @@ Output type: Message
 Drag to connect compatible inputs
 ```
 
-ในกรณีนี้ผู้ใช้ไม่ต้องค้นหาคำว่า `message` บนพื้นที่ทำงาน ให้สังเกต port จาก:
+ในกรณีนี้ผู้ใช้ไม่ต้องค้นหาคำว่า `message` บน canvas ให้สังเกต port จาก:
 
 1. ตำแหน่ง — output port อยู่ด้านขวาของ Component
 2. กล่องข้อความที่ปรากฏเมื่อเอาเม้าส์มาวางไว้ที่ port — แสดงชนิดข้อมูล `Message`
 3. เส้นเดิม — หากมีการเชื่อมอยู่แล้วให้ดูเส้นที่ออกจากวงกลมนั้น
 
-ชื่อภายใน `message` ใช้สำหรับอ่าน Flow JSON, โปรแกรมที่ใช้สร้าง Flow และตารางอ้างอิงใน README ไม่ใช่ชื่อกำกับที่รับประกันว่าจะมองเห็นบนพื้นที่ทำงาน
+ชื่อภายใน `message` ใช้สำหรับอ่าน Flow JSON, โปรแกรมที่ใช้สร้าง Flow และตารางอ้างอิงใน README ไม่ใช่ชื่อกำกับที่รับประกันว่าจะมองเห็นบน canvas
 
 ### วิธีอ่านลูกศรและชนิดข้อมูล
 
@@ -138,7 +162,7 @@ Question for Workers.result (Message)
 - **แยกออกหลายทาง (Fan-out)**: output เดียวเชื่อมไปหลาย Components เช่น ส่งคำถามเดียวกันให้ Workers สามตัว
 - **รวมจากหลายทาง (Fan-in)**: หลาย outputs ไหลมารวมที่ Component เดียว เช่น คำตอบ Workers สามตัวไหลเข้า Collector
 - **เส้นวนกลับ (Loop-back)**: เส้นที่ย้อนจาก Component ด้านหลังกลับไปยัง Component ก่อนหน้าเพื่อทำงานซ้ำ
-- **Handle**: ชื่อทางเทคนิคที่พบเฉพาะใน Flow JSON ใช้ระบุว่าเส้นเชื่อมผูกกับ port ใด เช่น `sourceHandle` และ `targetHandle`; บนพื้นที่ทำงานให้เรียกว่า port
+- **Handle**: ชื่อทางเทคนิคที่พบเฉพาะใน Flow JSON ใช้ระบุว่าเส้นเชื่อมผูกกับ port ใด เช่น `sourceHandle` และ `targetHandle`; บน canvas ให้เรียกว่า port
 
 ### ชนิดข้อมูลหลักที่พบใน Flow
 
@@ -180,13 +204,13 @@ flowchart LR
 
 วิธีสร้าง:
 
-1. ลาก `Chat Input` ลงบนพื้นที่ทำงาน
+1. ลาก `Chat Input` ลงบน canvas
 2. ตั้ง `Sender = User` และ `Sender Name = User`
 3. เปิด `Store Messages` หากต้องการเก็บประวัติใน Langflow; Flow file นี้ตั้งเป็น `true`
 
 output port ที่ใช้มีชื่อภายในว่า `message` และส่งข้อมูลชนิด `Message` โดยลากออกสามทาง:
 
-เมื่อ Component แสดงแบบย่อ จะเห็นเป็นวงกลม output port ด้านขวาของ `Chat Input` ให้เอาเม้าส์มาวางไว้ที่วงกลม แล้วจะเห็นกล่องข้อความ `Output type: Message`; คำว่า `message` เป็นชื่อภายใน JSON จึงอาจไม่ปรากฏบนพื้นที่ทำงาน
+เมื่อ Component แสดงแบบย่อ จะเห็นเป็นวงกลม output port ด้านขวาของ `Chat Input` ให้เอาเม้าส์มาวางไว้ที่วงกลม แล้วจะเห็นกล่องข้อความ `Output type: Message`; คำว่า `message` เป็นชื่อภายใน JSON จึงอาจไม่ปรากฏบน canvas
 
 - ไป `Prepare Original Question.original_question` เพื่อเริ่มเส้นทางทำงานของ Workers
 - ไป `Collect 3 Worker Answers.original_request` เพื่อให้ Vote Agent เห็นคำถามต้นฉบับ
@@ -196,7 +220,7 @@ output port ที่ใช้มีชื่อภายในว่า `messag
 
 ### 2. Prepare Original Question
 
-ชนิด: custom component `RetryQuestionSeed` ชื่อบนพื้นที่ทำงานว่า `Prepare Original Question`
+ชนิด: custom component `RetryQuestionSeed` ชื่อบน canvas ว่า `Prepare Original Question`
 
 วิธีสร้าง:
 
@@ -214,11 +238,11 @@ output port ที่ใช้มีชื่อภายในว่า `messag
 
 ### 3. Retry Original Question
 
-ชนิด: built-in `LoopComponent` จากหมวด **Flow Control** ชื่อบนพื้นที่ทำงานว่า `Retry Original Question`
+ชนิด: built-in `LoopComponent` จากหมวด **Flow Control** ชื่อบน canvas ว่า `Retry Original Question`
 
 วิธีสร้างและตั้งค่า:
 
-1. ลาก `Loop` ลงบนพื้นที่ทำงาน
+1. ลาก `Loop` ลงบน canvas
 2. ไม่ต้องแก้ Python code ของ built-in component
 3. ต่อ `Prepare Original Question.result` เข้า input port ชื่อภายใน `data` ซึ่งมี `display_name` ว่า `Inputs`
 4. ใช้ output port ชื่อภายใน `item` ซึ่งมี `display_name` ว่า `Item` เป็นข้อมูลของรอบปัจจุบัน
@@ -239,12 +263,12 @@ output port ที่ใช้มีชื่อภายในว่า `messag
 
 ### 4. Question for Workers
 
-ชนิด: custom component `RetryQuestionMessage` ชื่อบนพื้นที่ทำงานว่า `Question for Workers`
+ชนิด: custom component `RetryQuestionMessage` ชื่อบน canvas ว่า `Question for Workers`
 
 วิธีสร้าง:
 
 1. กด **New Custom Component**
-2. ใช้ class `RetryQuestionMessage` จากส่วน `dataToMessageCode` ใน builder
+2. ใช้ class `RetryQuestionMessage` จากส่วน `dataToMessageCode` ในโปรแกรมสร้าง Flow
 3. กำหนด input port ชื่อ `item` เป็น `DataInput`
 4. กำหนด output port ชื่อ `result` เป็น `Message`
 
@@ -298,7 +322,7 @@ output port ที่ใช้มีชื่อภายในว่า `messag
 วิธีสร้าง:
 
 1. กด **New Custom Component**
-2. ใช้ component definition ที่อยู่ใน Flow file/builder
+2. ใช้คำจำกัดความของ Component ที่คัดลอกมาจาก Flow ตั้งต้นและบันทึกอยู่ใน Flow JSON
 3. สร้าง input port ชนิด `Message` จำนวนสี่รายการ: `original_request`, `candidate_1`, `candidate_2`, `candidate_3`
 4. สร้าง output port ชื่อ `result` ชนิด `Message`
 
@@ -379,7 +403,7 @@ Outputs:
 วิธีสร้าง:
 
 1. กด **New Custom Component**
-2. ใช้ class `StripPassMarker` จากส่วน `stripCode` ใน builder
+2. ใช้ class `StripPassMarker` จากส่วน `stripCode` ในโปรแกรมสร้าง Flow
 3. Input `approved_answer` เป็น `MessageTextInput`
 4. Output `result` เป็น `Message`
 
@@ -436,7 +460,7 @@ Flow นี้ไม่มีข้อบังคับเรื่องโค
 ## ไฟล์
 
 - `LAB-concurrent-vote-2of3-retry-thai.json` — ไฟล์สำหรับ Upload a flow ใน Langflow 1.7.3
-- `build_concurrent_vote_retry.mjs` — builder ที่สร้าง Flow จาก Hybrid v1 โดยตัด Verifier, Final Editor และส่วนอื่นที่ไม่อยู่ใน design นี้ออก
+- `build_concurrent_vote_retry.mjs` — โปรแกรม Node.js สำหรับสร้าง Flow JSON จาก Hybrid v1 โดยตัด Verifier, Final Editor และส่วนอื่นที่ไม่อยู่ในการออกแบบนี้ออก โปรแกรมนี้ทำงานนอก Langflow และไม่ทำงานตอนถามคำถาม
 
 `Remove PASS Marker` เป็น Component ช่วยจัดเส้นทาง โดยลบคำว่า `PASS` ก่อนส่งเข้า Chat Output เท่านั้น ไม่ตรวจ แก้ หรือเพิ่มสาระของคำตอบ
 
