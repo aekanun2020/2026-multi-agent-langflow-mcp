@@ -473,3 +473,20 @@ Flow นี้ไม่มีข้อบังคับเรื่องโค
 - Worker Agent แต่ละตัวมีเส้นเชื่อมไปยัง MCP tools 2 เส้น: MSSQL และ RAG
 - Vote Agent ไม่มีเส้นเชื่อมไปยัง tool
 - ไฟล์ JSON ใน repo ไม่บันทึก API key; key อยู่เฉพาะใน flow ที่ติดตั้งใน Langflow
+
+### การยิงซ้ำเพื่อวัด non-determinism — 2026-08-07
+
+ยิงคำถาม Finance/Loan Grounded-18 ชุดเดิมไปยัง Flow ID `4e193ed2-8649-475d-8ecc-db05a23e9839` และให้คะแนนจาก Final Answer เท่านั้น:
+
+| Metric | รอบก่อน | รอบซ้ำ | ผลต่าง |
+|---|---:|---:|---:|
+| Successful answers | 18/18 | 18/18 | คงเดิม |
+| Correctness | 73/90 | 73/90 | 0 |
+| Faithfulness | 79/90 | 78/90 | -1 |
+| Average latency | 15.29s | 14.25s | -1.04s |
+
+แม้ correctness รวมเท่าเดิม แต่คะแนน correctness เปลี่ยน 4/18 ข้อ และคะแนน faithfulness เปลี่ยน 7/18 ข้อ คู่คะแนนทั้งสองด้านเหมือนเดิมเพียง 11/18 ข้อ จึงสรุปได้ว่า Flow มีความคงที่ด้านการทำงานสำเร็จและคะแนนรวมพอสมควร แต่ยังมี non-determinism ระดับรายละเอียดของคำตอบ โดยเฉพาะการเติมสกุลเงิน ความครบของข้อมูล และคำอธิบายที่เกิน ground
+
+- [รายงานเปรียบเทียบรายข้อ](evaluation-finance-loan-grounded18-nondeterminism-rerun-20260807.md)
+- [Raw Final Answers ทั้ง 18 ข้อ](raw-finance-loan-grounded18-nondeterminism-rerun-20260807.jsonl)
+- [คะแนนแบบ JSON](scores-finance-loan-grounded18-nondeterminism-rerun-20260807.json)
