@@ -28,25 +28,25 @@ flowchart LR
 - Builder: [`build_concurrent_vote_retry.mjs`](build_concurrent_vote_retry.mjs)
 - ขอบเขตของหัวข้อนี้: อธิบายทุก component ยกเว้นรายละเอียดการตั้งค่า MCP Server
 
-Flow file ถูกสร้างด้วย builder โดยนำ component พื้นฐานจาก Hybrid v1 มาเฉพาะส่วนที่ต้องใช้ แล้วเพิ่ม built-in `If-Else`, built-in `Loop` และ custom utility components สำหรับแปลงชนิดข้อมูล การสร้างผ่าน builder ช่วยรักษา node ID, handle และชนิดข้อมูลของ edge ให้ตรงกับ Langflow 1.7.3 มากกว่าการแก้ JSON ด้วยมือ
+Flow file ถูกสร้างด้วย builder โดยนำ component พื้นฐานจาก Hybrid v1 มาเฉพาะส่วนที่ต้องใช้ แล้วเพิ่ม built-in `If-Else`, built-in `Loop` และ custom utility components สำหรับแปลงชนิดข้อมูล การสร้างผ่าน builder ช่วยรักษา node ID, `sourceHandle`/`targetHandle` ภายใน JSON และชนิดข้อมูลของ edge ให้ตรงกับ Langflow 1.7.3 มากกว่าการแก้ JSON ด้วยมือ
 
 ## สำหรับผู้อ่านที่ไม่เคยใช้ Langflow: วิธีอ่านชื่อและเส้นเชื่อม
 
 ใน Langflow กล่องแต่ละกล่องบน canvas เรียกว่า **Component** เช่น `Chat Input`, `Worker Agent 1` และ `Collect 3 Worker Answers`
 
-Component มีจุดต่อหรือ **port** สองด้าน:
+Component มี **port (จุดเชื่อมต่อ)** สองด้าน จากจุดนี้เป็นต้นไปเอกสารจะใช้คำว่า **port** อย่างสม่ำเสมอ:
 
 - **Input port** คือจุดรับข้อมูลเข้า Component
 - **Output port** คือจุดส่งผลลัพธ์ออกจาก Component
 - เส้นเชื่อมหรือ **edge** แสดงว่าข้อมูลจาก output port ของ Component หนึ่งจะไหลไปยัง input port ของอีก Component หนึ่ง
 
-เอกสารนี้เขียนชื่อจุดต่อในรูปแบบ:
+เอกสารนี้เขียนชื่อ port ในรูปแบบ:
 
 ```text
 ชื่อ Component.ชื่อ port
 ```
 
-เครื่องหมายจุด `.` อ่านว่า **“ช่องของ”** ใช้เพื่อแบ่งชื่อ Component ออกจากชื่อ port เท่านั้น ไม่ใช่คำสั่งหรือ operator ของ Langflow
+เครื่องหมายจุด `.` อ่านว่า **“port ของ”** ใช้เพื่อแบ่งชื่อ Component ออกจากชื่อ port เท่านั้น ไม่ใช่คำสั่งหรือ operator ของ Langflow
 
 ตัวอย่าง:
 
@@ -103,7 +103,7 @@ Question for Workers.result (Message)
 - **Fan-out**: output เดียวลากไปหลาย Components เช่นส่งคำถามเดียวกันให้ Workers สามตัว
 - **Fan-in**: หลาย outputs ไหลมารวมที่ Component เดียว เช่นคำตอบ Workers สามตัวไหลเข้า Collector
 - **Loop-back**: เส้นที่ย้อนจาก Component ด้านหลังกลับไปยัง Component ก่อนหน้าเพื่อทำงานซ้ำ
-- **Handle**: จุดต่อบน Component; ในเอกสารนี้ใช้ความหมายเดียวกับ port
+- **Handle**: คำที่ใช้เฉพาะเมื่อกล่าวถึงข้อมูลภายใน Flow JSON ซึ่งระบุว่า edge ผูกกับ port ใด เช่น `sourceHandle` และ `targetHandle`; บนหน้า canvas ให้เรียกว่า port
 
 ### ชนิดข้อมูลหลักที่พบใน Flow
 
@@ -183,7 +183,7 @@ Output ที่ใช้คือ `message` ชนิด `Message` โดยล
 
 1. ลาก `Loop` ลงบน canvas
 2. ไม่ต้องแก้ Python code ของ built-in component
-3. ต่อ `Prepare Original Question.result` เข้าช่อง `Inputs/data`
+3. ต่อ `Prepare Original Question.result` เข้า input port `Inputs/data`
 4. ใช้ output `Item/item` เป็นข้อมูลของรอบปัจจุบัน
 
 ชนิดข้อมูล:
@@ -196,9 +196,9 @@ Output ที่ใช้คือ `message` ชนิด `Message` โดยล
 
 - `Prepare Original Question.result (DataFrame)` → `Retry Original Question.data (DataFrame)`
 - `Retry Original Question.item (Data)` → `Question for Workers.item (Data)`
-- `Pass or Retry.false_result (Message)` → loop-back handle `Retry Original Question.item (Data | Message)`
+- `Pass or Retry.false_result (Message)` → loop-back port `Retry Original Question.item (Data | Message)`
 
-เส้นสุดท้ายต้องลากกลับเข้าที่ handle `item` ของ Loop ไม่ใช่ input `data` ปกติ หากสร้าง edge JSON เอง target handle ต้องประกาศ `output_types = ["Data", "Message"]`; มิฉะนั้น Langflow 1.7.3 จะลบเส้นและแสดง `Some connections were removed because they were invalid`
+เส้นสุดท้ายต้องลากกลับเข้าที่ port `item` ของ Loop ไม่ใช่ input port `data` ปกติ หากสร้าง edge JSON เอง `targetHandle` ซึ่งเป็นข้อมูลภายใน JSON ต้องประกาศ `output_types = ["Data", "Message"]`; มิฉะนั้น Langflow 1.7.3 จะลบเส้นและแสดง `Some connections were removed because they were invalid`
 
 ### 4. Question for Workers
 
@@ -262,7 +262,7 @@ Agent Instructions ของทั้งสามตัวกำหนดเห�
 
 1. กด **New Custom Component**
 2. ใช้ component definition ที่อยู่ใน Flow file/builder
-3. สร้าง inputs ชนิด `Message` สี่ช่อง: `original_request`, `candidate_1`, `candidate_2`, `candidate_3`
+3. สร้าง input port ชนิด `Message` จำนวนสี่รายการ: `original_request`, `candidate_1`, `candidate_2`, `candidate_3`
 4. สร้าง output `result` ชนิด `Message`
 
 หน้าที่คือรอ dependency ให้ครบทั้งคำถามเดิมและคำตอบ Worker สามตัว แล้วประกอบเป็นข้อความ bundle โดยไม่ลงคะแนน ไม่ parse JSON และไม่แก้ claim
@@ -331,7 +331,7 @@ Inputs มีสามเส้น:
 Outputs:
 
 - `true_result (Message)` → `Remove PASS Marker.approved_answer`
-- `false_result (Message)` → loop-back handle `Retry Original Question.item`
+- `false_result (Message)` → loop-back port `Retry Original Question.item`
 
 ดังนั้น router ไม่ได้สร้างคำตอบใหม่ เพียงเลือกว่าจะส่ง Vote response ไป Chat Output หรือส่งคำถามเดิมกลับเข้า Loop
 
@@ -382,7 +382,7 @@ Configuration ใน Flow file:
 | 14 | Chat Input.message | Message | Pass or Retry.false_case_message | Message | payload คำถามเดิมเมื่อไม่ผ่าน |
 | 15 | Pass or Retry.true_result | Message | Remove PASS Marker.approved_answer | Message | คำตอบที่ผ่าน vote |
 | 16 | Remove PASS Marker.result | Message | Chat Output.input_value | Message | Final Answer ที่ลบ marker แล้ว |
-| 17 | Pass or Retry.false_result | Message | Retry Original Question.item | Data/Message loop handle | ส่งคำถามเดิมกลับเข้า Loop |
+| 17 | Pass or Retry.false_result | Message | Retry Original Question.item | Data/Message loop port | ส่งคำถามเดิมกลับเข้า Loop |
 
 ## ทิศทางการไหลของข้อมูล
 
