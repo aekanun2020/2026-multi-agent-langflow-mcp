@@ -30,6 +30,91 @@ flowchart LR
 
 Flow file ถูกสร้างด้วย builder โดยนำ component พื้นฐานจาก Hybrid v1 มาเฉพาะส่วนที่ต้องใช้ แล้วเพิ่ม built-in `If-Else`, built-in `Loop` และ custom utility components สำหรับแปลงชนิดข้อมูล การสร้างผ่าน builder ช่วยรักษา node ID, handle และชนิดข้อมูลของ edge ให้ตรงกับ Langflow 1.7.3 มากกว่าการแก้ JSON ด้วยมือ
 
+## สำหรับผู้อ่านที่ไม่เคยใช้ Langflow: วิธีอ่านชื่อและเส้นเชื่อม
+
+ใน Langflow กล่องแต่ละกล่องบน canvas เรียกว่า **Component** เช่น `Chat Input`, `Worker Agent 1` และ `Collect 3 Worker Answers`
+
+Component มีจุดต่อหรือ **port** สองด้าน:
+
+- **Input port** คือจุดรับข้อมูลเข้า Component
+- **Output port** คือจุดส่งผลลัพธ์ออกจาก Component
+- เส้นเชื่อมหรือ **edge** แสดงว่าข้อมูลจาก output port ของ Component หนึ่งจะไหลไปยัง input port ของอีก Component หนึ่ง
+
+เอกสารนี้เขียนชื่อจุดต่อในรูปแบบ:
+
+```text
+ชื่อ Component.ชื่อ port
+```
+
+เครื่องหมายจุด `.` อ่านว่า **“ช่องของ”** ใช้เพื่อแบ่งชื่อ Component ออกจากชื่อ port เท่านั้น ไม่ใช่คำสั่งหรือ operator ของ Langflow
+
+ตัวอย่าง:
+
+```text
+Collect 3 Worker Answers.original_request
+```
+
+อ่านว่า:
+
+- `Collect 3 Worker Answers` คือชื่อ Component บน canvas
+- `original_request` คือชื่อ input port ภายใน Component นั้น
+- `.` หมายถึง “input port `original_request` ของ Component `Collect 3 Worker Answers`”
+
+ดังนั้นข้อความต่อไปนี้:
+
+```text
+Chat Input.message
+→ Collect 3 Worker Answers.original_request
+```
+
+หมายถึง:
+
+1. หา Component ชื่อ `Chat Input`
+2. จับจุด output ชื่อ `message`
+3. ลากเส้นไปยัง Component ชื่อ `Collect 3 Worker Answers`
+4. ปล่อยที่ input ชื่อ `original_request`
+5. ข้อมูลชนิด `Message` ซึ่งมีคำถามต้นฉบับของผู้ใช้จะไหลตามลูกศรจากซ้ายไปขวา
+
+ชื่อที่เห็นบนหน้าจออาจเป็นคำอ่านง่าย เช่น **Original Request** แต่ชื่อภายใน Flow JSON เป็น `original_request` เอกสารนี้ใช้ชื่อภายในเพื่อให้ตรวจเทียบกับไฟล์ JSON ได้ตรงกัน
+
+### วิธีอ่านลูกศรและชนิดข้อมูล
+
+รูปแบบทั่วไปคือ:
+
+```text
+Source Component.output_port (ชนิดข้อมูล)
+→ Target Component.input_port (ชนิดข้อมูลที่รับได้)
+```
+
+ตัวอย่าง:
+
+```text
+Question for Workers.result (Message)
+→ Worker Agent 1.input_value (Message)
+```
+
+แปลว่า output `result` ของ `Question for Workers` ส่งข้อมูลชนิด `Message` เข้า input `input_value` ของ `Worker Agent 1`
+
+คำที่ใช้ในเอกสารนี้:
+
+- **Source**: Component ต้นทางที่ส่งข้อมูล
+- **Target**: Component ปลายทางที่รับข้อมูล
+- **Payload**: ตัวข้อมูลที่วิ่งอยู่ในเส้น เช่นคำถามหรือคำตอบ
+- **Fan-out**: output เดียวลากไปหลาย Components เช่นส่งคำถามเดียวกันให้ Workers สามตัว
+- **Fan-in**: หลาย outputs ไหลมารวมที่ Component เดียว เช่นคำตอบ Workers สามตัวไหลเข้า Collector
+- **Loop-back**: เส้นที่ย้อนจาก Component ด้านหลังกลับไปยัง Component ก่อนหน้าเพื่อทำงานซ้ำ
+- **Handle**: จุดต่อบน Component; ในเอกสารนี้ใช้ความหมายเดียวกับ port
+
+### ชนิดข้อมูลหลักที่พบใน Flow
+
+| ชนิด | ความหมายแบบง่าย | ตัวอย่างใน Flow |
+|---|---|---|
+| `Message` | ข้อความสนทนาพร้อม metadata | คำถามผู้ใช้และคำตอบ Agent |
+| `Data` | ข้อมูลหนึ่งรายการที่ไม่จำเป็นต้องเป็นข้อความสนทนา | คำถามหนึ่งรายการที่ออกจาก Loop |
+| `DataFrame` | กลุ่มของ `Data` หลายรายการ | รายการคำถามที่เตรียมให้ Loop |
+
+Langflow จะยอมให้ลากเส้นได้เมื่อชนิด output และ input เข้ากัน หากชนิดไม่เข้ากัน เส้นอาจลากไม่ได้หรือถูกลบเมื่อนำเข้า Flow
+
 ## ภาพรวม Component และชนิดข้อมูล
 
 ```mermaid
@@ -64,7 +149,7 @@ flowchart LR
 2. ตั้ง `Sender = User` และ `Sender Name = User`
 3. เปิด `Store Messages` หากต้องการเก็บประวัติใน Langflow; Flow file นี้ตั้งเป็น `true`
 
-Output ที่ใช้คือ `message` ชนิด `Message` โดยลากออกสองทาง:
+Output ที่ใช้คือ `message` ชนิด `Message` โดยลากออกสามทาง:
 
 - ไป `Prepare Original Question.original_question` เพื่อเริ่มเส้นทางทำงานของ Workers
 - ไป `Collect 3 Worker Answers.original_request` เพื่อให้ Vote Agent เห็นคำถามต้นฉบับ
