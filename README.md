@@ -14,6 +14,7 @@ Microsoft Learn แบ่ง orchestration หลักเป็น Sequential, 
 | [`parallel-orchestration/`](parallel-orchestration/) | **Concurrent orchestration** | ล่าสุด: [`v9`](parallel-orchestration/flows/LAB-1-4-withlocal-concurrent-consensus-v9-canonical-claims-thai.json) | Agents รับ task เดียวกันพร้อมกัน แล้วรวมผลแบบ semantic consensus หรือ deterministic claim voting ระดับ claim |
 | [`magentic-orchestration/`](magentic-orchestration/) | **Magentic orchestration** | ล่าสุด: v3 | Manager สร้าง task ledger, delegate งานให้ specialist subflows, ตรวจ progress, re-plan และผ่าน Resilient Final Guard |
 | [`hybrid-orchestration/`](hybrid-orchestration/) | **Hybrid orchestration** | ล่าสุด: v1 | ผสม Concurrent Workers, Semantic Consensus, Evidence Verification และ Language-only Editing |
+| [`Hybrid with Vote-Based Orchestration/`](Hybrid%20with%20Vote-Based%20Orchestration/) | **Hybrid orchestration** | [`LAB-hybrid-vote-2of3-verified-thai.json`](Hybrid%20with%20Vote-Based%20Orchestration/LAB-hybrid-vote-2of3-verified-thai.json) | Concurrent Workers → tool-free Vote 2-of-3 → Evidence Verifier ตามกติกา 4 ข้อ → Language-only Final Editor |
 
 ## รุ่นล่าสุดของแต่ละสาย
 
@@ -21,6 +22,7 @@ Microsoft Learn แบ่ง orchestration หลักเป็น Sequential, 
 |---|---|---|---|
 | **Concurrent — Answer-level Vote** | [`2-of-3 Vote`](Multi-Agent%20with%20Concurrent%20Orchestration/README.md) | Worker 3 ตัวใช้ tools ชุดเดียวกันและทำงานอิสระ; Vote Agent ไม่มี tool และเลือกเฉพาะสาระสำคัญที่ตรงกันอย่างน้อย 2 ใน 3 | Correctness **81.1%**, Faithfulness **87.8%**, Availability **100%**, เวลาเฉลี่ย **15.29s** |
 | **Hybrid** | [`Hybrid v1`](hybrid-orchestration/docs/v1-grounded-consensus.md) | รวม 3 Parallel Workers, Semantic Consensus, Evidence Verifier ที่เห็นทั้ง raw answers/draft และ Language-only Faithfulness Editor; ไม่มี rigid JSON contract หรือ fail-closed Guard | Correctness **84.4%**, Faithfulness **96.7%**, Availability **100% first pass** |
+| **Hybrid — Vote-Based + Verification** | [`Hybrid Vote 2-of-3 Verified`](Hybrid%20with%20Vote-Based%20Orchestration/README.md) | Vote ไม่ผ่านจึง retry Workers; Vote ผ่านแล้ว Verifier คง/แก้/ตัด/ระบุว่ายืนยัน claim ไม่ได้ จากนั้น Editor เรียบเรียงภาษาเท่านั้น | สร้างและ smoke test ผ่านแล้ว; ยังไม่ได้ยิง Grounded-18 เต็มชุด |
 | **Concurrent — Deterministic Claim line** | [`Canonical Claims v9`](parallel-orchestration/docs/flow-versions.md) | Workers ส่ง canonical claims แล้วใช้ deterministic 2-of-3 vote, LLM verbalizer และ Final Claim Guard | Full run เคยล้มจาก MCP; มี targeted artifacts แต่ยังไม่มี final aggregate ที่เทียบ v5 ได้ |
 | **Magentic** | [`Resilient Final Guard v3`](magentic-orchestration/docs/v3-resilient-final-guard.md) | Manager ไม่ทำ specialist task เอง; ใช้ SQL/RAG/Verification subflows และ Guard ที่รักษา valid answer เมื่อ audit metadata ขาด | Correctness **51.1%**, Faithfulness **92.2%**, Availability **100%** |
 
@@ -37,10 +39,11 @@ Microsoft Learn แบ่ง orchestration หลักเป็น Sequential, 
 Multi-Agent with Concurrent Orchestration/  # มีแล้ว: Concurrent 2-of-3 answer vote
 parallel-orchestration/                     # มีแล้ว: Concurrent claim/consensus experiments
 hybrid-orchestration/                       # มีแล้ว: Concurrent + verification + editing
+Hybrid with Vote-Based Orchestration/       # มีแล้ว: 2-of-3 vote + verification + editing
 magentic-orchestration/                     # มีแล้ว: Manager-directed planning/delegation
 sequential-orchestration/                   # วางแผน: Sequential pipeline
 handoff-orchestration/                      # วางแผน: Dynamic transfer of control
 group-chat-orchestration/                   # วางแผน: Shared collaborative conversation
 ```
 
-รายละเอียด Flow, diagram, benchmark และวิธีใช้งานอยู่ที่ [Concurrent 2-of-3 README](Multi-Agent%20with%20Concurrent%20Orchestration/README.md), [Parallel README](parallel-orchestration/README.md), [Magentic README](magentic-orchestration/README.md) และ [Hybrid README](hybrid-orchestration/README.md) ส่วนผลเปรียบเทียบข้ามสายให้อ้างอิง [ตาราง Grounded-18 กลาง](benchmarks/finance-loan-grounded18/FLOW_COMPARISON.md) เพื่อหลีกเลี่ยงการนำคะแนนจากคนละชุดคำถามมาเทียบกัน
+รายละเอียด Flow, diagram, benchmark และวิธีใช้งานอยู่ที่ [Concurrent 2-of-3 README](Multi-Agent%20with%20Concurrent%20Orchestration/README.md), [Hybrid Vote-Based README](Hybrid%20with%20Vote-Based%20Orchestration/README.md), [Parallel README](parallel-orchestration/README.md), [Magentic README](magentic-orchestration/README.md) และ [Hybrid README](hybrid-orchestration/README.md) ส่วนผลเปรียบเทียบข้ามสายให้อ้างอิง [ตาราง Grounded-18 กลาง](benchmarks/finance-loan-grounded18/FLOW_COMPARISON.md) เพื่อหลีกเลี่ยงการนำคะแนนจากคนละชุดคำถามมาเทียบกัน
