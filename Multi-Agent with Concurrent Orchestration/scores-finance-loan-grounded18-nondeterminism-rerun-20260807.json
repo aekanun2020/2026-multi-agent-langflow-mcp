@@ -1,0 +1,53 @@
+{
+  "suite": "finance-loan-grounded18-v1",
+  "sut": {
+    "name": "LAB-concurrent-vote-2of3-retry-thai",
+    "flow_file": "Multi-Agent with Concurrent Orchestration/LAB-concurrent-vote-2of3-retry-thai.json",
+    "flow_id": "4e193ed2-8649-475d-8ecc-db05a23e9839",
+    "endpoint": "http://127.0.0.1:7860/api/v1/run/4e193ed2-8649-475d-8ecc-db05a23e9839"
+  },
+  "scoring_basis": "Final Answer only",
+  "scores": [
+    {"question":"Q1","correctness":4,"faithfulness":4,"note":"values are substantively correct but both totals are rounded rather than exact"},
+    {"question":"Q2","correctness":5,"faithfulness":5,"note":"counts, percentages and labels are correct"},
+    {"question":"Q3","correctness":5,"faithfulness":5,"note":"all statuses, counts and rounded shares are correct without approval interpretation"},
+    {"question":"Q4","correctness":4,"faithfulness":4,"note":"requested cohort metrics are correct but currency is invented"},
+    {"question":"Q5","correctness":4,"faithfulness":4,"note":"all labels and metrics are correct but dollar currency is invented"},
+    {"question":"Q6","correctness":3,"faithfulness":4,"note":"all three extrema and their metrics are identified, but requested group counts are omitted and currency is invented"},
+    {"question":"Q7","correctness":5,"faithfulness":5,"note":"all raw buckets and metrics are correct; interpretation remains descriptive"},
+    {"question":"Q8","correctness":5,"faithfulness":5,"note":"all fixed bands, populations and metrics are correct"},
+    {"question":"Q9","correctness":5,"faithfulness":5,"note":"year totals, gap, ratio and non-approval constraint are correct"},
+    {"question":"Q10","correctness":3,"faithfulness":5,"note":"benchmarks and all qualifying labels are correct, but per-segment measured values are omitted"},
+    {"question":"Q11","correctness":3,"faithfulness":3,"note":"totals are rounded; currency and funded-amnt release semantics are unsupported"},
+    {"question":"Q12","correctness":5,"faithfulness":5,"note":"both portfolio shares are correct"},
+    {"question":"Q13","correctness":5,"faithfulness":3,"note":"distribution is correct but status explanations and normal/problem grouping are unsupported"},
+    {"question":"Q14","correctness":2,"faithfulness":4,"note":"reports funded totals instead of mapped cohort averages and invents currency"},
+    {"question":"Q15","correctness":4,"faithfulness":4,"note":"all groups and requested metrics are correct but dollar currency is invented"},
+    {"question":"Q16","correctness":4,"faithfulness":4,"note":"extrema are correct but currency is invented"},
+    {"question":"Q17","correctness":3,"faithfulness":5,"note":"bucket counts are correct but mapped contract metrics are incomplete"},
+    {"question":"Q18","correctness":4,"faithfulness":4,"note":"year calculations are correct but currency is invented"}
+  ],
+  "summary": {
+    "questions": 18,
+    "successful_http_answers": 18,
+    "errors": 0,
+    "correctness_total": 73,
+    "correctness_average": 4.06,
+    "faithfulness_total": 78,
+    "faithfulness_average": 4.33,
+    "latency_average_seconds": 14.25,
+    "latency_min_seconds": 7.92,
+    "latency_max_seconds": 21.57
+  },
+  "comparison_to_20260806": {
+    "previous_correctness_total": 73,
+    "previous_faithfulness_total": 79,
+    "previous_latency_average_seconds": 15.29,
+    "correctness_delta": 0,
+    "faithfulness_delta": -1,
+    "latency_delta_seconds": -1.04,
+    "unchanged_correctness_questions": 14,
+    "unchanged_faithfulness_questions": 11,
+    "unchanged_score_pair_questions": 11
+  }
+}
