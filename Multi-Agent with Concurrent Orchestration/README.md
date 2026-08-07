@@ -70,7 +70,7 @@ Chat Input.message
 หมายถึง:
 
 1. หา Component ชื่อ `Chat Input`
-2. จับ output port ชื่อ `message`
+2. จับวงกลม output port ด้านขวาของ `Chat Input`; เมื่อ hover ใน Langflow 1.7.3 จะเห็น tooltip `Output type: Message`
 3. ลากเส้นไปยัง Component ชื่อ `Collect 3 Worker Answers`
 4. ปล่อยที่ input port ชื่อ `original_request`
 5. ข้อมูลชนิด `Message` ซึ่งมีคำถามต้นฉบับของผู้ใช้จะไหลตามลูกศรจากซ้ายไปขวา
@@ -91,9 +91,26 @@ MessageTextInput(
 ```
 
 - `name="original_request"` คือชื่อภายในที่ใช้ใน Flow JSON และ notation ของ README
-- `display_name="Original Request"` คือชื่ออ่านง่ายที่เห็นบนหน้า Langflow
+- `display_name="Original Request"` คือชื่ออ่านง่ายที่ Component schema เตรียมไว้ให้ UI แต่ตำแหน่งหรือรูปแบบการแสดงขึ้นอยู่กับชนิด Component และสถานะย่อ/ขยาย
 
-ดังนั้นชื่อที่เห็นบน UI อาจเป็น **Original Request** ขณะที่เอกสารเขียน `original_request` เพื่อให้ตรวจเทียบกับ JSON ได้ตรงกัน
+ดังนั้นชื่อที่ UI แสดงอาจเป็น **Original Request**, อาจแสดงเฉพาะชนิดข้อมูล หรืออาจไม่แสดง label บน canvas เลย ขณะที่เอกสารเขียน `original_request` เพื่อให้ตรวจเทียบกับ JSON ได้ตรงกัน
+
+### สิ่งที่เห็นจริงบน canvas อาจไม่มีชื่อ port
+
+Component แบบ compact เช่น `Chat Input` แสดงเพียงวงกลม output port ด้านขวา เมื่อวางเมาส์เหนือวงกลม Langflow 1.7.3 แสดง tooltip ว่า:
+
+```text
+Output type: Message
+Drag to connect compatible inputs
+```
+
+ในกรณีนี้ผู้ใช้ไม่ต้องค้นหาคำว่า `message` บน canvas ให้ระบุ port จาก:
+
+1. ตำแหน่ง — output port อยู่ด้านขวาของ Component
+2. Tooltip — แสดงชนิดข้อมูล `Message`
+3. เส้นเดิม — หากมีการเชื่อมอยู่แล้วให้ดูเส้นที่ออกจากวงกลมนั้น
+
+ชื่อภายใน `message` ใช้สำหรับอ่าน Flow JSON, builder และตารางอ้างอิงใน README ไม่ใช่ label ที่รับประกันว่าจะมองเห็นบน canvas
 
 ### วิธีอ่านลูกศรและชนิดข้อมูล
 
@@ -167,7 +184,9 @@ flowchart LR
 2. ตั้ง `Sender = User` และ `Sender Name = User`
 3. เปิด `Store Messages` หากต้องการเก็บประวัติใน Langflow; Flow file นี้ตั้งเป็น `true`
 
-Output ที่ใช้คือ `message` ชนิด `Message` โดยลากออกสามทาง:
+output port ที่ใช้มีชื่อภายในว่า `message` และส่งข้อมูลชนิด `Message` โดยลากออกสามทาง:
+
+บน canvas แบบ compact จะเห็นเป็นวงกลม output port ด้านขวาของ `Chat Input` และ tooltip `Output type: Message`; คำว่า `message` เป็นชื่อภายใน JSON
 
 - ไป `Prepare Original Question.original_question` เพื่อเริ่มเส้นทางทำงานของ Workers
 - ไป `Collect 3 Worker Answers.original_request` เพื่อให้ Vote Agent เห็นคำถามต้นฉบับ
@@ -201,8 +220,8 @@ Output ที่ใช้คือ `message` ชนิด `Message` โดยล
 
 1. ลาก `Loop` ลงบน canvas
 2. ไม่ต้องแก้ Python code ของ built-in component
-3. ต่อ `Prepare Original Question.result` เข้า input port ชื่อ `data` ซึ่งแสดงบน UI ว่า `Inputs`
-4. ใช้ output port ชื่อ `item` ซึ่งแสดงบน UI ว่า `Item` เป็นข้อมูลของรอบปัจจุบัน
+3. ต่อ `Prepare Original Question.result` เข้า input port ชื่อภายใน `data` ซึ่งมี `display_name` ว่า `Inputs`
+4. ใช้ output port ชื่อภายใน `item` ซึ่งมี `display_name` ว่า `Item` เป็นข้อมูลของรอบปัจจุบัน
 
 ชนิดข้อมูล:
 
