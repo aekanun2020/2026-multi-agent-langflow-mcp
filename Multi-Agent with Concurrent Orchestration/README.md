@@ -46,7 +46,7 @@ Component มี **port (จุดเชื่อมต่อ)** สองด้
 ชื่อ Component.ชื่อ port
 ```
 
-เครื่องหมายจุด `.` อ่านว่า **“port ของ”** ใช้เพื่อแบ่งชื่อ Component ออกจากชื่อ port เท่านั้น ไม่ใช่คำสั่งหรือ operator ของ Langflow
+รูปแบบ `Component.port` อ่านว่า **“port ชื่อ `port` ของ Component ชื่อ `Component`”** เครื่องหมายจุด `.` มีไว้แบ่งชื่อ Component ออกจากชื่อ port เท่านั้น รูปแบบนี้เป็น notation ที่ README ใช้อธิบายเส้นเชื่อม ไม่ใช่ syntax, คำสั่ง หรือ operator ของ Langflow
 
 ตัวอย่าง:
 
@@ -57,8 +57,8 @@ Collect 3 Worker Answers.original_request
 อ่านว่า:
 
 - `Collect 3 Worker Answers` คือชื่อ Component บน canvas
-- `original_request` คือชื่อ input port ภายใน Component นั้น
-- `.` หมายถึง “input port `original_request` ของ Component `Collect 3 Worker Answers`”
+- `original_request` คือชื่อภายในของ input port
+- ทั้งข้อความอ่านว่า “input port ชื่อ `original_request` ของ Component ชื่อ `Collect 3 Worker Answers`”
 
 ดังนั้นข้อความต่อไปนี้:
 
@@ -70,12 +70,30 @@ Chat Input.message
 หมายถึง:
 
 1. หา Component ชื่อ `Chat Input`
-2. จับจุด output ชื่อ `message`
+2. จับ output port ชื่อ `message`
 3. ลากเส้นไปยัง Component ชื่อ `Collect 3 Worker Answers`
-4. ปล่อยที่ input ชื่อ `original_request`
+4. ปล่อยที่ input port ชื่อ `original_request`
 5. ข้อมูลชนิด `Message` ซึ่งมีคำถามต้นฉบับของผู้ใช้จะไหลตามลูกศรจากซ้ายไปขวา
 
-ชื่อที่เห็นบนหน้าจออาจเป็นคำอ่านง่าย เช่น **Original Request** แต่ชื่อภายใน Flow JSON เป็น `original_request` เอกสารนี้ใช้ชื่อภายในเพื่อให้ตรวจเทียบกับไฟล์ JSON ได้ตรงกัน
+### ใครเป็นผู้ตั้งชื่อ port
+
+- **Built-in Component:** ผู้พัฒนา Langflow กำหนดชื่อ port มาให้แล้ว ผู้ใช้เลือกและลากเส้นจาก port ที่มีอยู่
+- **Custom Component:** ผู้เขียน Python component เป็นผู้กำหนดชื่อ port ใน code
+- การลากเส้นบน canvas ไม่ได้เป็นการตั้งชื่อ port ใหม่ แต่เป็นการเชื่อม port ที่ Component ประกาศไว้แล้ว
+
+Custom component สามารถมีทั้งชื่อภายในและชื่อที่แสดงบน UI เช่น:
+
+```python
+MessageTextInput(
+    name="original_request",
+    display_name="Original Request",
+)
+```
+
+- `name="original_request"` คือชื่อภายในที่ใช้ใน Flow JSON และ notation ของ README
+- `display_name="Original Request"` คือชื่ออ่านง่ายที่เห็นบนหน้า Langflow
+
+ดังนั้นชื่อที่เห็นบน UI อาจเป็น **Original Request** ขณะที่เอกสารเขียน `original_request` เพื่อให้ตรวจเทียบกับ JSON ได้ตรงกัน
 
 ### วิธีอ่านลูกศรและชนิดข้อมูล
 
@@ -93,7 +111,7 @@ Question for Workers.result (Message)
 → Worker Agent 1.input_value (Message)
 ```
 
-แปลว่า output `result` ของ `Question for Workers` ส่งข้อมูลชนิด `Message` เข้า input `input_value` ของ `Worker Agent 1`
+แปลว่า output port ชื่อ `result` ของ Component ชื่อ `Question for Workers` ส่งข้อมูลชนิด `Message` เข้า input port ชื่อ `input_value` ของ Component ชื่อ `Worker Agent 1`
 
 คำที่ใช้ในเอกสารนี้:
 
@@ -183,8 +201,8 @@ Output ที่ใช้คือ `message` ชนิด `Message` โดยล
 
 1. ลาก `Loop` ลงบน canvas
 2. ไม่ต้องแก้ Python code ของ built-in component
-3. ต่อ `Prepare Original Question.result` เข้า input port `Inputs/data`
-4. ใช้ output `Item/item` เป็นข้อมูลของรอบปัจจุบัน
+3. ต่อ `Prepare Original Question.result` เข้า input port ชื่อ `data` ซึ่งแสดงบน UI ว่า `Inputs`
+4. ใช้ output port ชื่อ `item` ซึ่งแสดงบน UI ว่า `Item` เป็นข้อมูลของรอบปัจจุบัน
 
 ชนิดข้อมูล:
 
@@ -208,8 +226,8 @@ Output ที่ใช้คือ `message` ชนิด `Message` โดยล
 
 1. กด **New Custom Component**
 2. ใช้ class `RetryQuestionMessage` จากส่วน `dataToMessageCode` ใน builder
-3. กำหนด input `item` เป็น `DataInput`
-4. กำหนด output `result` เป็น `Message`
+3. กำหนด input port ชื่อ `item` เป็น `DataInput`
+4. กำหนด output port ชื่อ `result` เป็น `Message`
 
 หน้าที่คืออ่าน `Data.text` จาก Loop แล้วแปลงกลับเป็น `Message(text=...)` เพราะ Agent รับคำถามผ่าน `input_value` ชนิด `Message`
 
@@ -263,7 +281,7 @@ Agent Instructions ของทั้งสามตัวกำหนดเห�
 1. กด **New Custom Component**
 2. ใช้ component definition ที่อยู่ใน Flow file/builder
 3. สร้าง input port ชนิด `Message` จำนวนสี่รายการ: `original_request`, `candidate_1`, `candidate_2`, `candidate_3`
-4. สร้าง output `result` ชนิด `Message`
+4. สร้าง output port ชื่อ `result` ชนิด `Message`
 
 หน้าที่คือรอ dependency ให้ครบทั้งคำถามเดิมและคำตอบ Worker สามตัว แล้วประกอบเป็นข้อความ bundle โดยไม่ลงคะแนน ไม่ parse JSON และไม่แก้ claim
 
