@@ -16,6 +16,8 @@ Microsoft Learn แบ่ง orchestration หลักเป็น Sequential, 
 | [`hybrid-orchestration/`](hybrid-orchestration/) | **Hybrid orchestration** | ล่าสุด: v1 | ผสม Concurrent Workers, Semantic Consensus, Evidence Verification และ Language-only Editing |
 | [`Hybrid with Vote-Based Orchestration/`](Hybrid%20with%20Vote-Based%20Orchestration/) | **Hybrid orchestration** | [`LAB-hybrid-vote-2of3-verified-thai.json`](Hybrid%20with%20Vote-Based%20Orchestration/LAB-hybrid-vote-2of3-verified-thai.json) | Concurrent Workers → tool-free Vote 2-of-3 → Evidence Verifier ตามกติกา 4 ข้อ → Language-only Final Editor |
 
+การตั้งค่า [Faithfulness ของ Worker ใน Langfuse](Multi-Agent%20with%20Concurrent%20Orchestration/README.md#บันทึก-faithfulness-ของ-worker-ใน-langfuse) และ [ซอร์ส Worker](Multi-Agent%20with%20Concurrent%20Orchestration/faithfulness_worker.py) สำหรับ Flow Concurrent 2-of-3
+
 ## รุ่นล่าสุดของแต่ละสาย
 
 | สายพัฒนา | รุ่นล่าสุด | อะไรใหม่ที่สุด | ผล Grounded-18 ล่าสุด |
