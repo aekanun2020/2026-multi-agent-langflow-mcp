@@ -54,6 +54,19 @@ Flow file ถูกสร้างด้วยโปรแกรมดังก�
 
 ส่วน JavaScript ที่อ่านไฟล์ สร้าง Component สร้างเส้นเชื่อม และเขียน JSON **ไม่ถูกวางใน Component ใด** เพราะทำงานเฉพาะตอนนักพัฒนารันไฟล์ `.mjs` เพื่อสร้าง Flow เท่านั้น นอกจากนี้ `routerCode` ที่ยังพบในไฟล์เป็นโค้ดระหว่างการพัฒนา แต่ผลลัพธ์สุดท้ายแทนที่ส่วนนั้นด้วย built-in `If-Else`; ดังนั้น `routerCode` ไม่ได้ถูกฝังและไม่ได้ทำงานใน Flow JSON ปัจจุบัน
 
+## บันทึก Faithfulness ของ Worker ใน Langfuse
+
+Worker ทั้งสามใช้ [Agent Component](faithfulness_worker.py) ที่เพิ่มการประเมินเมื่อ `search_documentation` คืนข้อความเอกสารให้ Worker ในรอบนั้น Qwen ส่งคำตอบ ข้อกล่าวอ้าง คำตัดสิน และข้อความหลักฐานใน response สุดท้ายเดียวกัน ผลค้นยังอยู่ในข้อความ tool ของ Generation ที่ OpenRouter Broadcast ส่งเข้า Langfuse ส่วน Vote Agent รับข้อความคำตอบจาก Worker ตามเดิม
+
+1. นำเข้า [Flow JSON](LAB-concurrent-vote-2of3-retry-thai.json) ใน Langflow 1.7.3 และตั้งค่าการเชื่อมต่อ MCP ตามชื่อที่กำหนดใน flow
+2. ตั้ง **Langfuse Base URL** ของ Worker เป็น URL ที่ Langflow ติดต่อได้ ค่าเริ่มต้นคือ `http://100.64.102.88:3000`
+3. เลือก Langflow Global Variables ที่เก็บคีย์โปรเจกต์ `openrouter-local` ให้กับ **Langfuse Public Key** และ **Langfuse Secret Key** ใน Worker ทั้งสาม หาก runtime มี `LANGFUSE_PUBLIC_KEY` และ `LANGFUSE_SECRET_KEY` อยู่แล้ว สามารถใช้ค่านั้นได้
+4. เปิด [OpenRouter Broadcast](https://openrouter.ai/docs/guides/features/broadcast/otel-collector) สำหรับคีย์ของ flow โดยให้ destination ส่ง Input และ Output มายัง `openrouter-local` แล้วเปิด trace จาก Worker ที่มีผลค้นเพื่อดูผลค้นใน **Input**, คำตอบกับหลักฐานใน **Output** และ `faithfulness_self` ใน **Scores**
+
+คะแนนคือจำนวนข้อที่ Qwen ให้ว่าได้รับการรองรับและตรวจคำอ้างอิงจากผลค้นได้ หารด้วยจำนวนข้อทั้งหมดในคำตอบของ Worker ขอบเขตหลักฐานคือผล `search_documentation` ของรอบนั้น โค้ดยอมรับชื่อไฟล์ย่อที่ระบุแหล่งได้เพียงแห่งเดียวและเทียบข้อความโดยละเครื่องหมายตัวหนาของ Markdown ข้อที่ Qwen ให้ผ่านแต่ยืนยันคำอ้างอิงไม่ได้จะอยู่ในตัวหารและถูกนับแยกใน `unverified_citation_claims` หากไม่มีข้อกล่าวอ้างให้เว้นคะแนน หากส่งคะแนนไม่สำเร็จ Worker ส่งคำตอบที่อ่านได้ต่อให้ Vote Agent และลงเหตุผลไว้ใน log พร้อม trace ID
+
+แก้ [ซอร์ส Worker](faithfulness_worker.py) แล้วรัน `node "Multi-Agent with Concurrent Orchestration/build_concurrent_vote_retry.mjs" --refresh-worker-code` จาก root ของ repo เพื่อฝังซอร์สลงใน Flow JSON ทั้งสาม Worker โดยใช้โครงสร้าง flow ที่มีอยู่
+
 ## สำหรับผู้อ่านที่ไม่เคยใช้ Langflow: วิธีอ่านชื่อและเส้นเชื่อม
 
 ใน Langflow พื้นที่ที่ใช้วางและลากเส้นเชื่อมกล่องต่าง ๆ เรียกว่า **canvas** ส่วนกล่องแต่ละกล่องเรียกว่า **Component** เช่น `Chat Input`, `Worker Agent 1` และ `Collect 3 Worker Answers`

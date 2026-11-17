@@ -7,6 +7,47 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, "..");
 const sourcePath = path.join(root, "hybrid-orchestration", "flows", "LAB-hybrid-v1-grounded-consensus-thai-ui-upload-20260805.json");
 const outputPath = path.join(here, "LAB-concurrent-vote-2of3-retry-thai.json");
+const workerIds = ["Agent-ConsensusWorker1", "Agent-ConsensusWorker2", "Agent-ConsensusWorker3"];
+const workerCode = fs.readFileSync(path.join(here, "faithfulness_worker.py"), "utf8");
+
+function embedFaithfulnessWorker(worker) {
+  const node = worker.data.node;
+  const template = node.template;
+  template.code.value = workerCode;
+
+  template.langfuse_base_url = {
+    ...structuredClone(template.openai_api_base),
+    name: "langfuse_base_url",
+    display_name: "Langfuse Base URL",
+    info: "Langfuse URL reachable from this Langflow instance.",
+    trace_as_metadata: false,
+    value: "http://100.64.102.88:3000",
+  };
+  for (const [field, label] of [
+    ["langfuse_public_key", "Langfuse Public Key"],
+    ["langfuse_secret_key", "Langfuse Secret Key"],
+  ]) {
+    template[field] = {
+      ...structuredClone(template.api_key),
+      name: field,
+      display_name: label,
+      info: "Project credential for openrouter-local. Use a Langflow global variable.",
+      advanced: true,
+      real_time_refresh: false,
+      value: "",
+    };
+  }
+  for (const field of ["langfuse_base_url", "langfuse_public_key", "langfuse_secret_key"]) {
+    if (!node.field_order.includes(field)) node.field_order.push(field);
+  }
+}
+
+if (process.argv.includes("--refresh-worker-code")) {
+  const exported = JSON.parse(fs.readFileSync(outputPath, "utf8"));
+  for (const id of workerIds) embedFaithfulnessWorker(exported.data.nodes.find((node) => node.id === id));
+  fs.writeFileSync(outputPath, JSON.stringify(exported, null, 2) + "\n");
+  process.exit(0);
+}
 const flow = JSON.parse(fs.readFileSync(sourcePath, "utf8"));
 const clone = (value) => structuredClone(value);
 const findNode = (id) => flow.data.nodes.find((node) => node.id === id);
@@ -21,7 +62,6 @@ const chatInput = findNode("ChatInput-uc7rV");
 const chatOutput = findNode("ChatOutput-BDIVy");
 const collector = findNode("ConsensusVoteAggregator-main");
 const voteAgent = findNode("Agent-ycwYQ");
-const workerIds = ["Agent-ConsensusWorker1", "Agent-ConsensusWorker2", "Agent-ConsensusWorker3"];
 
 const keepIds = new Set([
   chatInput.id,
@@ -49,6 +89,7 @@ for (const workerId of workerIds) {
 - ตอบเป็นภาษาไทยเป็นหลัก
 - ส่งเฉพาะคำตอบสำหรับผู้ใช้ ไม่แสดง thinking process หรือ tool trace`;
   worker.data.node.template.temperature.value = 0.2;
+  embedFaithfulnessWorker(worker);
 }
 
 collector.data.node.display_name = "Collect 3 Worker Answers";
